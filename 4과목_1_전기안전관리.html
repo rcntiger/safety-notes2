@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>전기안전관리 업무 수행</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_4과목_목차.html">목차</a><h1>1. 전기안전관리 업무 수행</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①배분전반·개폐기</a><a href="#s2">②보호계전기·과전류</a><a href="#s3">③누전차단기</a><a href="#s4">④차단용량·법령</a><a href="#s5">⑤최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 전기안전관리</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①배분전반·개폐기">
+<h2><span class="n">1-1</span>배(분)전반 · 개폐기</h2>
+<h3>① 배(분)전반</h3>
+<ul>
+<li>전력을 나누고 제어·보호하는 기기(차단기·계기·개폐기)를 모아 둔 함</li>
+<li>안전: 충전부가 드러나지 않는 <b>폐쇄형</b>, 문 잠금·관계자 외 출입금지, 외함 <b>접지</b>, 회로명 표시, 앞면 작업공간 확보, 습기·먼지 차단</li>
+</ul>
+<h3>② 개폐기의 종류</h3>
+<div class="tw"><table>
+<tr><th>기기</th><th>개폐 능력</th></tr>
+<tr><td><b>단로기 (DS)</b></td><td><b>무부하</b> 상태에서만 개폐 — 부하전류 차단 불가 (회로 분리용)</td></tr>
+<tr><td>부하개폐기 (LBS)</td><td>부하전류 개폐 가능, 고장(단락)전류 차단 불가</td></tr>
+<tr><td><b>차단기 (CB)</b></td><td>부하전류 + <b>고장전류</b>까지 차단</td></tr>
+<tr><td>전자개폐기 (MC)</td><td>전동기 등 잦은 개폐, 과부하 계전기와 조합</td></tr>
+</table></div>
+<h3>③ 조작 순서</h3>
+<div class="mn"><div class="t">"끌 땐 차단기 먼저, 켤 땐 단로기 먼저" → 단로기는 마지막에 끄고 처음에 켠다</div>
+<div class="s">정전: CB 개방 → DS 개방 / 복전: DS 투입 → CB 투입 — 단로기에 부하전류가 흐르지 않게</div></div>
+<div class="trap">부하가 걸린 상태에서 단로기를 열면 아크 발생 → 반드시 차단기를 먼저 개방</div>
+<div class="sum">단로기는 무부하만! 끌 땐 CB 먼저, 켤 땐 DS 먼저!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②보호계전기·과전류">
+<h2><span class="n">1-2</span>보호계전기 · 과전류 차단기</h2>
+<h3>① 보호계전기</h3>
+<div class="tw"><table>
+<tr><th>계전기</th><th>동작</th></tr>
+<tr><td>과전류계전기 (OCR)</td><td>정정값 이상의 전류 → 차단 신호</td></tr>
+<tr><td>과전압 / 부족전압계전기 (OVR / UVR)</td><td>전압이 너무 높거나 낮을 때</td></tr>
+<tr><td>지락계전기 (GR, OCGR)</td><td>지락(땅으로 새는) 전류 검출</td></tr>
+<tr><td>(비율)차동계전기</td><td>들어간 전류와 나온 전류의 차이 → 변압기·발전기 <b>내부 고장</b></td></tr>
+<tr><td>거리계전기 · 방향계전기</td><td>송전선 고장 지점·방향 판별</td></tr>
+</table></div>
+<div class="mn"><div class="t">"차동은 들어온 것과 나간 것의 차이 → 내부 고장"</div></div>
+<h3>② 과전류 차단기</h3>
+<ul>
+<li>종류: 퓨즈, 배선용 차단기(MCCB), 기중·진공·가스 차단기(고압)</li>
+<li>과전류(과부하·단락)로 전선이 과열되기 전에 회로를 차단 → 전기화재 예방</li>
+<li>고압 퓨즈: <b>포장퓨즈</b>는 정격전류 1.3배에 견디고 2배 전류로 120분 안에 용단 / <b>비포장퓨즈</b>는 1.25배에 견디고 2배 전류로 2분 안에 용단</li>
+</ul>
+<div class="mn"><div class="t">"포장은 1.3배·120분, 비포장은 1.25배·2분"</div></div>
+<div class="sum">차동은 내부 고장! 과전류 차단기는 전선 과열 전에 끊는다!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<!-- s3 -->
+<section id="s3" data-nav="③누전차단기">
+<h2><span class="n">1-3</span>누전 차단기</h2>
+<div class="law">안전보건규칙 제304조</div>
+<h3>① 설치 대상</h3>
+<ul>
+<li>대지전압 <b>150V 초과</b> 이동형·휴대형 전기기계기구</li>
+<li>물 등 도전성이 높은 액체로 <b>습윤한 장소</b>에서 쓰는 전기기계기구</li>
+<li>철판·철골 위 등 도전성이 높은 장소에서 쓰는 이동형·휴대형</li>
+<li><b>임시배선</b> 전로가 설치된 장소에서 쓰는 이동형·휴대형</li>
+</ul>
+<div class="mn"><div class="t">"150V 넘는 휴대용, 젖은 곳, 쇠 위, 임시배선"</div></div>
+<h3>② 성능</h3>
+<ul>
+<li>정격감도전류 <b>30mA 이하</b>, 동작시간 <b>0.03초 이내</b></li>
+<li>정격전부하전류 50A 이상 대용량: 200mA 이하, 0.1초 이내 가능</li>
+<li>설치 제외: <b>이중절연</b> 구조, <b>절연대</b> 위에서 사용, <b>비접지</b> 방식 전로</li>
+</ul>
+<div class="mn"><div class="t">"삼십(30)mA, 영점영삼(0.03)초" — 3이 두 번</div></div>
+<div class="trap">'정격감도전류 30mA 이하, 0.3초 이내'처럼 시간을 바꾼 보기 주의 (0.03초)</div>
+<div class="sum">150V 휴대용·젖은 곳·쇠 위·임시배선! 30mA·0.03초!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<!-- s4 -->
+<section id="s4" data-nav="④차단용량·법령">
+<h2><span class="n">1-4</span>정격차단용량(kA) · 전기안전관련 법령</h2>
+<h3>① 정격차단용량</h3>
+<ul>
+<li>차단기가 안전하게 끊을 수 있는 <b>최대 고장(단락)전류</b> — 정격차단전류(kA)</li>
+<li>3상 차단용량(MVA) = √3 × 정격전압(kV) × 정격차단전류(kA)</li>
+<li>단락전류 Is = (100 ÷ %Z) × 정격전류 → 설치 지점의 단락전류보다 큰 차단용량을 선택</li>
+</ul>
+<div class="mn"><div class="t">예: 7.2kV, 12.5kA → √3 × 7.2 × 12.5 ≈ <b>156 MVA</b></div>
+<div class="s">"차단용량이 단락전류보다 작으면 차단기가 터진다"</div></div>
+<h3>② 전기안전 관련 법령</h3>
+<ul>
+<li>전기안전관리법, 전기사업법, 한국전기설비규정(KEC), 산업안전보건기준에 관한 규칙(제2편 제3장 전기로 인한 위험 방지)</li>
+<li>전압 구분(KEC): <b>저압</b> 교류 1kV 이하·직류 1.5kV 이하 / <b>고압</b> 교류 1kV 초과~7kV 이하·직류 1.5kV 초과~7kV 이하 / <b>특고압</b> 7kV 초과</li>
+</ul>
+<div class="mn"><div class="t">"교류 1, 직류 1.5, 둘 다 7 넘으면 특고압"</div></div>
+<div class="sum">차단용량 = √3 × kV × kA! 저압 교류 1·직류 1.5, 7kV 넘으면 특고압!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<section id="s5" data-nav="⑤최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s5">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="산업안전기사_4과목_목차.html"><small>← 목차</small>4과목 목차</a><a class="nx" href="4과목_2_감전재해_방지.html"><small>다음 →</small>2. 감전재해 및 방지대책</a></div>
+<script>
+const S={
+"s1":[
+["무부하 상태에서만 개폐할 수 있는 기기는?",["차단기","단로기","부하개폐기","전자개폐기"],1,"단로기입니다."],
+["고장(단락)전류까지 차단할 수 있는 기기는?",["단로기","부하개폐기","차단기","컷아웃스위치"],2,"차단기입니다."],
+["정전 작업 시 개폐 순서로 옳은 것은?",["단로기 개방 → 차단기 개방","차단기 개방 → 단로기 개방","동시에 개방","순서 무관"],1,"끌 땐 차단기 먼저입니다."],
+["복전 시 투입 순서로 옳은 것은?",["단로기 투입 → 차단기 투입","차단기 투입 → 단로기 투입","동시에 투입","순서 무관"],0,"켤 땐 단로기 먼저입니다."]
+],
+"s2":[
+["변압기 내부 고장을 검출하는 계전기는?",["과전류계전기","부족전압계전기","비율차동계전기","지락계전기"],2,"차동계전기입니다."],
+["지락전류를 검출하는 계전기는?",["OCR","GR","OVR","UVR"],1,"지락계전기(GR)입니다."],
+["고압 포장퓨즈의 용단 특성은?",["정격 1.3배에 견디고 2배 전류로 120분 내 용단","정격 1.25배에 견디고 2배로 2분 내 용단","정격 2배에 견디고 3배로 1분 내 용단","정격 1.1배에 견디고 1.5배로 60분 내 용단"],0,"포장 1.3배·120분입니다."],
+["과전류 차단기의 주된 목적은?",["누전 검출","전선 과열과 전기화재 방지","정전기 제거","전압 상승"],1,"과열 전에 끊습니다."]
+],
+"s3":[
+["누전차단기를 설치해야 하는 이동형 전기기계기구의 대지전압 기준은?",["30V 초과","110V 초과","150V 초과","220V 초과"],2,"150V 초과입니다."],
+["감전 방지용 누전차단기의 정격감도전류는?",["10mA 이하","30mA 이하","100mA 이하","200mA 이하"],1,"30mA 이하입니다."],
+["감전 방지용 누전차단기의 동작시간은?",["0.03초 이내","0.1초 이내","0.3초 이내","1초 이내"],0,"0.03초 이내입니다."],
+["누전차단기 설치 대상에서 제외되는 것은?",["습윤한 장소의 기기","이중절연 구조의 기기","임시배선 장소의 휴대형 기기","철골 위의 이동형 기기"],1,"이중절연 구조는 제외입니다."]
+],
+"s4":[
+["정격전압 7.2kV, 정격차단전류 12.5kA인 3상 차단기의 차단용량은 약?",["90 MVA","125 MVA","156 MVA","270 MVA"],2,"√3 × 7.2 × 12.5 ≈ 156입니다."],
+["KEC에서 저압의 교류 전압 범위는?",["600V 이하","750V 이하","1kV 이하","7kV 이하"],2,"교류 1kV 이하입니다."],
+["특고압의 기준은?",["1kV 초과","1.5kV 초과","7kV 초과","22.9kV 초과"],2,"7kV 초과입니다."],
+["정격차단전류의 의미는?",["평상시 흐르는 전류","차단기가 끊을 수 있는 최대 고장전류","누설전류 한계","정격 부하전류"],1,"최대 고장전류입니다."]
+],
+"final":[
+["부하전류는 개폐할 수 있으나 단락전류는 차단할 수 없는 기기는?",["단로기","부하개폐기","차단기","퓨즈"],1,"부하개폐기입니다."],
+["단로기를 조작할 때 지켜야 할 원칙은?",["부하가 걸린 상태에서 개방","차단기가 열린 무부하 상태에서 조작","항상 먼저 개방","항상 나중에 투입"],1,"무부하에서만 조작합니다."],
+["물에 젖은 장소에서 쓰는 전기기계기구에 설치해야 하는 것은?",["누전차단기","단로기","피뢰기","전력량계"],0,"누전차단기입니다."],
+["대용량(정격전부하전류 50A 이상) 누전차단기의 허용 기준은?",["30mA·0.03초","200mA·0.1초","500mA·1초","1A·0.5초"],1,"200mA 이하, 0.1초 이내입니다."],
+["직류 저압의 범위는?",["1kV 이하","1.5kV 이하","7kV 이하","750V 이하"],1,"직류 1.5kV 이하입니다."],
+["전압이 정정값보다 낮아질 때 동작하는 계전기는?",["OVR","UVR","OCR","GR"],1,"부족전압계전기(UVR)입니다."],
+["배전반 안전 조치로 틀린 것은?",["외함 접지","문 잠금","충전부 노출형 구조","회로명 표시"],2,"폐쇄형으로 합니다."],
+["%Z가 5%인 변압기의 단락전류는 정격전류의 몇 배인가?",["5배","10배","20배","50배"],2,"100 ÷ 5 = 20배입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s4_p1';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

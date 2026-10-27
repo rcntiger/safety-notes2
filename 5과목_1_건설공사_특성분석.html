@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>건설공사 특성분석</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_5과목_목차.html">목차</a><h1>1. 건설공사 특성분석</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①안전관리계획·특수성</a><a href="#s2">②설계도서·조직</a><a href="#s3">③재해사례</a><a href="#s4">④최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 건설공사 특수성 분석</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①안전관리계획·특수성">
+<h2><span class="n">1</span>안전관리 계획 수립 · 작업환경 특수성 · 계약조건 특수성</h2>
+<h3>① 두 가지 법정 계획</h3>
+<div class="tw"><table>
+<tr><th>구분</th><th>안전관리계획</th><th>유해위험방지계획서</th></tr>
+<tr><td>근거</td><td>건설기술 진흥법</td><td>산업안전보건법</td></tr>
+<tr><td>목적</td><td>시설물·공중 안전 (구조물 붕괴 등)</td><td><b>근로자</b> 안전·보건</td></tr>
+<tr><td>제출·확인</td><td>발주청·인허가기관 승인</td><td>착공 전날까지 <b>공단</b>에 2부</td></tr>
+</table></div>
+<div class="mn"><div class="t">"건진법은 시설물(공중), 산안법은 근로자"</div></div>
+<h3>② 건설공사 작업환경의 특수성</h3>
+<ul><li><b>옥외</b> 작업(기상 영향), <b>고소</b>·지하 작업, 작업장소가 계속 바뀜, 여러 공종·협력업체가 동시에, <b>일용·단기</b> 근로자 많음, 공정이 날마다 달라짐, 중장비 사용</li></ul>
+<div class="mn"><div class="t">"밖에서, 높이, 매일 바뀌고, 여러 업체가, 처음 온 사람과"</div></div>
+<h3>③ 계약조건의 특수성</h3>
+<ul><li>도급·다단계 하도급 구조(책임 분산), 공사기간 압박, 저가 낙찰로 안전 투자 부족, 발주자 요구에 따른 잦은 설계 변경</li></ul>
+<div class="sum">건진법은 시설물, 산안법은 근로자! 옥외·고소·이동·다업체·일용직! 다단계 하도급·공기 압박!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 2 · 안전관리 고려사항 확인</div>
+
+<!-- s2 -->
+<section id="s2" data-nav="②설계도서·조직">
+<h2><span class="n">2-1</span>설계도서 검토 · 안전관리 조직</h2>
+<h3>① 설계도서 검토</h3>
+<ul>
+<li>설계 단계에서 시공 중 위험요소를 찾아 없애는 <b>설계안전성 검토(DfS)</b></li>
+<li>검토 항목: 고소·굴착·양중 작업 위험, 가설구조물 계획, 시공 순서, 주변 지장물(전선·가스관)</li>
+</ul>
+<h3>② 건설현장 안전관리 조직 (산업안전보건법)</h3>
+<div class="tw"><table>
+<tr><th>직위·기구</th><th>기준</th></tr>
+<tr><td>안전보건관리책임자</td><td>현장소장 (공사금액 20억 원 이상)</td></tr>
+<tr><td>안전관리자</td><td>공사금액 <b>50억 원 이상</b> 선임 (규모에 따라 인원 증가)</td></tr>
+<tr><td>안전보건총괄책임자</td><td>도급인 현장 — 관계수급인 포함 공사금액 20억 원 이상 건설업</td></tr>
+<tr><td>노사협의체</td><td>공사금액 <b>120억 원</b> 이상 (토목 150억 원 이상) — 산업안전보건위원회 대신 운영 가능</td></tr>
+<tr><td>안전보건조정자</td><td>같은 장소에서 2개 이상 공사, 공사금액 합계 50억 원 이상</td></tr>
+<tr><td>안전보건협의체</td><td>도급인과 수급인 전원, 매월 1회 이상 회의</td></tr>
+</table></div>
+<div class="mn"><div class="t">"안전관리자 50억, 노사협의체 120억(토목 150억), 협의체는 매월"</div></div>
+<div class="sum">DfS로 설계부터! 안전관리자 50억·노사협의체 120억·조정자 50억·협의체 매월!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<!-- s3 -->
+<section id="s3" data-nav="③재해사례">
+<h2><span class="n">2-2</span>시공 및 재해사례 검토</h2>
+<ul>
+<li>건설업 사망재해 1위: <b>떨어짐(추락)</b> — 그다음 부딪힘, 맞음(낙하물), 깔림·무너짐, 끼임</li>
+<li>추락 다발 장소: 비계·작업발판, 지붕(채광창·슬레이트), 사다리, 개구부, 철골 위</li>
+<li>사례 검토 방법: 동종 공사의 재해 사례 → 원인 분석 → 현장에 같은 위험이 있는지 확인 → 대책 반영(TBM·교육)</li>
+</ul>
+<div class="mn"><div class="t">"건설 사망은 절반 가까이 떨어짐 — 높은 곳이 1순위"</div></div>
+<div class="trap">'지붕 슬레이트·채광창'은 밟으면 깨짐 → 폭 30cm 이상 발판 설치 등 추락 방지</div>
+<div class="sum">건설 사망 1위는 떨어짐! 비계·지붕·사다리·개구부!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<section id="s4" data-nav="④최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s4">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="산업안전기사_5과목_목차.html"><small>← 목차</small>5과목 목차</a><a class="nx" href="5과목_2_건설공사_위험성.html"><small>다음 →</small>2. 건설공사 위험성</a></div>
+<script>
+const S={
+"s1":[
+["건설기술 진흥법에 따른 계획은?",["안전관리계획","유해위험방지계획서","공정안전보고서","안전보건개선계획"],0,"건진법은 안전관리계획입니다."],
+["건설업 유해위험방지계획서의 제출처는?",["발주청","한국산업안전보건공단","시·군·구청","소방서"],1,"공단입니다."],
+["건설공사 작업환경의 특수성이 아닌 것은?",["옥외 작업","작업장소의 이동","일용 근로자 비중","고정된 생산 라인"],3,"건설은 고정 라인이 없습니다."],
+["건설공사 계약조건의 특수성이 아닌 것은?",["다단계 하도급","공사기간 압박","저가 낙찰","장기 고용 보장"],3,"일용·단기가 많습니다."]
+],
+"s2":[
+["설계 단계에서 시공 중 위험요소를 제거하는 제도는?",["설계안전성 검토(DfS)","안전검사","작업환경측정","특수건강진단"],0,"DfS입니다."],
+["건설현장 안전관리자 선임 기준 공사금액은?",["20억 원 이상","50억 원 이상","120억 원 이상","800억 원 이상"],1,"50억 원 이상입니다."],
+["노사협의체를 구성할 수 있는 건설공사 금액(토목 제외)은?",["50억 원 이상","100억 원 이상","120억 원 이상","150억 원 이상"],2,"120억 원 이상입니다."],
+["도급인과 수급인으로 구성하는 안전보건협의체 회의 주기는?",["매주","매월","분기","반기"],1,"매월 1회 이상입니다."]
+],
+"s3":[
+["건설업 사망재해 중 가장 많은 유형은?",["떨어짐","끼임","감전","화재"],0,"떨어짐입니다."],
+["건설현장 추락 다발 장소가 아닌 것은?",["비계","지붕","개구부","현장 사무실 책상"],3,"높은 곳이 위험합니다."],
+["재해 사례를 현장에 반영하는 방법으로 가장 적절한 것은?",["사례를 보관만 한다","원인을 분석해 같은 위험을 찾고 대책을 TBM·교육에 반영","책임자만 문책","보험 처리"],1,"분석 → 확인 → 반영입니다."]
+],
+"final":[
+["산업안전보건법상 건설 유해위험방지계획서의 목적은?",["시설물 안전","근로자 안전·보건","품질 관리","원가 절감"],1,"산안법은 근로자입니다."],
+["같은 장소에서 2개 이상 공사가 진행되고 공사금액 합계가 50억 원 이상일 때 두는 사람은?",["안전보건조정자","보건관리자","산업보건의","명예산업안전감독관"],0,"안전보건조정자입니다."],
+["토목공사업의 노사협의체 구성 기준 공사금액은?",["50억 원 이상","120억 원 이상","150억 원 이상","300억 원 이상"],2,"토목은 150억 원 이상입니다."],
+["건설현장의 안전보건관리책임자는 보통 누구인가?",["현장소장","안전관리자","공사 감독관","작업반장"],0,"현장소장입니다."],
+["지붕 채광창 위 작업의 주된 위험은?",["떨어짐","감전","질식","소음"],0,"깨지며 떨어질 위험입니다."],
+["건설공사의 특수성 중 '작업장소가 계속 바뀐다'에 해당하는 것은?",["이동성","정형성","고정성","반복성"],0,"이동성입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s5_p1';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>건설업 산업안전보건관리비 관리</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_5과목_목차.html">목차</a><h1>3. 건설업 산업안전보건관리비 관리</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①계상기준</a><a href="#s2">②대상액</a><a href="#s3">③사용내역</a><a href="#s4">④최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 건설업 산업안전보건관리비 규정</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①계상기준">
+<h2><span class="n">1-1</span>계상 및 사용기준</h2>
+<div class="law">고시「건설업 산업안전보건관리비 계상 및 사용기준」</div>
+<h3>① 적용 · 계상 주체</h3>
+<ul>
+<li>적용: 총공사금액 <b>2천만 원 이상</b> 건설공사</li>
+<li><b>발주자</b>(또는 자기공사자)가 공사 계약 시 계상 → <b>시공자(도급인)</b>가 사용</li>
+</ul>
+<h3>② 계상 방법</h3>
+<div class="tw"><table>
+<tr><th>대상액</th><th>계상액</th></tr>
+<tr><td>5억 원 미만</td><td>대상액 × 요율</td></tr>
+<tr><td>5억 원 이상 50억 원 미만</td><td>대상액 × 요율 + <b>기초액</b></td></tr>
+<tr><td>50억 원 이상</td><td>대상액 × 요율</td></tr>
+</table></div>
+<ul>
+<li>요율·기초액은 공사 종류(건축·토목·중건설·특수건설)와 대상액 규모별로 고시에서 정함</li>
+<li>발주자가 재료를 직접 제공하는 경우: 재료비를 <b>포함</b>한 계상액과 <b>제외</b>한 계상액의 <b>1.2배</b> 중 작은 값</li>
+</ul>
+<div class="mn"><div class="t">"기초액은 가운데(5억~50억)만" / "관급재료 있으면 1.2배와 비교해 작은 것"</div></div>
+<div class="sum">2천만 원 이상! 발주자가 쌓고 시공자가 쓴다! 기초액은 5억~50억 구간만! 관급재료는 1.2배 비교!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②대상액">
+<h2><span class="n">1-2</span>대상액 작성요령</h2>
+<ul>
+<li>대상액 = <b>재료비 + 직접노무비</b> (공사원가계산서 기준)</li>
+<li>대상액이 구분되어 있지 않으면: 도급계약 또는 자체사업계획상 총공사금액의 <b>70%</b>를 대상액으로</li>
+<li>설계 변경으로 대상액이 바뀌면 관리비도 조정</li>
+</ul>
+<div class="mn"><div class="t">"대상액은 재직(재료비 + 직접노무비)" / "모르면 총공사금액의 70%"</div></div>
+<div class="trap">간접노무비·경비·일반관리비·이윤은 대상액에 포함되지 않음</div>
+<div class="sum">재료비 + 직접노무비! 구분 안 되면 70%!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<!-- s3 -->
+<section id="s3" data-nav="③사용내역">
+<h2><span class="n">1-3</span>항목별 사용내역</h2>
+<h3>① 사용 항목 (9개)</h3>
+<div class="tw"><table>
+<tr><th>항목</th><th>예</th></tr>
+<tr><td>1. 안전관리자·보건관리자 임금 등</td><td>전담 안전관리자 인건비, 유도자·신호자 임금(일부)</td></tr>
+<tr><td>2. 안전시설비 등</td><td>안전난간, 추락방호망, 안전대 부착설비, 방호선반</td></tr>
+<tr><td>3. 보호구 등</td><td>안전모, 안전대, 안전화</td></tr>
+<tr><td>4. 안전보건진단비 등</td><td>유해위험방지계획서 작성, 안전진단, 작업환경측정</td></tr>
+<tr><td>5. 안전보건교육비 등</td><td>법정 교육, 교육 자료</td></tr>
+<tr><td>6. 근로자 건강장해예방비 등</td><td>건강진단, 구급용품, 혹서기 휴게시설</td></tr>
+<tr><td>7. 건설재해예방전문지도기관 기술지도비</td><td>기술지도 계약 비용</td></tr>
+<tr><td>8. 본사 전담조직 근로자 임금 등</td><td>본사 안전 전담부서 인건비</td></tr>
+<tr><td>9. 위험성평가 등에 따른 소요비용</td><td>위험성평가로 찾은 위험 개선 비용</td></tr>
+</table></div>
+<div class="mn"><div class="t">"사람·시설·보호구, 진단·교육·건강, 기술지도·본사·위험성평가"</div></div>
+<h3>② 사용할 수 없는 예</h3>
+<ul><li>공사 목적물이나 원활한 공사를 위한 시설(일반 가설울타리·비계 자체), 경비원·교통정리원 등 공사 진행 목적 인건비, 근로자 일반 복리후생비, 다른 법에 따라 의무적으로 설치하는 것</li></ul>
+<h3>③ 사용 관리</h3>
+<ul>
+<li>발주자·감리자가 <b>6개월마다 1회</b> 이상 사용내역 확인 (공기 6개월 이내는 종료 시)</li>
+<li>사용명세서는 공사 종료 후 <b>1년</b>간 보존</li>
+<li>공정률별 최소 사용기준: 공정률 50% 이상 70% 미만 → <b>50%</b> 이상 / 70% 이상 90% 미만 → <b>70%</b> 이상 / 90% 이상 → <b>90%</b> 이상</li>
+</ul>
+<div class="mn"><div class="t">"6개월마다 확인, 끝나고 1년 보관" / "공정률 50·70·90이면 그만큼 써야"</div></div>
+<div class="sum">9개 항목(사람·시설·보호구·진단·교육·건강·기술지도·본사·위험성평가)! 6개월 확인·1년 보존·50·70·90!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<section id="s4" data-nav="④최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s4">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="5과목_2_건설공사_위험성.html"><small>← 이전</small>2. 건설공사 위험성</a><a class="nx" href="5과목_4_건설현장_안전시설.html"><small>다음 →</small>4. 건설현장 안전시설 관리</a></div>
+<script>
+const S={
+"s1":[
+["산업안전보건관리비 적용 대상 총공사금액은?",["1천만 원 이상","2천만 원 이상","5천만 원 이상","1억 원 이상"],1,"2천만 원 이상입니다."],
+["산업안전보건관리비를 계상하는 자는?",["발주자","하수급인","근로자","감리자"],0,"발주자가 계상합니다."],
+["기초액을 더하는 대상액 구간은?",["5억 원 미만","5억 원 이상 50억 원 미만","50억 원 이상","모든 구간"],1,"가운데 구간만입니다."],
+["발주자가 재료를 제공할 때 계상액 기준은?",["재료비 포함액과 미포함액의 1.2배 중 작은 값","재료비 포함액","재료비 미포함액","둘 중 큰 값"],0,"1.2배와 비교해 작은 값입니다."]
+],
+"s2":[
+["산업안전보건관리비 대상액의 구성은?",["재료비 + 직접노무비","재료비 + 간접노무비","직접노무비 + 경비","총공사금액 전부"],0,"재직입니다."],
+["대상액이 구분되지 않은 경우 대상액은?",["총공사금액의 50%","총공사금액의 60%","총공사금액의 70%","총공사금액의 100%"],2,"70%입니다."],
+["대상액에 포함되지 않는 것은?",["재료비","직접노무비","일반관리비","공사에 직접 투입된 자재비"],2,"일반관리비는 제외입니다."]
+],
+"s3":[
+["산업안전보건관리비로 사용할 수 있는 것은?",["추락방호망","일반 가설울타리","경비원 인건비","근로자 회식비"],0,"안전시설비입니다."],
+["산업안전보건관리비 사용내역 확인 주기는?",["매월","3개월마다","6개월마다","1년마다"],2,"6개월마다 1회 이상입니다."],
+["산업안전보건관리비 사용명세서 보존기간은?",["공사 종료 후 6개월","공사 종료 후 1년","공사 종료 후 3년","공사 종료 후 5년"],1,"1년입니다."],
+["공정률 75%일 때 최소 사용기준은?",["50% 이상","70% 이상","90% 이상","100%"],1,"70~90% 미만은 70% 이상입니다."],
+["산업안전보건관리비 사용 항목이 아닌 것은?",["안전보건교육비","보호구","근로자 건강장해예방비","공사용 굴착기 임대료"],3,"공사 장비는 해당 없습니다."]
+],
+"final":[
+["공정률 92%일 때 산업안전보건관리비 최소 사용기준은?",["50% 이상","70% 이상","90% 이상","100%"],2,"90% 이상입니다."],
+["산업안전보건관리비를 사용하는 자는?",["발주자","시공자(도급인)","설계자","감리자"],1,"시공자가 사용합니다."],
+["유해위험방지계획서 작성 비용이 속하는 항목은?",["안전시설비","안전보건진단비 등","보호구 등","교육비"],1,"안전보건진단비 등입니다."],
+["본사 안전 전담부서 인건비가 속하는 항목은?",["본사 전담조직 근로자 임금 등","안전관리자 임금 등","교육비","기술지도비"],0,"본사 전담조직 임금입니다."],
+["산업안전보건관리비 사용명세서 보관 기준은?",["공사 종료 후 1년","공사 종료 즉시 폐기","영구 보존","6개월"],0,"1년입니다."],
+["대상액 5억 원 미만 공사의 계상 방법은?",["대상액 × 요율","대상액 × 요율 + 기초액","정액","총공사금액 × 1%"],0,"대상액 × 요율입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s5_p3';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

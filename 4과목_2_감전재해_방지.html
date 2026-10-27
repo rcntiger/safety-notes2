@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>감전재해 및 방지대책</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_4과목_목차.html">목차</a><h1>2. 감전재해 및 방지대책</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①안전전압·접촉전압</a><a href="#s2">②감전요소·형태</a><a href="#s3">③통전전류 영향</a><a href="#s4">④감전방지·정전작업</a><a href="#s5">⑤절연 보호구·방호구</a><a href="#s6">⑥최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 감전재해 예방 및 조치</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①안전전압·접촉전압">
+<h2><span class="n">1</span>안전전압 · 허용접촉 및 보폭전압 · 인체의 저항</h2>
+<h3>① 안전전압</h3>
+<ul><li>우리나라: <b>30V</b> (나라마다 다름 — 24~50V)</li></ul>
+<h3>② 허용접촉전압</h3>
+<div class="tw"><table>
+<tr><th>종별</th><th>접촉 상태</th><th>허용접촉전압</th></tr>
+<tr><td>제1종</td><td>인체 대부분이 <b>수중</b></td><td><b>2.5V</b> 이하</td></tr>
+<tr><td>제2종</td><td>인체가 현저히 젖었거나, 금속 구조물에 신체 일부가 상시 접촉</td><td><b>25V</b> 이하</td></tr>
+<tr><td>제3종</td><td>통상의 인체 상태에서 접촉전압이 가해지면 위험한 경우</td><td><b>50V</b> 이하</td></tr>
+<tr><td>제4종</td><td>접촉전압이 가해질 우려가 없거나 위험성이 낮음</td><td>제한 없음</td></tr>
+</table></div>
+<div class="mn"><div class="t">"물속 2.5, 젖으면 25, 보통 50, 걱정 없으면 무제한" — 0이 하나씩 붙는다</div></div>
+<h3>③ 접촉전압 vs 보폭전압</h3>
+<ul>
+<li><b>접촉전압</b>: 손과 발 사이 전위차 (누전된 외함을 만졌을 때) — E = (Rb + 1.5ρs) × Ik</li>
+<li><b>보폭전압</b>: 두 발 사이(약 1m) 전위차 (접지점 주변을 걸을 때) — E = (Rb + 6ρs) × Ik</li>
+</ul>
+<div class="mn"><div class="t">"손발은 1.5, 두 발은 6" (ρs: 지표면 저항률, Rb: 인체저항)</div></div>
+<h3>④ 인체의 저항</h3>
+<ul>
+<li>계산 시 인체저항 약 <b>1,000Ω</b> (심실세동 에너지 계산은 500Ω)</li>
+<li>피부가 젖으면 약 1/10~1/12, 물에 잠기면 약 1/25로 감소 / 전압이 높을수록 저항 감소</li>
+</ul>
+<div class="sum">안전전압 30V! 2.5·25·50·무제한! 손발 1.5, 두 발 6! 인체 1,000Ω!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 2 · 감전재해의 요인</div>
+
+<!-- s2 -->
+<section id="s2" data-nav="②감전요소·형태">
+<h2><span class="n">2-1</span>감전요소 · 감전사고의 형태 · 전압의 구분</h2>
+<h3>① 감전 위험 요소</h3>
+<div class="tw"><table>
+<tr><th>1차적 요소 (직접 좌우)</th><th>2차적 요소</th></tr>
+<tr><td><b>통전전류의 크기</b> (가장 중요)<br>통전시간<br>통전경로<br>전원의 종류 (교류가 직류보다 위험)</td><td>인체 조건(저항)<br>전압의 크기<br>계절·주위 환경<br>주파수</td></tr>
+</table></div>
+<div class="mn"><div class="t">"전류·시간·경로·전원" — 감전은 전압이 아니라 <b>전류</b>가 죽인다</div></div>
+<div class="trap">전압의 크기는 2차적 요소 / 1차적 요소 중 가장 큰 영향은 통전전류의 크기</div>
+<h3>② 통전경로별 위험도 (심장전류계수)</h3>
+<div class="tw"><table>
+<tr><th>경로</th><th>계수</th></tr>
+<tr><td>왼손 → 가슴</td><td><b>1.5</b> (가장 위험)</td></tr>
+<tr><td>오른손 → 가슴</td><td>1.3</td></tr>
+<tr><td>왼손 → 한 발·양발 / 양손 → 양발</td><td>1.0</td></tr>
+<tr><td>오른손 → 한 발·양발</td><td>0.8</td></tr>
+<tr><td>왼손 → 등</td><td>0.7</td></tr>
+<tr><td>왼손 → 오른손</td><td>0.4</td></tr>
+<tr><td>오른손 → 등</td><td>0.3</td></tr>
+</table></div>
+<div class="mn"><div class="t">"심장은 왼쪽 — 왼손에서 가슴이 최악(1.5)"</div></div>
+<h3>③ 감전사고의 형태</h3>
+<ul><li>충전부 <b>직접 접촉</b>, 누전된 외함 등 <b>간접 접촉</b>, 아크(섬락)에 의한 화상, 정전유도·전자유도, 낙뢰</li></ul>
+<h3>④ 전압의 구분 (KEC)</h3>
+<ul><li>저압: 교류 1kV 이하·직류 1.5kV 이하 / 고압: 그 초과 ~ 7kV 이하 / 특고압: 7kV 초과</li></ul>
+<div class="sum">전류·시간·경로·전원! 왼손→가슴 1.5 최악! 저압 1·1.5, 특고압 7!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<!-- s3 -->
+<section id="s3" data-nav="③통전전류 영향">
+<h2><span class="n">2-2</span>통전전류의 크기 및 그에 따른 영향</h2>
+<div class="tw"><table>
+<tr><th>구분</th><th>전류 (상용주파수, 성인 남자)</th><th>영향</th></tr>
+<tr><td>최소감지전류</td><td><b>1mA</b></td><td>짜릿함을 느끼기 시작</td></tr>
+<tr><td>고통한계전류 (가수전류)</td><td><b>7~8mA</b></td><td>고통을 참으며 스스로 떨어질 수 있음</td></tr>
+<tr><td>마비한계전류 (불수전류)</td><td><b>10~15mA</b></td><td>근육이 굳어 스스로 떨어지지 못함</td></tr>
+<tr><td>심실세동전류</td><td><b>I = 165 ÷ √T</b> mA</td><td>심장이 떨려 혈액 순환 정지 → 사망</td></tr>
+</table></div>
+<div class="mn"><div class="t">"1 느끼고, 7~8 참고, 10~15 못 떼고, 165/√T 심장이 멈춘다"</div></div>
+<h3>심실세동 에너지</h3>
+<p>W = I²RT = (165/√T × 10⁻³)² × 500 × T ≈ <b>13.6J</b> (인체저항 500Ω)</p>
+<div class="mn"><div class="t">예: 통전시간 1초 → 심실세동전류 165mA / 0.25초 → 165 ÷ 0.5 = <b>330mA</b></div></div>
+<div class="sum">1·7~8·10~15·165/√T! 심실세동 에너지 13.6J!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<!-- s4 -->
+<section id="s4" data-nav="④감전방지·정전작업">
+<h2><span class="n">2-3</span>감전 방지 대책 · 정전작업 · 충전전로 작업</h2>
+<h3>① 직접접촉 방지</h3>
+<ul><li>충전부를 폐쇄형 외함에 넣기, 절연덮개·방호망, 울타리로 격리, 높은 곳에 설치, 접근한계거리 유지</li></ul>
+<h3>② 간접접촉 방지</h3>
+<ul><li>보호<b>접지</b>, <b>누전차단기</b>, <b>이중절연</b> 기기, <b>비접지식 전로</b>(절연변압기), 안전전압 이하 사용</li></ul>
+<div class="mn"><div class="t">"직접은 막고(외함·덮개·울타리), 간접은 흘려보내고 끊는다(접지·누전차단기)"</div></div>
+<h3>③ 정전작업 절차</h3>
+<div class="mn"><div class="t">"끊고 → 잠그고 → 방전하고 → 확인하고 → 접지한다"</div>
+<div class="s">① 전원 차단 → ② 잠금장치·꼬리표 → ③ 잔류전하 방전 → ④ 검전기로 정전 확인 → ⑤ 단락접지 기구 설치</div></div>
+<ul><li>작업 후: 작업기구·단락접지 제거 → 근로자 이격 확인 → 잠금 해제 → 통보 → 전원 투입</li></ul>
+<h3>④ 충전전로 접근한계거리 (안전보건규칙 제321조)</h3>
+<div class="tw"><table>
+<tr><th>전압</th><th>0.3kV 이하</th><th>0.3~0.75kV</th><th>0.75~2kV</th><th>2~15kV</th><th>15~37kV</th><th>37~88kV</th></tr>
+<tr><td>거리</td><td>접촉 금지</td><td><b>30cm</b></td><td><b>45cm</b></td><td><b>60cm</b></td><td><b>90cm</b></td><td>110cm</td></tr>
+</table></div>
+<div class="mn"><div class="t">"30·45·60·90, 그다음 110"</div></div>
+<div class="sum">직접은 막고 간접은 접지·누전차단기! 끊고·잠그고·방전·확인·접지! 30·45·60·90!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 3 · 절연용 안전장구</div>
+
+<!-- s5 -->
+<section id="s5" data-nav="⑤절연 보호구·방호구">
+<h2><span class="n">3</span>절연용 안전보호구 · 절연용 안전방호구</h2>
+<div class="tw"><table>
+<tr><th>구분</th><th>뜻</th><th>예</th></tr>
+<tr><td><b>절연용 보호구</b></td><td>작업자가 <b>몸에 착용</b></td><td>절연안전모(AE·ABE), 절연장갑(전기용 고무장갑), 절연화·절연장화, 절연복</td></tr>
+<tr><td><b>절연용 방호구</b></td><td><b>전로(충전부)에 씌움</b></td><td>고무절연관, 절연시트, 절연커버, 애자커버</td></tr>
+<tr><td>활선작업용 기구</td><td>충전부를 떨어져서 조작</td><td>핫스틱(절연봉), 활선 장선기</td></tr>
+<tr><td>검출·접지 용구</td><td>정전 확인·접지</td><td>검전기, 단락접지기구</td></tr>
+</table></div>
+<div class="mn"><div class="t">"보호구는 사람에게, 방호구는 전선에"</div></div>
+<h3>절연장갑 등급</h3>
+<div class="tw"><table>
+<tr><th>등급</th><th>00</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+<tr><td>최대사용전압(교류)</td><td>500V</td><td>1,000V</td><td>7,500V</td><td>17,000V</td><td>26,500V</td><td>36,000V</td></tr>
+<tr><td>색상</td><td>갈색</td><td>빨간색</td><td>흰색</td><td>노란색</td><td>녹색</td><td>등색</td></tr>
+</table></div>
+<div class="mn"><div class="t">"갈·빨·흰·노·녹·등" → "갈빨 흰노 녹등" (갈비 빨리 흰 노을 녹색 등불)</div></div>
+<div class="trap">고무절연관·절연시트는 '보호구'가 아니라 <mark>방호구</mark></div>
+<div class="sum">보호구는 사람, 방호구는 전선! 장갑 00 갈색 500V ~ 4 등색 36,000V!</div>
+<div class="quiz" data-set="s5"></div>
+<label class="chk"><input type="checkbox" data-k="s5">이 단원 암기 완료</label>
+</section>
+
+<section id="s6" data-nav="⑥최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s6">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="4과목_1_전기안전관리.html"><small>← 이전</small>1. 전기안전관리 업무 수행</a><a class="nx" href="4과목_3_정전기_관리.html"><small>다음 →</small>3. 정전기 장·재해 관리</a></div>
+<script>
+const S={
+"s1":[
+["우리나라의 안전전압은?",["12V","24V","30V","50V"],2,"30V입니다."],
+["인체가 현저히 젖은 상태의 허용접촉전압(제2종)은?",["2.5V 이하","25V 이하","50V 이하","제한 없음"],1,"젖으면 25V입니다."],
+["인체 대부분이 수중에 있는 상태의 허용접촉전압은?",["2.5V 이하","10V 이하","25V 이하","50V 이하"],0,"물속 2.5V입니다."],
+["접지점 주변을 걸을 때 두 발 사이에 걸리는 전압은?",["접촉전압","보폭전압","대지전압","정격전압"],1,"보폭전압입니다."],
+["피부가 물에 잠겼을 때 인체 저항은 건조 시의 약?",["1/2","1/5","1/12","1/25"],3,"물에 잠기면 약 1/25입니다."]
+],
+"s2":[
+["감전 위험의 1차적 요소가 아닌 것은?",["통전전류의 크기","통전시간","통전경로","전압의 크기"],3,"전압은 2차적 요소입니다."],
+["감전 위험에 가장 큰 영향을 주는 요소는?",["전압의 크기","통전전류의 크기","주파수","계절"],1,"전류가 가장 중요합니다."],
+["통전경로 중 가장 위험한 것은?",["오른손 → 등","왼손 → 오른손","왼손 → 가슴","양손 → 양발"],2,"왼손→가슴 1.5입니다."],
+["누전된 기기 외함을 만져 감전되는 형태는?",["직접 접촉","간접 접촉","아크","낙뢰"],1,"간접 접촉입니다."]
+],
+"s3":[
+["최소감지전류는 약?",["0.1mA","1mA","10mA","100mA"],1,"1mA입니다."],
+["근육이 굳어 스스로 떨어질 수 없는 마비한계(불수)전류는?",["1mA","7~8mA","10~15mA","50~100mA"],2,"10~15mA입니다."],
+["심실세동전류 식은?",["I = 165√T","I = 165/√T","I = 165/T","I = 165T"],1,"165 ÷ √T(mA)입니다."],
+["통전시간 0.25초일 때 심실세동전류는?",["41mA","165mA","330mA","660mA"],2,"165 ÷ 0.5 = 330mA입니다."],
+["인체저항 500Ω일 때 심실세동을 일으키는 에너지는 약?",["1.36J","13.6J","136J","1,360J"],1,"약 13.6J입니다."]
+],
+"s4":[
+["간접접촉에 의한 감전 방지 대책이 아닌 것은?",["보호접지","누전차단기","이중절연","충전부 노출"],3,"충전부는 막아야 합니다."],
+["정전작업 절차 중 검전기로 정전을 확인한 뒤 하는 일은?",["전원 차단","잔류전하 방전","단락접지 기구 설치","잠금장치 설치"],2,"확인 후 단락접지입니다."],
+["정전작업 시 전원 차단 직후 하는 일은?",["단락접지","잠금장치·꼬리표 부착","검전","작업 개시"],1,"끊고 → 잠급니다."],
+["충전전로 전압 6.6kV에서 접근한계거리는?",["30cm","45cm","60cm","90cm"],2,"2~15kV는 60cm입니다."],
+["충전전로 전압 22.9kV에서 접근한계거리는?",["45cm","60cm","90cm","110cm"],2,"15~37kV는 90cm입니다."]
+],
+"s5":[
+["절연용 방호구에 해당하는 것은?",["절연장갑","절연화","고무절연관","절연안전모"],2,"전선에 씌우는 방호구입니다."],
+["절연용 보호구에 해당하는 것은?",["절연시트","애자커버","절연장화","절연커버"],2,"몸에 착용하는 보호구입니다."],
+["절연장갑 00등급의 최대사용전압과 색상은?",["500V, 갈색","1,000V, 빨간색","7,500V, 흰색","17,000V, 노란색"],0,"00 갈색 500V입니다."],
+["절연장갑 1등급의 최대사용전압은?",["1,000V","7,500V","17,000V","26,500V"],1,"1등급 7,500V입니다."],
+["충전부에서 떨어져 조작하는 활선작업용 기구는?",["핫스틱","검전기","절연시트","절연화"],0,"핫스틱입니다."]
+],
+"final":[
+["통상의 인체 상태에서 위험성이 높은 경우의 허용접촉전압(제3종)은?",["2.5V 이하","25V 이하","50V 이하","100V 이하"],2,"보통 50V입니다."],
+["고통을 참으며 스스로 이탈할 수 있는 한계 전류는?",["1mA","7~8mA","10~15mA","100mA"],1,"고통한계(가수)전류입니다."],
+["교류와 직류의 감전 위험 비교로 옳은 것은?",["직류가 더 위험","교류가 더 위험","같다","비교 불가"],1,"교류가 더 위험합니다."],
+["통전시간 1초일 때 심실세동전류는?",["16.5mA","100mA","165mA","330mA"],2,"165 ÷ 1 = 165mA입니다."],
+["충전전로 0.38kV(380V)에서 접근한계거리는?",["접촉 금지","30cm","45cm","60cm"],1,"0.3~0.75kV는 30cm입니다."],
+["절연장갑 4등급의 색상은?",["갈색","녹색","등색","흰색"],2,"4등급 등색입니다."],
+["보폭전압 계산식에서 지표면 저항률(ρs)에 곱하는 계수는?",["1.5","3","6","10"],2,"두 발은 6입니다."],
+["정전작업 순서로 옳은 것은?",["차단→잠금→방전→검전→단락접지","검전→차단→잠금→방전→접지","차단→검전→방전→잠금→접지","잠금→차단→접지→방전→검전"],0,"끊고·잠그고·방전·확인·접지입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s4_p2';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

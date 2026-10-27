@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>비계·거푸집 가시설 위험방지</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_5과목_목차.html">목차</a><h1>5. 비계·거푸집 가시설 위험방지</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①강관·틀비계</a><a href="#s2">②달·말·이동식 비계</a><a href="#s3">③통로·발판</a><a href="#s4">④거푸집·동바리</a><a href="#s5">⑤흙막이</a><a href="#s6">⑥최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 건설 가시설물 설치 및 관리</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①강관·틀비계">
+<h2><span class="n">1-1</span>비계 — 강관비계 · 강관틀비계</h2>
+<div class="law">안전보건규칙 제56조~제71조</div>
+<h3>① 강관비계</h3>
+<ul>
+<li>비계기둥 간격: 띠장 방향 <b>1.85m 이하</b>, 장선 방향 <b>1.5m 이하</b></li>
+<li>띠장 간격: <b>2.0m 이하</b></li>
+<li>비계기둥 꼭대기에서 <b>31m</b>를 넘는 아랫부분의 비계기둥은 강관 <b>2개</b>로 묶어 세움</li>
+<li>비계기둥 사이 적재하중 <b>400kg</b> 이하</li>
+<li>벽이음: 수직 <b>5m</b>, 수평 <b>5m</b> 이내</li>
+</ul>
+<div class="mn"><div class="t">"기둥 1.85·1.5, 띠장 2, 31m 아래는 두 개, 400kg, 벽이음 5·5"</div></div>
+<h3>② 강관틀비계</h3>
+<ul>
+<li>높이 20m 초과·중량물 적재 시 주틀 간 간격 <b>1.8m 이하</b></li>
+<li>벽이음: 수직 <b>6m</b>, 수평 <b>8m</b> 이내</li>
+<li>길이가 띠장 방향 4m 이하이고 높이 10m 초과 시 10m 이내마다 띠장 방향으로 버팀기둥</li>
+</ul>
+<div class="mn"><div class="t">"강관은 5·5, 틀비계는 6·8"</div></div>
+<div class="trap">강관비계 벽이음(5m·5m)과 강관틀비계 벽이음(6m·8m)을 바꾼 보기 주의</div>
+<div class="sum">강관 1.85·1.5·2·31m·400kg·5·5! 틀비계 1.8·6·8!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②달·말·이동식 비계">
+<h2><span class="n">1-2</span>비계 — 달비계 · 말비계 · 이동식 · 시스템비계 · 점검</h2>
+<div class="tw"><table>
+<tr><th>비계</th><th>기준</th></tr>
+<tr><td>달비계 (안전계수)</td><td>와이어로프·달기강선 <b>10 이상</b> / 달기체인·달기훅 <b>5 이상</b> / 달기강대·하부·상부 지점: 강재 2.5 이상, 목재 5 이상</td></tr>
+<tr><td>말비계</td><td>지주부재와 수평면 기울기 <b>75° 이하</b>, 하단 미끄럼 방지 / 높이 2m 초과 시 작업발판 폭 <b>40cm 이상</b></td></tr>
+<tr><td>이동식 비계</td><td>바퀴 브레이크·쐐기·아웃트리거 / 최대 적재하중 <b>250kg</b> 이하 / 발판 위에서 사다리 사용 금지</td></tr>
+<tr><td>시스템비계</td><td>수직재와 받침철물 연결 길이는 받침철물 전체 길이의 <b>1/3 이상</b></td></tr>
+</table></div>
+<div class="mn"><div class="t">"달비계 와이어 10, 체인 5" / "말비계 75°" / "이동식 250kg"</div></div>
+<h3>비계 점검 (작업 시작 전·악천후 후·조립·해체·변경 후)</h3>
+<ul><li>발판 재료의 손상·부착 상태, 연결 재료·철물의 손상·부식, 해체·탈락, 기둥의 침하·변형·변위, 손잡이 탈락, 로프 부착 상태</li></ul>
+<div class="sum">달비계 10·5, 말비계 75°·40cm, 이동식 250kg, 시스템 1/3!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<!-- s3 -->
+<section id="s3" data-nav="③통로·발판">
+<h2><span class="n">1-3</span>작업통로 및 발판</h2>
+<div class="tw"><table>
+<tr><th>시설</th><th>기준</th></tr>
+<tr><td>가설통로</td><td>경사 <b>30° 이하</b>, <b>15° 초과</b> 시 미끄럼막이 / 높이 8m 이상 비계다리는 <b>7m</b> 이내마다 계단참, 수직갱 15m 이상은 <b>10m</b> 이내마다 계단참</td></tr>
+<tr><td>사다리식 통로</td><td>폭 30cm 이상, 발판과 벽 사이 15cm 이상, 상단은 <b>60cm</b> 이상 올라가게, 길이 10m 이상이면 5m 이내마다 계단참, 기울기 75° 이하</td></tr>
+<tr><td>작업발판</td><td>높이 2m 이상 작업장 — 폭 <b>40cm 이상</b>, 틈 <b>3cm 이하</b>, 2개 이상 지지물에 고정</td></tr>
+<tr><td>계단</td><td>폭 1m 이상, 높이 3m 초과 시 3m 이내마다 너비 1.2m 이상 계단참, 높이 1m 이상 계단에 난간</td></tr>
+</table></div>
+<div class="mn"><div class="t">"통로 30°·15°, 비계다리 8m→7m마다, 수직갱 15m→10m마다" / "발판 40·3"</div></div>
+<div class="sum">통로 30°·15°! 비계다리 7m·수직갱 10m마다 계단참! 발판 40cm·3cm!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<!-- s4 -->
+<section id="s4" data-nav="④거푸집·동바리">
+<h2><span class="n">1-4</span>거푸집 및 동바리</h2>
+<h3>① 동바리 (파이프 서포트)</h3>
+<ul>
+<li><b>3개 이상</b> 이어서 사용 금지 / 이어서 쓸 때는 <b>4개 이상</b> 볼트 또는 전용 철물</li>
+<li>높이 <b>3.5m 초과</b> 시 높이 <b>2m</b> 이내마다 수평연결재를 2개 방향으로</li>
+<li>받침목·깔판으로 침하 방지, 상하 고정</li>
+</ul>
+<div class="mn"><div class="t">"서포트는 3개 이상 잇지 말고, 이으면 볼트 4개, 3.5m 넘으면 2m마다 가로대"</div></div>
+<h3>② 거푸집에 작용하는 하중</h3>
+<ul>
+<li>연직하중: 고정하중(콘크리트·철근·거푸집 무게, 철근콘크리트 약 24kN/㎥) + 작업하중·충격하중</li>
+<li>수평하중, 콘크리트 <b>측압</b></li>
+</ul>
+<h3>③ 측압이 커지는 조건</h3>
+<ul><li>타설 속도가 <b>빠를수록</b>, 슬럼프가 <b>클수록</b>, 기온이 <b>낮을수록</b>, 다짐(진동)이 많을수록, 거푸집 강성이 클수록, 부재 단면이 클수록, 철근이 적을수록</li></ul>
+<div class="mn"><div class="t">"빨리 붓고, 묽고, 춥고, 많이 흔들면 옆으로 미는 힘(측압)이 커진다"</div></div>
+<h3>④ 거푸집 해체</h3>
+<ul><li>하중을 적게 받는 부분부터: 기둥·벽·보 <b>측면</b> → 슬래브 → 보 <b>밑면</b> / 해체 구역 출입금지, 상하 동시 작업 금지</li></ul>
+<div class="sum">서포트 3개 금지·볼트 4개·3.5m 넘으면 2m마다! 빠르고 묽고 추우면 측압↑! 옆면 먼저, 밑면 나중!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<!-- s5 -->
+<section id="s5" data-nav="⑤흙막이">
+<h2><span class="n">1-5</span>흙막이</h2>
+<h3>① 흙막이 공법</h3>
+<ul>
+<li>지지 방식: 자립식, <b>버팀대식</b>(스트럿), <b>어스앵커식</b>, 타이로드식</li>
+<li>구조 방식: H-파일 + 토류판, 강널말뚝(시트파일), 지하연속벽(슬러리월), CIP, SCW</li>
+</ul>
+<h3>② 계측기</h3>
+<div class="tw"><table>
+<tr><th>계측기</th><th>측정</th></tr>
+<tr><td>지하수위계</td><td>지하수위 변화</td></tr>
+<tr><td>간극수압계</td><td>흙 속 간극수압</td></tr>
+<tr><td><b>지중경사계</b> (inclinometer)</td><td>흙막이 벽·지중의 <b>수평 변위</b></td></tr>
+<tr><td><b>하중계</b> (load cell)</td><td>버팀대·앵커의 <b>축하중</b></td></tr>
+<tr><td>변형률계 (strain gauge)</td><td>버팀대·띠장의 변형</td></tr>
+<tr><td>토압계</td><td>흙막이 벽에 작용하는 토압</td></tr>
+<tr><td>건물경사계 (tiltmeter)</td><td>인접 건물 기울기</td></tr>
+<tr><td>지표침하계 · 균열계</td><td>지표 침하 / 균열 폭 변화</td></tr>
+</table></div>
+<div class="mn"><div class="t">"벽이 밀리면 경사계, 버팀대 힘은 하중계, 옆 건물은 건물경사계"</div></div>
+<h3>③ 굴착 바닥의 이상 현상</h3>
+<div class="tw"><table>
+<tr><th>현상</th><th>지반</th><th>내용</th></tr>
+<tr><td><b>히빙</b></td><td>연약 <b>점토</b></td><td>흙막이 바깥 흙의 무게로 굴착 바닥이 <b>부풀어 오름</b></td></tr>
+<tr><td><b>보일링</b></td><td><b>사질토</b></td><td>지하수위 차이로 모래와 물이 끓듯 <b>솟아오름</b></td></tr>
+<tr><td>파이핑</td><td>사질토</td><td>물이 흐르는 길(파이프)이 생겨 흙이 씻겨 나감</td></tr>
+</table></div>
+<div class="mn"><div class="t">"점토는 히빙, 모래는 보일링(끓는다)"</div></div>
+<ul><li>흙막이 지보공 정기점검: 부재의 손상·변형·부식·변위·탈락, 버팀대 긴압 정도, 접속부·교차부 상태, 침하 정도</li></ul>
+<div class="sum">버팀대·어스앵커! 경사계는 수평변위, 하중계는 축력! 점토 히빙·모래 보일링!</div>
+<div class="quiz" data-set="s5"></div>
+<label class="chk"><input type="checkbox" data-k="s5">이 단원 암기 완료</label>
+</section>
+
+<section id="s6" data-nav="⑥최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s6">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="5과목_4_건설현장_안전시설.html"><small>← 이전</small>4. 건설현장 안전시설 관리</a><a class="nx" href="5과목_6_공종별_안전.html"><small>다음 →</small>6. 공사 및 작업 종류별 안전</a></div>
+<script>
+const S={
+"s1":[
+["강관비계 비계기둥의 띠장 방향 간격은?",["1.5m 이하","1.85m 이하","2.0m 이하","2.5m 이하"],1,"1.85m 이하입니다."],
+["강관비계 비계기둥 사이 적재하중 한도는?",["200kg","300kg","400kg","500kg"],2,"400kg 이하입니다."],
+["강관비계 기둥을 2개의 강관으로 묶어 세워야 하는 부분은?",["꼭대기에서 20m 아래","꼭대기에서 31m 넘는 아랫부분","전체","지면에서 10m까지"],1,"31m 아래입니다."],
+["강관비계 벽이음 간격은?",["수직 5m, 수평 5m 이내","수직 6m, 수평 8m 이내","수직 8m, 수평 10m 이내","수직 3m, 수평 3m 이내"],0,"강관은 5·5입니다."],
+["강관틀비계 벽이음 간격은?",["수직 5m, 수평 5m","수직 6m, 수평 8m","수직 8m, 수평 6m","수직 10m, 수평 10m"],1,"틀비계는 6·8입니다."]
+],
+"s2":[
+["달비계 와이어로프의 안전계수는?",["2.5 이상","5 이상","10 이상","15 이상"],2,"10 이상입니다."],
+["달비계 달기체인의 안전계수는?",["2.5 이상","5 이상","10 이상","3 이상"],1,"5 이상입니다."],
+["말비계 지주부재와 수평면의 기울기는?",["60° 이하","75° 이하","80° 이하","90° 이하"],1,"75° 이하입니다."],
+["이동식 비계 작업발판의 최대 적재하중은?",["150kg","250kg","400kg","500kg"],1,"250kg 이하입니다."]
+],
+"s3":[
+["가설통로의 경사 기준은?",["15° 이하","20° 이하","30° 이하","45° 이하"],2,"30° 이하입니다."],
+["높이 8m 이상 비계다리의 계단참 설치 간격은?",["5m 이내마다","7m 이내마다","10m 이내마다","15m 이내마다"],1,"7m 이내마다입니다."],
+["작업발판의 폭 기준은?",["30cm 이상","40cm 이상","50cm 이상","60cm 이상"],1,"40cm 이상입니다."],
+["작업발판 재료 사이 틈의 기준은?",["1cm 이하","3cm 이하","5cm 이하","10cm 이하"],1,"3cm 이하입니다."]
+],
+"s4":[
+["파이프 서포트를 이어서 사용할 수 없는 개수는?",["2개 이상","3개 이상","4개 이상","5개 이상"],1,"3개 이상 이어 쓰기 금지입니다."],
+["파이프 서포트 높이가 3.5m를 초과할 때 수평연결재 설치 간격은?",["1m 이내마다","2m 이내마다","3m 이내마다","4m 이내마다"],1,"2m 이내마다입니다."],
+["콘크리트 측압이 커지는 조건이 아닌 것은?",["타설 속도가 빠를 때","슬럼프가 클 때","기온이 높을 때","다짐이 많을 때"],2,"기온은 낮을수록 커집니다."],
+["거푸집 해체 순서로 옳은 것은?",["보 밑면 → 슬래브 → 측면","측면 → 슬래브 → 보 밑면","슬래브 → 측면 → 보 밑면","순서 무관"],1,"옆면 먼저, 밑면 나중입니다."]
+],
+"s5":[
+["흙막이 벽의 수평 변위를 측정하는 계측기는?",["하중계","지중경사계","지하수위계","균열계"],1,"지중경사계입니다."],
+["버팀대의 축하중을 측정하는 계측기는?",["하중계","토압계","간극수압계","지표침하계"],0,"하중계(load cell)입니다."],
+["연약 점토 지반에서 굴착 바닥이 부풀어 오르는 현상은?",["히빙","보일링","파이핑","액상화"],0,"히빙입니다."],
+["사질토에서 모래와 물이 끓듯이 솟는 현상은?",["히빙","보일링","크리프","압밀"],1,"보일링입니다."],
+["인접 건물의 기울기를 측정하는 계측기는?",["건물경사계","하중계","변형률계","지하수위계"],0,"건물경사계(tiltmeter)입니다."]
+],
+"final":[
+["강관비계 띠장 간격은?",["1.5m 이하","1.85m 이하","2.0m 이하","3.0m 이하"],2,"2.0m 이하입니다."],
+["강관비계 비계기둥의 장선 방향 간격은?",["1.5m 이하","1.85m 이하","2.0m 이하","2.5m 이하"],0,"1.5m 이하입니다."],
+["시스템비계 수직재와 받침철물의 연결 길이 기준은?",["받침철물 전체 길이의 1/4 이상","1/3 이상","1/2 이상","전체"],1,"1/3 이상입니다."],
+["수직갱에 설치한 높이 15m 이상 통로의 계단참 간격은?",["5m 이내마다","7m 이내마다","10m 이내마다","15m 이내마다"],2,"10m 이내마다입니다."],
+["파이프 서포트를 이어 쓸 때 필요한 볼트 수는?",["2개 이상","3개 이상","4개 이상","6개 이상"],2,"4개 이상입니다."],
+["흙막이 지지 방식이 아닌 것은?",["버팀대식","어스앵커식","타이로드식","거푸집식"],3,"거푸집은 흙막이 방식이 아닙니다."],
+["지하수위 차이로 생긴 물길로 흙이 씻겨 나가는 현상은?",["파이핑","히빙","압밀","크리프"],0,"파이핑입니다."],
+["말비계 높이가 2m를 넘을 때 작업발판 폭은?",["30cm 이상","40cm 이상","50cm 이상","60cm 이상"],1,"40cm 이상입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s5_p5';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

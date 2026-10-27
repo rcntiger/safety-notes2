@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>화학물질 안전관리 실행</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_4과목_목차.html">목차</a><h1>7. 화학물질 안전관리 실행</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①위험물 종류</a><a href="#s2">②산안법 위험물질</a><a href="#s3">③저장·취급</a><a href="#s4">④가스·MSDS</a><a href="#s5">⑤화학장치</a><a href="#s6">⑥건조설비·계측</a><a href="#s7">⑦최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 화학물질(위험물, 유해화학물질) 확인</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①위험물 종류">
+<h2><span class="n">1-1</span>위험물의 기초화학 · 정의 · 종류 (위험물안전관리법)</h2>
+<h3>① 기초화학</h3>
+<ul>
+<li>증기비중 = 분자량 ÷ 29(공기) → 1보다 크면 공기보다 무거워 <b>바닥에 고임</b> (LPG·휘발유 증기)</li>
+<li>1몰 기체 부피 = 22.4L (0℃, 1기압)</li>
+</ul>
+<h3>② 위험물안전관리법 제1~6류</h3>
+<div class="tw"><table>
+<tr><th>류</th><th>성질</th><th>예</th><th>소화</th></tr>
+<tr><td>1류</td><td><b>산화성 고체</b></td><td>염소산염류, 질산염류, 과망간산염류</td><td>물 (알칼리금속 과산화물은 건조사)</td></tr>
+<tr><td>2류</td><td><b>가연성 고체</b></td><td>황화인, 적린, 유황, 마그네슘, 금속분</td><td>물 (금속분은 건조사)</td></tr>
+<tr><td>3류</td><td><b>자연발화성·금수성</b></td><td>칼륨, 나트륨, 황린, 탄화칼슘</td><td>건조사 (물 금지)</td></tr>
+<tr><td>4류</td><td><b>인화성 액체</b></td><td>휘발유, 알코올, 등유, 아세톤</td><td>질식 (포·CO₂·분말)</td></tr>
+<tr><td>5류</td><td><b>자기반응성</b></td><td>니트로화합물, 유기과산화물, 셀룰로이드</td><td>다량의 물</td></tr>
+<tr><td>6류</td><td><b>산화성 액체</b></td><td>과산화수소, 질산, 과염소산</td><td>물</td></tr>
+</table></div>
+<div class="mn"><div class="t">"산고·가고·자금·인액·자반·산액" → 1류와 6류는 산화성(고체↔액체), 사이에 가연·자연발화·인화·자기반응</div></div>
+<div class="trap">1류(산화성 고체)와 6류(산화성 액체)는 스스로 타지 않고 다른 물질을 태우는 조연성</div>
+<div class="sum">증기비중 1보다 크면 바닥에! 산고·가고·자금·인액·자반·산액!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②산안법 위험물질">
+<h2><span class="n">1-2</span>산업안전보건법상 위험물질 · 노출기준 · 유해요인</h2>
+<div class="law">안전보건규칙 별표1</div>
+<h3>① 위험물질의 종류 (7가지)</h3>
+<ul><li>폭발성 물질 및 유기과산화물 · 물반응성 물질 및 인화성 고체 · 산화성 액체 및 산화성 고체 · <b>인화성 액체</b> · <b>인화성 가스</b> · <b>부식성 물질</b> · <b>급성 독성 물질</b></li></ul>
+<h3>② 인화성 액체</h3>
+<div class="tw"><table>
+<tr><th>기준</th><th>예</th></tr>
+<tr><td>인화점 23℃ 미만 + 초기끓는점 35℃ 이하</td><td>에틸에테르, 가솔린, 아세트알데히드, 산화프로필렌</td></tr>
+<tr><td>인화점 23℃ 미만 + 초기끓는점 35℃ 초과</td><td>노말헥산, 아세톤, 메틸에틸케톤, 메탄올, 에탄올, 이황화탄소</td></tr>
+<tr><td>인화점 23℃ 이상 60℃ 이하</td><td>크실렌, 아세트산아밀, 등유, 경유</td></tr>
+</table></div>
+<div class="mn"><div class="t">"인화점 23·60, 끓는점 35"</div></div>
+<h3>③ 인화성 가스 · 부식성 · 급성 독성</h3>
+<ul>
+<li>인화성 가스: 폭발하한계 <b>13% 이하</b> 또는 상하한 차이 <b>12% 이상</b> (20℃, 101.3kPa에서 기체)</li>
+<li>부식성(산): 농도 <b>20%</b> 이상 염산·황산·질산 / <b>60%</b> 이상 인산·아세트산·불산 — (염기): 농도 <b>40%</b> 이상 수산화나트륨·수산화칼륨</li>
+<li>급성 독성: LD₅₀(경구, 쥐) <b>300mg/kg</b> 이하 · LD₅₀(경피) <b>1,000mg/kg</b> 이하 · LC₅₀(가스, 쥐 4시간) <b>2,500ppm</b> 이하</li>
+</ul>
+<div class="mn"><div class="t">"가스는 하한 13·차이 12" / "산 20·60, 염기 40" / "먹으면 300, 바르면 1,000, 마시면 2,500"</div></div>
+<h3>④ 노출기준 · 유해요인</h3>
+<ul>
+<li>TWA(8시간 평균), STEL(15분), C(최고) — 2과목 5단원 참고</li>
+<li>침입 경로: 호흡기(가장 중요) · 피부 · 소화기 / CMR: 발암성·변이원성·생식독성</li>
+</ul>
+<div class="sum">인화성 액체 23·60·35! 가스 13·12! 산 20·60, 염기 40! 경구 300·경피 1,000·흡입 2,500!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 2 · 화학물질 유해 위험성 확인</div>
+
+<!-- s3 -->
+<section id="s3" data-nav="③저장·취급">
+<h2><span class="n">2-1</span>위험물의 성질 · 저장 및 취급방법</h2>
+<div class="tw"><table>
+<tr><th>물질</th><th>저장 방법</th><th>이유</th></tr>
+<tr><td>칼륨 · 나트륨</td><td><b>석유(등유) 속</b></td><td>물·공기와 반응 (금수성)</td></tr>
+<tr><td>황린</td><td><b>물 속</b></td><td>공기 중 자연발화</td></tr>
+<tr><td>이황화탄소</td><td><b>물 속</b></td><td>가연성 증기 발생 억제</td></tr>
+<tr><td>니트로셀룰로오스</td><td>물·알코올로 <b>습윤</b></td><td>건조하면 폭발 위험</td></tr>
+<tr><td>아세틸렌</td><td>다공성 물질에 <b>아세톤</b>으로 용해</td><td>압축 시 분해폭발</td></tr>
+<tr><td>과산화수소</td><td>안정제(인산 등) + 구멍 뚫린 마개</td><td>분해로 산소 발생·압력 상승</td></tr>
+<tr><td>탄화칼슘(카바이드)</td><td>건조한 곳, 밀폐</td><td>물과 반응해 아세틸렌 발생</td></tr>
+</table></div>
+<div class="mn"><div class="t">"칼륨·나트륨은 기름 속, 황린·이황화탄소는 물 속, 니트로셀룰로오스는 젖게, 아세틸렌은 아세톤에"</div></div>
+<div class="trap">황린은 물 속, 칼륨·나트륨은 석유 속 — 서로 바꾼 보기 단골</div>
+<div class="sum">칼륨·나트륨 기름, 황린·이황화탄소 물, 니트로셀룰로오스 습윤, 아세틸렌 아세톤!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<!-- s4 -->
+<section id="s4" data-nav="④가스·MSDS">
+<h2><span class="n">2-2</span>인화성 가스·유해화학물질 취급 주의 · MSDS</h2>
+<h3>① 인화성 가스 취급</h3>
+<ul>
+<li>누출 방지, 환기, 점화원 차단, 가스누출감지경보기 설치</li>
+<li>경보 설정값: 가연성 가스 <b>폭발하한계의 25% 이하</b>, 독성 가스 <b>TWA 이하</b></li>
+<li>경보 정밀도: 가연성 ±25% 이하, 독성 ±30% 이하</li>
+<li>공기보다 무거운 가스(LPG)는 감지기를 <b>바닥 가까이</b>, 가벼운 가스(수소·도시가스)는 <b>천장 가까이</b></li>
+</ul>
+<div class="mn"><div class="t">"하한계의 4분의 1에서 울린다" / "무거우면 아래, 가벼우면 위"</div></div>
+<h3>② 유해화학물질 취급</h3>
+<ul><li>밀폐·국소배기, 대체, 보호구(방독마스크·보호장갑·보안경), MSDS 교육, 경고표지 부착, 세안·샤워 설비</li></ul>
+<h3>③ MSDS (물질안전보건자료)</h3>
+<ul>
+<li><b>16개 항목</b>: 제품명, 유해성·위험성, 구성성분, 응급조치, 화재 대처, 누출 대처, 취급·저장, 노출방지·보호구, 물리화학적 특성, 안정성·반응성, 독성, 환경 영향, 폐기, 운송, 법적 규제, 그 밖의 참고사항</li>
+<li>작업장에 게시·비치, 근로자 교육, 용기에 <b>경고표지</b> 부착</li>
+<li>경고표지 기재: 명칭 · <b>그림문자</b> · <b>신호어</b>(위험/경고) · 유해·위험 문구 · 예방조치 문구 · 공급자 정보</li>
+</ul>
+<div class="mn"><div class="t">경고표지: "이름, 그림, 한마디(신호어), 위험, 예방, 누가 만들었나"</div></div>
+<div class="sum">경보는 하한계 25%! 무거우면 아래 감지! MSDS 16항목, 신호어는 위험·경고!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 3 · 화학물질 취급설비 개념 확인</div>
+
+<!-- s5 -->
+<section id="s5" data-nav="⑤화학장치">
+<h2><span class="n">3-1</span>각종 장치 종류 · 화학장치(반응기·정류탑·열교환기) 특성</h2>
+<div class="tw"><table>
+<tr><th>장치</th><th>종류·특성</th></tr>
+<tr><td><b>반응기</b></td><td>조작 방식: 회분식(batch) · 반회분식 · 연속식 / 구조: 교반조형 · 관형 · 탑형 · 유동층형 / 발열반응 시 <b>반응 폭주</b> 주의</td></tr>
+<tr><td><b>정류탑</b>(증류탑)</td><td>끓는점 차이로 분리 — 단탑(포종탑·체판탑), 충전탑 / 트레이 막힘·부식 점검</td></tr>
+<tr><td><b>열교환기</b></td><td>다관식(shell &amp; tube), 이중관식, 판형 / 일상점검: 보온재·도장 상태, 볼트 조임, 누출, 기초볼트</td></tr>
+<tr><td>고정·회전 장치</td><td>탑조류·저장탱크(고정) / 펌프·압축기·교반기(회전)</td></tr>
+<tr><td>안전장치</td><td>안전밸브, 파열판, 긴급차단밸브, 화염방지기, 통기밸브, 벤트스택, 플레어스택</td></tr>
+</table></div>
+<div class="mn"><div class="t">"반응기는 폭주, 정류탑은 끓는점, 열교환기는 새는지"</div></div>
+<div class="sum">반응기 회분·연속, 정류탑 단탑·충전탑, 열교환기 다관식!</div>
+<div class="quiz" data-set="s5"></div>
+<label class="chk"><input type="checkbox" data-k="s5">이 단원 암기 완료</label>
+</section>
+
+<!-- s6 -->
+<section id="s6" data-nav="⑥건조설비·계측">
+<h2><span class="n">3-2</span>화학설비(건조설비 등) 취급 시 주의 · 전기·계측설비</h2>
+<h3>① 건조설비 (안전보건규칙 제280조~)</h3>
+<ul>
+<li>위험물 건조설비(일정 규모 이상)는 <b>독립된 단층 건물</b>에 설치</li>
+<li>바깥면은 불연성 재료, 내부 선반은 불연성, 상부는 가벼운 재료, <b>폭발구</b>(압력 방출) 설치</li>
+<li>위험물 건조 시 <b>직화 사용 금지</b>, 건조 중 발생하는 가스·증기 배출 설비</li>
+</ul>
+<h3>② 특수화학설비 · 계측장치</h3>
+<ul>
+<li>특수화학설비: 발열반응 반응장치, 증류·정류·증발·추출 분리장치, 가열로·가열기, 온도 <b>350℃ 이상</b> 또는 게이지 압력 <b>980kPa 이상</b>으로 운전하는 설비 등</li>
+<li>설치할 것: <b>계측장치</b>(온도계·유량계·압력계), <b>자동경보장치</b>, <b>긴급차단장치</b>, <b>예비동력원</b></li>
+</ul>
+<div class="mn"><div class="t">"350도·980킬로" / 특수화학설비엔 "재고(계측) 울리고(경보) 끊고(차단) 대비한다(예비동력)"</div></div>
+<h3>③ 화학설비 안전거리 (안전보건규칙 별표8)</h3>
+<ul><li>단위공정시설 사이 <b>10m</b> 이상 / 플레어스택·위험물 저장탱크·사무실 등은 <b>20m</b> 이상</li></ul>
+<div class="mn"><div class="t">"공정끼리 10m, 나머지 20m"</div></div>
+<div class="sum">건조설비는 단층·폭발구·직화 금지! 350℃·980kPa는 특수화학설비! 공정 10m·나머지 20m!</div>
+<div class="quiz" data-set="s6"></div>
+<label class="chk"><input type="checkbox" data-k="s6">이 단원 암기 완료</label>
+</section>
+
+<section id="s7" data-nav="⑦최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s7">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="4과목_6_화재폭발_검토.html"><small>← 이전</small>6. 화재·폭발 검토</a><a class="nx" href="4과목_8_화공안전_비상조치.html"><small>다음 →</small>8. 화공안전 비상조치 계획·대응</a></div>
+<script>
+const S={
+"s1":[
+["위험물안전관리법상 제4류 위험물은?",["산화성 고체","가연성 고체","인화성 액체","자기반응성 물질"],2,"4류는 인화성 액체입니다."],
+["제3류 위험물의 성질은?",["산화성 액체","자연발화성 및 금수성","인화성 액체","가연성 고체"],1,"자연발화성·금수성입니다."],
+["과산화수소·질산이 속하는 위험물은?",["제1류","제2류","제5류","제6류"],3,"산화성 액체, 6류입니다."],
+["증기비중이 1보다 큰 가스의 특성은?",["천장에 모인다","바닥에 고인다","즉시 흩어진다","물에 녹는다"],1,"공기보다 무거워 바닥에 고입니다."]
+],
+"s2":[
+["인화성 액체 중 인화점 23℃ 미만, 초기끓는점 35℃ 이하인 물질은?",["에틸에테르","크실렌","등유","경유"],0,"에틸에테르입니다."],
+["인화성 가스의 기준은?",["폭발하한계 13% 이하 또는 상하한 차 12% 이상","하한계 20% 이하","상한계 50% 이상","하한계 5% 이하만"],0,"13·12입니다."],
+["부식성 물질(염기)의 기준은?",["농도 20% 이상 수산화나트륨","농도 40% 이상 수산화나트륨","농도 60% 이상 수산화나트륨","농도와 무관"],1,"염기 40%입니다."],
+["급성 독성 물질의 LD₅₀(경구, 쥐) 기준은?",["300mg/kg 이하","1,000mg/kg 이하","2,500mg/kg 이하","5,000mg/kg 이하"],0,"먹으면 300입니다."],
+["농도 20% 이상일 때 부식성 물질이 되는 산은?",["황산","인산","아세트산","불산"],0,"염산·황산·질산은 20%입니다."]
+],
+"s3":[
+["칼륨·나트륨의 저장 방법은?",["물 속","석유(등유) 속","공기 중","알코올 속"],1,"석유 속입니다."],
+["황린의 저장 방법은?",["석유 속","물 속","알코올 속","건조한 공기 중"],1,"물 속입니다."],
+["아세틸렌 용기에 함께 넣는 용제는?",["아세톤","물","석유","알코올"],0,"아세톤에 용해합니다."],
+["니트로셀룰로오스의 저장 방법은?",["완전히 건조","물·알코올로 습윤","석유 속","가열 보관"],1,"습윤 저장입니다."],
+["물과 반응해 아세틸렌을 발생시키는 물질은?",["탄화칼슘","황린","질산","과산화수소"],0,"탄화칼슘(카바이드)입니다."]
+],
+"s4":[
+["가연성 가스 누출감지경보기의 경보 설정값은?",["폭발하한계의 10% 이하","폭발하한계의 25% 이하","폭발하한계의 50% 이하","폭발상한계 이하"],1,"하한계의 25% 이하입니다."],
+["LPG 누출감지기의 설치 위치는?",["천장 가까이","바닥 가까이","창문 옆","어디든 무관"],1,"무거운 가스는 바닥입니다."],
+["MSDS의 작성 항목 수는?",["8개","12개","16개","20개"],2,"16개입니다."],
+["경고표지의 신호어는?",["위험·경고","주의·안전","금지·허가","정지·진행"],0,"위험 또는 경고입니다."],
+["독성 가스 누출감지경보기의 경보 설정값은?",["TWA 이하","STEL의 2배","LC₅₀","폭발하한계"],0,"TWA 이하입니다."]
+],
+"s5":[
+["원료를 한꺼번에 넣고 반응시킨 뒤 꺼내는 반응기는?",["회분식","연속식","관형","유동층형"],0,"회분식(batch)입니다."],
+["끓는점 차이로 혼합물을 분리하는 장치는?",["열교환기","정류탑(증류탑)","반응기","건조기"],1,"정류탑입니다."],
+["정류탑의 종류가 아닌 것은?",["포종탑","체판탑","충전탑","다관식"],3,"다관식은 열교환기입니다."],
+["발열반응 반응기에서 특히 주의할 현상은?",["반응 폭주","캐비테이션","서징","수격작용"],0,"반응 폭주입니다."]
+],
+"s6":[
+["특수화학설비의 온도 기준은?",["150℃ 이상","250℃ 이상","350℃ 이상","500℃ 이상"],2,"350℃ 이상입니다."],
+["특수화학설비의 압력 기준(게이지 압력)은?",["98kPa 이상","490kPa 이상","980kPa 이상","1,960kPa 이상"],2,"980kPa 이상입니다."],
+["특수화학설비에 설치할 장치가 아닌 것은?",["계측장치","자동경보장치","긴급차단장치","직화 가열장치"],3,"계측·경보·차단·예비동력입니다."],
+["단위공정시설 사이의 안전거리는?",["5m 이상","10m 이상","20m 이상","30m 이상"],1,"공정끼리 10m입니다."],
+["위험물 건조설비 구조로 틀린 것은?",["바깥면은 불연성","상부는 가벼운 재료","폭발구 설치","직화로 가열"],3,"직화는 금지입니다."]
+],
+"final":[
+["제5류 위험물(자기반응성)의 소화 방법은?",["건조사","질식소화","다량의 물","CO₂"],2,"다량의 물입니다."],
+["금수성 물질 화재의 소화 방법은?",["물","강화액","건조사","포"],2,"물은 금지, 건조사입니다."],
+["이황화탄소를 물 속에 저장하는 이유는?",["가연성 증기 발생 억제","산소 공급","온도 상승","부식 방지"],0,"증기 발생을 막습니다."],
+["인화성 액체 중 인화점 23~60℃인 물질은?",["가솔린","아세톤","등유","에틸에테르"],2,"등유입니다."],
+["급성 독성 물질의 LC₅₀(가스, 쥐 4시간 흡입) 기준은?",["500ppm 이하","1,000ppm 이하","2,500ppm 이하","5,000ppm 이하"],2,"마시면 2,500입니다."],
+["수소 누출감지기의 설치 위치는?",["바닥 가까이","천장 가까이","배수구","지하"],1,"가벼운 가스는 천장입니다."],
+["플레어스택과 위험물 저장탱크 사이의 안전거리는?",["10m 이상","20m 이상","30m 이상","50m 이상"],1,"20m 이상입니다."],
+["농도 60% 이상일 때 부식성 물질이 되는 것은?",["염산","질산","인산","황산"],2,"인산·아세트산·불산은 60%입니다."],
+["다관식(shell & tube)이 대표적인 장치는?",["반응기","열교환기","정류탑","건조기"],1,"열교환기입니다."],
+["MSDS 경고표지 기재 항목이 아닌 것은?",["그림문자","신호어","예방조치 문구","제품 가격"],3,"가격은 없습니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s4_p7';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

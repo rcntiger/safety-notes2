@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정전기 장·재해 관리</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_4과목_목차.html">목차</a><h1>3. 정전기 장·재해 관리</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①발생원리·현상</a><a href="#s2">②방전·장해</a><a href="#s3">③접지·본딩·유속</a><a href="#s4">④가습·제전기</a><a href="#s5">⑤최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 정전기 위험요소 파악</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①발생원리·현상">
+<h2><span class="n">1-1</span>정전기 발생원리 · 발생현상</h2>
+<h3>① 발생원리</h3>
+<ul><li>서로 다른 두 물체가 <b>접촉했다 분리</b>될 때 전하가 이동해 한쪽은 (+), 한쪽은 (−)로 대전</li></ul>
+<h3>② 발생에 영향을 주는 요인</h3>
+<div class="tw"><table>
+<tr><th>요인</th><th>정전기가 커지는 조건</th></tr>
+<tr><td>물질의 특성</td><td>대전서열에서 <b>멀리</b> 떨어진 물질끼리</td></tr>
+<tr><td>표면 상태</td><td>표면이 <b>오염·거칠수록</b></td></tr>
+<tr><td>물체의 이력</td><td><b>처음</b> 접촉·분리할 때 가장 크고, 반복할수록 감소</td></tr>
+<tr><td>접촉면적·압력</td><td><b>클수록</b></td></tr>
+<tr><td>분리속도</td><td><b>빠를수록</b></td></tr>
+</table></div>
+<div class="mn"><div class="t">"특표이 면분" → 특표(特票)를 받은 이(李)씨가 면(麵)을 분(粉)으로 빻는다</div>
+<div class="s">물질<b>특</b>성 · <b>표</b>면상태 · <b>이</b>력 · 접촉<b>면</b>적·압력 · <b>분</b>리속도</div></div>
+<h3>③ 대전의 종류</h3>
+<div class="tw"><table>
+<tr><th>대전</th><th>예</th></tr>
+<tr><td>마찰대전</td><td>두 물체가 문질러질 때</td></tr>
+<tr><td>박리대전</td><td>붙어 있던 것을 떼어낼 때 (필름·테이프)</td></tr>
+<tr><td>유동대전</td><td>액체가 <b>배관</b> 속을 흐를 때</td></tr>
+<tr><td>분출대전</td><td>기체·액체·분체가 <b>노즐</b>에서 뿜어져 나올 때</td></tr>
+<tr><td>충돌대전</td><td>분체 입자끼리·벽과 부딪힐 때</td></tr>
+<tr><td>파괴대전</td><td>고체가 부서질 때</td></tr>
+<tr><td>교반·침강대전</td><td>액체를 젓거나 입자가 가라앉을 때</td></tr>
+<tr><td>유도대전</td><td>대전체 가까이 있는 도체에 전하가 유도될 때</td></tr>
+</table></div>
+<div class="mn"><div class="t">"배관은 유동, 노즐은 분출, 테이프는 박리"</div></div>
+<div class="sum">접촉·분리로 대전! 특표이 면분! 배관 유동·노즐 분출·테이프 박리!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②방전·장해">
+<h2><span class="n">1-2</span>방전의 형태 및 영향 · 정전기의 장해</h2>
+<h3>① 방전의 형태</h3>
+<div class="tw"><table>
+<tr><th>방전</th><th>특징</th></tr>
+<tr><td>코로나 방전</td><td>뾰족한 도체 끝에서 미약한 발광 (에너지 작음)</td></tr>
+<tr><td>스트리머 방전</td><td>나뭇가지 모양, 코로나보다 강함</td></tr>
+<tr><td><b>불꽃 방전</b></td><td>도체 사이에서 강한 빛·소리 → <b>착화 위험 가장 큼</b></td></tr>
+<tr><td>연면 방전</td><td>절연체 <b>표면을 따라</b> 별 모양으로 퍼짐</td></tr>
+<tr><td>브러시 방전</td><td>대전된 절연체와 도체 사이의 붓 모양 방전</td></tr>
+<tr><td>뇌상 방전</td><td>공기 중에 떠 있는 대전 분체 구름에서 번개 모양 (사일로)</td></tr>
+</table></div>
+<div class="mn"><div class="t">"코로나는 반짝, 불꽃은 펑(가장 위험), 연면은 표면 따라 별 모양"</div></div>
+<h3>② 방전 에너지</h3>
+<p>W = ½CV² = ½QV = Q² ÷ 2C</p>
+<div class="mn"><div class="t">예: C = 100pF, V = 10kV → ½ × 100×10⁻¹² × (10⁴)² = <b>5mJ</b></div>
+<div class="s">이 에너지가 가스의 최소착화에너지(수소 약 0.019mJ, 메탄 약 0.28mJ)보다 크면 점화</div></div>
+<h3>③ 정전기의 장해</h3>
+<ul>
+<li><b>화재·폭발</b>: 방전 불꽃이 가연성 가스·증기·분진에 착화 (가장 큰 위험)</li>
+<li><b>전격</b>: 순간적 충격 → 놀라서 추락 등 2차 재해</li>
+<li><b>생산 장해</b>: 먼지 흡착, 필름 달라붙음, 전자기기 오작동</li>
+</ul>
+<div class="sum">불꽃 방전이 가장 위험! W = ½CV²! 화재·폭발·전격·생산 장해!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 2 · 정전기 위험요소 제거</div>
+
+<!-- s3 -->
+<section id="s3" data-nav="③접지·본딩·유속">
+<h2><span class="n">2-1</span>접지 · 본딩 · 유속의 제한</h2>
+<h3>① 접지 · 본딩</h3>
+<ul>
+<li><b>접지</b>: 도체를 대지와 연결해 전하를 흘려보냄 — 정전기 접지저항은 <b>10⁶Ω(1MΩ) 이하</b>면 충분</li>
+<li><b>본딩</b>: 도체끼리 연결해 <b>같은 전위</b>로 만듦 (탱크와 탱크로리, 배관 플랜지 사이)</li>
+<li>접지는 <b>도체</b>에만 효과 — 부도체(절연체)는 접지해도 전하가 빠지지 않음</li>
+</ul>
+<div class="mn"><div class="t">"접지는 땅으로, 본딩은 서로 손잡기" / "부도체는 접지가 안 듣는다"</div></div>
+<h3>② 유속의 제한 (배관 내 액체)</h3>
+<div class="tw"><table>
+<tr><th>조건</th><th>유속</th></tr>
+<tr><td>저항률 10¹⁰Ω·m 미만의 도전성 위험물</td><td><b>7m/s</b> 이하</td></tr>
+<tr><td>에테르·이황화탄소 등 위험성 높은 것</td><td><b>1m/s</b> 이하</td></tr>
+<tr><td>물·기체가 섞인 비수용성 위험물</td><td><b>1m/s</b> 이하</td></tr>
+</table></div>
+<div class="mn"><div class="t">"보통은 7, 위험하거나 섞였으면 1"</div></div>
+<div class="sum">접지는 땅으로(1MΩ 이하), 본딩은 손잡기, 부도체엔 안 듣는다! 유속 7·1!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<!-- s4 -->
+<section id="s4" data-nav="④가습·제전기">
+<h2><span class="n">2-2</span>보호구 착용 · 대전방지제 · 가습 · 제전기</h2>
+<div class="tw"><table>
+<tr><th>대책</th><th>내용</th></tr>
+<tr><td>보호구</td><td><b>정전화</b>(대전방지 안전화), 대전방지 작업복·장갑 → 인체 대전 방지</td></tr>
+<tr><td>대전방지제</td><td>물체 표면에 발라 흡습성·도전성을 높임 (부도체에 효과)</td></tr>
+<tr><td>가습</td><td>상대습도 <b>60~70% 이상</b>으로 → 표면에 수분막이 생겨 전하가 빠짐</td></tr>
+<tr><td>제전기</td><td>공기를 이온화해 대전체의 전하를 중화</td></tr>
+<tr><td>도전성 재료</td><td>부도체 대신 도전성 재료 사용</td></tr>
+</table></div>
+<div class="mn"><div class="t">"부도체는 접지 대신 가습·대전방지제·제전기"</div></div>
+<h3>제전기의 종류</h3>
+<div class="tw"><table>
+<tr><th>종류</th><th>특징</th></tr>
+<tr><td>전압인가식</td><td>고전압으로 코로나 방전을 일으켜 이온 생성 — <b>제전 능력 가장 큼</b></td></tr>
+<tr><td>자기방전식</td><td>접지된 침·브러시가 대전체 전계로 스스로 방전 — <b>전원 불필요</b>, 낮은 전위(약 2kV 이하)는 제전 어려움</td></tr>
+<tr><td>방사선식</td><td>방사성 동위원소로 공기 이온화 — 폭발 위험 장소 사용 가능, 피폭 주의</td></tr>
+</table></div>
+<div class="mn"><div class="t">"전압인가식은 힘세고, 자기방전식은 전원 없이, 방사선식은 방폭 장소에"</div></div>
+<div class="sum">정전화·대전방지제·습도 60~70%·제전기! 전압인가·자기방전·방사선!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<section id="s5" data-nav="⑤최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s5">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="4과목_2_감전재해_방지.html"><small>← 이전</small>2. 감전재해 및 방지대책</a><a class="nx" href="4과목_4_전기방폭_관리.html"><small>다음 →</small>4. 전기 방폭 관리</a></div>
+<script>
+const S={
+"s1":[
+["정전기 발생량이 커지는 조건이 아닌 것은?",["분리속도가 빠를수록","접촉면적이 클수록","대전서열이 가까운 물질끼리","표면이 오염될수록"],2,"서열이 멀어야 커집니다."],
+["액체가 배관 속을 흐를 때 생기는 대전은?",["마찰대전","유동대전","박리대전","충돌대전"],1,"유동대전입니다."],
+["노즐에서 뿜어져 나올 때 생기는 대전은?",["분출대전","유도대전","파괴대전","교반대전"],0,"분출대전입니다."],
+["물체의 이력과 정전기의 관계로 옳은 것은?",["처음 접촉·분리할 때 가장 크다","반복할수록 커진다","이력과 무관하다","마지막에 가장 크다"],0,"처음이 가장 큽니다."]
+],
+"s2":[
+["착화 위험이 가장 큰 방전은?",["코로나 방전","불꽃 방전","연면 방전","스트리머 방전"],1,"불꽃 방전입니다."],
+["절연체 표면을 따라 별 모양으로 퍼지는 방전은?",["코로나 방전","브러시 방전","연면 방전","뇌상 방전"],2,"연면 방전입니다."],
+["정전용량 100pF, 전압 10kV일 때 방전 에너지는?",["0.5mJ","5mJ","50mJ","500mJ"],1,"½ × 100×10⁻¹² × 10⁸ = 5mJ입니다."],
+["정전기 방전 에너지 식은?",["W = CV","W = ½CV²","W = 2CV²","W = C/V"],1,"½CV²입니다."]
+],
+"s3":[
+["도체끼리 연결해 같은 전위로 만드는 대책은?",["접지","본딩","가습","제전"],1,"본딩입니다."],
+["정전기 방지용 접지저항의 기준은?",["10Ω 이하","100Ω 이하","10⁶Ω 이하","10¹²Ω 이하"],2,"1MΩ 이하면 충분합니다."],
+["접지가 효과 없는 대상은?",["금속 탱크","금속 배관","부도체(절연체)","탱크로리"],2,"부도체는 접지가 안 듣습니다."],
+["이황화탄소를 배관으로 옮길 때 유속 기준은?",["1m/s 이하","3m/s 이하","7m/s 이하","10m/s 이하"],0,"위험성 높으면 1m/s입니다."]
+],
+"s4":[
+["정전기 방지를 위한 상대습도 기준은?",["30~40% 이상","40~50% 이상","60~70% 이상","90% 이상"],2,"60~70% 이상입니다."],
+["제전 능력이 가장 큰 제전기는?",["전압인가식","자기방전식","방사선식","접지식"],0,"전압인가식입니다."],
+["전원이 필요 없는 제전기는?",["전압인가식","자기방전식","방사선식","교류식"],1,"자기방전식입니다."],
+["인체의 정전기 대전을 막는 보호구는?",["절연장갑","정전화","방진마스크","귀마개"],1,"정전화입니다."]
+],
+"final":[
+["필름을 롤에서 떼어낼 때 생기는 대전은?",["박리대전","유동대전","분출대전","침강대전"],0,"박리대전입니다."],
+["대전된 분체 구름에서 번개 모양으로 생기는 방전은?",["코로나 방전","뇌상 방전","연면 방전","불꽃 방전"],1,"뇌상 방전입니다."],
+["탱크로리에서 저장탱크로 위험물을 옮길 때 정전기 대책은?",["본딩과 접지","가습만","제전기만","유속 증가"],0,"서로 잇고 땅으로 흘립니다."],
+["부도체의 정전기 대책으로 적절하지 않은 것은?",["가습","대전방지제","제전기","접지만 실시"],3,"부도체는 접지가 안 듣습니다."],
+["도전성 위험물(저항률 10¹⁰Ω·m 미만)의 배관 유속 기준은?",["1m/s 이하","3m/s 이하","7m/s 이하","15m/s 이하"],2,"보통은 7m/s입니다."],
+["정전용량 200pF, 전압 5kV일 때 방전 에너지는?",["0.5mJ","2.5mJ","5mJ","25mJ"],1,"½ × 200×10⁻¹² × 25×10⁶ = 2.5mJ입니다."],
+["폭발 위험 장소에서도 쓸 수 있는 제전기는?",["방사선식","전압인가식(일반형)","자기방전식","모두 불가"],0,"방사선식입니다."],
+["정전기로 인한 가장 큰 위험은?",["화재·폭발","소음","진동","조도 저하"],0,"착화에 의한 화재·폭발입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s4_p3';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

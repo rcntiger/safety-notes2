@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>전기 방폭 관리</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_4과목_목차.html">목차</a><h1>4. 전기 방폭 관리</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①방폭구조 종류</a><a href="#s2">②선정·방폭기기</a><a href="#s3">③폭발등급·위험장소</a><a href="#s4">④측정·정전기 대책</a><a href="#s5">⑤최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 전기방폭설비</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①방폭구조 종류">
+<h2><span class="n">1-1</span>방폭구조의 종류 및 특징</h2>
+<div class="tw"><table>
+<tr><th>방폭구조</th><th>기호</th><th>원리</th></tr>
+<tr><td><b>내압</b>방폭</td><td>d</td><td>용기 안에서 폭발해도 용기가 <b>견디고</b>, 틈새로 나가는 화염이 식어 외부로 번지지 않음</td></tr>
+<tr><td><b>압력</b>방폭</td><td>p</td><td>용기 안에 보호가스(공기·불활성가스)를 <b>밀어 넣어</b> 가스 침입 차단</td></tr>
+<tr><td><b>유입</b>방폭</td><td>o</td><td>불꽃 나는 부분을 <b>기름 속</b>에 넣음</td></tr>
+<tr><td><b>안전증</b>방폭</td><td>e</td><td>정상 운전 중 불꽃·고온이 <b>생기지 않게</b> 구조·온도 안전도를 높임</td></tr>
+<tr><td><b>본질안전</b>방폭</td><td>ia, ib</td><td>정상·사고 시의 불꽃·열이 <b>점화에너지 이하</b> (ia: 고장 2개까지 안전)</td></tr>
+<tr><td>몰드방폭</td><td>m</td><td>컴파운드로 밀봉</td></tr>
+<tr><td>충전방폭</td><td>q</td><td>모래 등 충전재로 채움</td></tr>
+<tr><td>비점화방폭</td><td>n</td><td>정상 작동 시 점화하지 않음 (2종 장소용)</td></tr>
+<tr><td>특수방폭</td><td>s</td><td>그 밖의 방법으로 성능 확인</td></tr>
+</table></div>
+<div class="mn"><div class="t">"내압은 견디고(d), 압력은 밀어내고(p), 유입은 기름(o), 안전증은 불꽃을 안 만들고(e), 본질안전은 에너지를 작게(i)"</div>
+<div class="s">기호: <b>d</b>(내압) <b>p</b>(압력) <b>o</b>(oil 유입) <b>e</b>(안전증) <b>i</b>(intrinsic 본질안전) <b>m</b>(mould) <b>q</b>(quartz 모래)</div></div>
+<div class="trap">'용기 내부 폭발에 견딤' = 내압(d), '보호가스 압입' = 압력(p)</div>
+<div class="sum">d 견디고·p 밀어내고·o 기름·e 불꽃 안 만들고·i 에너지 작게!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②선정·방폭기기">
+<h2><span class="n">1-2</span>방폭구조 선정 및 유의사항 · 방폭형 전기기기</h2>
+<h3>① 위험장소별 선정</h3>
+<div class="tw"><table>
+<tr><th>장소</th><th>사용 가능한 방폭구조</th></tr>
+<tr><td>0종</td><td><b>본질안전(ia)</b>만</td></tr>
+<tr><td>1종</td><td>내압(d), 압력(p), 유입(o), 본질안전(ia·ib), 몰드(m), 충전(q)</td></tr>
+<tr><td>2종</td><td>0·1종용 모두 + 안전증(e), 비점화(n)</td></tr>
+</table></div>
+<div class="mn"><div class="t">"0종은 본질안전 ia 하나뿐, 2종은 다 된다"</div></div>
+<h3>② 선정 시 고려사항</h3>
+<ul><li>위험장소 등급(0·1·2종), 가스·증기의 <b>폭발등급</b>(IIA·IIB·IIC), <b>발화온도</b>에 맞는 온도등급(T1~T6), 설치 환경(부식·습기·진동)</li></ul>
+<h3>③ 방폭기기 표시</h3>
+<div class="mn"><div class="t">예: Ex d IIB T4 → 방폭(Ex) · 내압구조(d) · 폭발등급 IIB · 온도등급 T4(최고표면온도 135℃ 이하)</div></div>
+<ul><li>방폭구조 전기기계기구는 <b>안전인증</b> 대상 방호장치</li></ul>
+<div class="sum">0종은 ia만! 장소·폭발등급·온도등급 보고 고른다! Ex d IIB T4!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 2 · 전기방폭 사고예방 및 대응</div>
+
+<!-- s3 -->
+<section id="s3" data-nav="③폭발등급·위험장소">
+<h2><span class="n">2-1</span>전기폭발등급 · 위험장소 선정</h2>
+<h3>① 위험장소 구분</h3>
+<div class="tw"><table>
+<tr><th>장소</th><th>폭발성 분위기</th><th>예</th></tr>
+<tr><td><b>0종</b></td><td><b>연속적·장기간</b> 존재</td><td>탱크·용기 내부, 배관 내부</td></tr>
+<tr><td><b>1종</b></td><td>정상 작동 중 <b>생길 수 있음</b></td><td>맨홀·벤트·샘플링 지점 주변</td></tr>
+<tr><td><b>2종</b></td><td>정상 작동 중엔 없고 <b>이상 시 잠깐</b></td><td>개스킷·패킹 주위</td></tr>
+</table></div>
+<div class="mn"><div class="t">"0종은 늘 있고, 1종은 가끔, 2종은 사고 때만" / 분진은 20종·21종·22종</div></div>
+<h3>② 폭발등급 (가스 그룹)</h3>
+<div class="tw"><table>
+<tr><th>등급</th><th>최대안전틈새(MESG)</th><th>대표 가스</th></tr>
+<tr><td>IIA</td><td>0.9mm 이상</td><td>프로판, 메탄(광산 외)</td></tr>
+<tr><td>IIB</td><td>0.5mm 초과 0.9mm 미만</td><td>에틸렌</td></tr>
+<tr><td><b>IIC</b></td><td><b>0.5mm 이하</b></td><td><b>수소, 아세틸렌</b> (가장 위험)</td></tr>
+</table></div>
+<div class="mn"><div class="t">"C로 갈수록 위험, 틈새는 좁게 — 수소·아세틸렌은 C"</div>
+<div class="s">IIC용 기기는 IIA·IIB 장소에도 쓸 수 있음 (상위 등급은 하위 호환)</div></div>
+<h3>③ 온도등급 (최고표면온도)</h3>
+<div class="tw"><table>
+<tr><th>등급</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th></tr>
+<tr><td>최고표면온도</td><td>450℃</td><td>300℃</td><td>200℃</td><td>135℃</td><td>100℃</td><td>85℃</td></tr>
+</table></div>
+<div class="mn"><div class="t">"사오공·삼백·이백·백삼오·백·팔오" — 발화온도가 낮은 가스일수록 T 숫자가 큰 기기</div></div>
+<div class="sum">0종 늘·1종 가끔·2종 사고 때! IIC = 수소·아세틸렌·0.5mm 이하! T1 450 ~ T6 85!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<!-- s4 -->
+<section id="s4" data-nav="④측정·정전기 대책">
+<h2><span class="n">2-2</span>정전기방지 대책 · 절연저항·접지저항·정전용량 측정</h2>
+<h3>① 방폭 지역의 정전기 대책</h3>
+<ul><li>설비 접지·본딩, 유속 제한, 정전화·대전방지 작업복, 가습, 제전기(방사선식 등) — 3단원 정전기 참고</li></ul>
+<h3>② 측정</h3>
+<div class="tw"><table>
+<tr><th>측정</th><th>방법</th></tr>
+<tr><td><b>절연저항</b></td><td>절연저항계(메거)로 전로와 대지 사이 저항 측정 — 높을수록 좋음</td></tr>
+<tr><td><b>접지저항</b></td><td>접지저항계, 전위강하법(보조 접지극 2개를 쓰는 3전극법) — 낮을수록 좋음</td></tr>
+<tr><td>정전용량</td><td>대전체의 정전용량을 측정해 방전 에너지(½CV²) 평가</td></tr>
+</table></div>
+<h3>③ 저압 전로 절연저항 기준 (KEC)</h3>
+<div class="tw"><table>
+<tr><th>전로의 사용전압</th><th>시험전압</th><th>절연저항</th></tr>
+<tr><td>SELV·PELV</td><td>DC 250V</td><td><b>0.5MΩ</b> 이상</td></tr>
+<tr><td>FELV, 500V 이하</td><td>DC 500V</td><td><b>1.0MΩ</b> 이상</td></tr>
+<tr><td>500V 초과</td><td>DC 1,000V</td><td><b>1.0MΩ</b> 이상</td></tr>
+</table></div>
+<ul><li>저압 전선로의 누설전류: 최대공급전류의 <b>1/2,000</b> 이하</li></ul>
+<div class="mn"><div class="t">"절연은 높게, 접지는 낮게" / "안전전압 회로 0.5, 나머지 1.0MΩ"</div></div>
+<div class="sum">절연저항은 메거·높게, 접지저항은 3전극법·낮게! 0.5·1.0MΩ, 누설 1/2,000!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<section id="s5" data-nav="⑤최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s5">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="4과목_3_정전기_관리.html"><small>← 이전</small>3. 정전기 장·재해 관리</a><a class="nx" href="4과목_5_전기설비_위험요인.html"><small>다음 →</small>5. 전기설비 위험요인 관리</a></div>
+<script>
+const S={
+"s1":[
+["용기 내부에서 폭발이 일어나도 용기가 견디고 외부로 화염이 번지지 않게 한 구조는?",["내압방폭","압력방폭","유입방폭","안전증방폭"],0,"내압(d)입니다."],
+["용기 안에 보호가스를 압입해 가스 침입을 막는 구조는?",["내압방폭","압력방폭","충전방폭","몰드방폭"],1,"압력(p)입니다."],
+["안전증방폭구조의 기호는?",["d","p","e","o"],2,"e입니다."],
+["정상·사고 시 불꽃·열이 점화에너지 이하가 되게 한 구조는?",["본질안전방폭","유입방폭","내압방폭","비점화방폭"],0,"본질안전(i)입니다."],
+["불꽃이 생기는 부분을 기름 속에 넣은 구조는?",["유입방폭","충전방폭","몰드방폭","압력방폭"],0,"유입(o)입니다."]
+],
+"s2":[
+["0종 장소에 사용할 수 있는 방폭구조는?",["내압방폭","압력방폭","본질안전방폭(ia)","안전증방폭"],2,"0종은 ia만입니다."],
+["2종 장소에만 사용 가능한(1종에는 불가) 방폭구조는?",["내압방폭","안전증방폭","압력방폭","본질안전방폭"],1,"안전증·비점화는 2종용입니다."],
+["방폭구조 선정 시 고려사항이 아닌 것은?",["위험장소 등급","가스 폭발등급","발화온도","작업자 나이"],3,"장소·폭발등급·온도등급입니다."],
+["Ex d IIB T4에서 T4의 최고표면온도는?",["200℃","135℃","100℃","85℃"],1,"T4는 135℃입니다."]
+],
+"s3":[
+["폭발성 분위기가 연속적·장기간 존재하는 장소는?",["0종","1종","2종","20종"],0,"0종입니다."],
+["정상 작동 중엔 없고 이상 시에만 잠깐 생기는 장소는?",["0종","1종","2종","21종"],2,"2종입니다."],
+["수소·아세틸렌이 속하는 폭발등급은?",["IIA","IIB","IIC","I"],2,"IIC입니다."],
+["IIC 등급의 최대안전틈새는?",["0.9mm 이상","0.5~0.9mm","0.5mm 이하","1.0mm 이상"],2,"0.5mm 이하입니다."],
+["온도등급 T1의 최고표면온도는?",["450℃","300℃","200℃","135℃"],0,"T1은 450℃입니다."]
+],
+"s4":[
+["절연저항을 측정하는 계기는?",["메거(절연저항계)","검전기","전력량계","회로시험기"],0,"메거입니다."],
+["SELV 회로의 절연저항 기준(KEC)은?",["0.1MΩ 이상","0.5MΩ 이상","1.0MΩ 이상","10MΩ 이상"],1,"0.5MΩ 이상입니다."],
+["사용전압 380V 전로의 절연저항 기준(KEC)은?",["0.2MΩ 이상","0.5MΩ 이상","1.0MΩ 이상","5MΩ 이상"],2,"500V 이하는 1.0MΩ입니다."],
+["저압 전선로의 누설전류 허용 기준은?",["최대공급전류의 1/1,000 이하","1/2,000 이하","1/5,000 이하","1/10,000 이하"],1,"1/2,000 이하입니다."]
+],
+"final":[
+["맨홀·벤트 주변처럼 정상 작동 중 폭발성 분위기가 생길 수 있는 장소는?",["0종","1종","2종","비위험장소"],1,"1종입니다."],
+["프로판이 속하는 폭발등급은?",["IIA","IIB","IIC","III"],0,"IIA입니다."],
+["모래 등 충전재로 채운 방폭구조의 기호는?",["m","q","n","s"],1,"q입니다."],
+["온도등급 T6의 최고표면온도는?",["135℃","100℃","85℃","50℃"],2,"T6은 85℃입니다."],
+["IIC용 방폭기기에 대한 설명으로 옳은 것은?",["IIA 장소에는 쓸 수 없다","IIA·IIB 장소에도 쓸 수 있다","IIB 장소에만 쓴다","가스와 무관하다"],1,"상위 등급은 하위 호환입니다."],
+["접지저항 측정에 쓰는 방법은?",["전위강하법(3전극법)","메거법","휘트스톤법만","검전법"],0,"전위강하법입니다."],
+["방폭구조 전기기계기구의 인증 제도는?",["안전인증","자율안전확인","안전검사","신고"],0,"방호장치 안전인증 대상입니다."],
+["0종 장소의 예는?",["가연성 액체 저장탱크 내부","패킹 주위","사무실","맨홀 주변"],0,"탱크 내부입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s4_p4';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

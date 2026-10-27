@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>건설현장 안전시설 관리</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_5과목_목차.html">목차</a><h1>4. 건설현장 안전시설 관리</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①추락 방지</a><a href="#s2">②붕괴 방지</a><a href="#s3">③낙하·비래 방지</a><a href="#s4">④공구·장비</a><a href="#s5">⑤최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 안전시설 설치 및 관리</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①추락 방지">
+<h2><span class="n">1-1</span>추락 방지용 안전시설</h2>
+<div class="law">안전보건규칙 제13조·제42조~제45조</div>
+<h3>① 추락 방지 순서</h3>
+<div class="mn"><div class="t">"발판·난간 먼저 → 안 되면 추락방호망 → 그래도 안 되면 안전대"</div>
+<div class="s">높이 <b>2m 이상</b> 추락 위험 장소: 작업발판 → 안전난간·울타리·덮개 → 추락방호망 → 안전대 착용</div></div>
+<h3>② 안전난간</h3>
+<ul>
+<li>상부 난간대: 바닥에서 <b>90cm 이상</b> (120cm 이하면 중간 난간대는 상부와 바닥의 중간, 120cm 넘으면 중간 난간대 2단 이상·간격 60cm 이하)</li>
+<li>발끝막이판 <b>10cm 이상</b>, 난간대 지름 <b>2.7cm 이상</b>, 가장 취약한 지점에서 <b>100kg 이상</b> 하중에 견딤</li>
+</ul>
+<h3>③ 추락방호망</h3>
+<ul>
+<li>작업면에서 망 설치 지점까지 수직거리 <b>10m 이하</b></li>
+<li>망의 처짐: 짧은 변 길이의 <b>12% 이상</b></li>
+<li>건축물 바깥쪽 설치 시 내민 길이: 벽면에서 <b>3m 이상</b></li>
+</ul>
+<div class="tw"><table>
+<tr><th>방망사 인장강도</th><th>그물코 10cm 매듭 없음</th><th>10cm 매듭</th><th>5cm 매듭</th></tr>
+<tr><td>신품</td><td>240kg</td><td>200kg</td><td>110kg</td></tr>
+<tr><td>폐기 기준</td><td>150kg</td><td>135kg</td><td>60kg</td></tr>
+</table></div>
+<div class="mn"><div class="t">"추락방호망은 10m 이하, 처짐 12%, 3m 내밀기"</div></div>
+<h3>④ 개구부 · 지붕</h3>
+<ul>
+<li>개구부: 안전난간·울타리·수직형 추락방망 또는 <b>덮개</b>(뒤집히거나 떨어지지 않게 고정, '개구부 주의' 표시)</li>
+<li>슬레이트·채광창 지붕: 폭 <b>30cm 이상</b> 발판, 추락방호망</li>
+</ul>
+<div class="sum">2m부터! 난간 90·10·2.7·100kg! 방호망 10m·12%·3m! 지붕 발판 30cm!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②붕괴 방지">
+<h2><span class="n">1-2</span>붕괴 방지용 안전시설</h2>
+<h3>① 굴착면의 기울기 (안전보건규칙 별표11)</h3>
+<div class="tw"><table>
+<tr><th>지반</th><th>모래</th><th>연암 및 풍화암</th><th>경암</th><th>그 밖의 흙</th></tr>
+<tr><td>기울기</td><td><b>1 : 1.8</b></td><td><b>1 : 1.0</b></td><td><b>1 : 0.5</b></td><td><b>1 : 1.2</b></td></tr>
+</table></div>
+<div class="mn"><div class="t">"모래는 1.8로 눕히고, 흙은 1.2, 연암 1.0, 경암 0.5" — 단단할수록 세운다</div></div>
+<h3>② 토사 붕괴 방지</h3>
+<ul>
+<li>흙막이 지보공 설치, 굴착면 기울기 준수, 배수(지표수·지하수 처리), 굴착 단부에 중량물·장비 적재 금지</li>
+<li>작업 시작 전·비온 뒤·지진 후 굴착면 점검: 부석·균열·함수·용수·동결 상태</li>
+</ul>
+<h3>③ 붕괴 원인</h3>
+<ul>
+<li>외적 원인: 굴착 깊이·기울기 과다, 진동·충격, 지표수·지하수 침투, 굴착면 상부 하중 증가</li>
+<li>내적 원인: 절토면 토질·암질 불량, 성토면 다짐 불량, 점착력 감소</li>
+</ul>
+<div class="sum">모래 1.8·흙 1.2·연암 1.0·경암 0.5! 흙막이·배수·상부 하중 금지!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<!-- s3 -->
+<section id="s3" data-nav="③낙하·비래 방지">
+<h2><span class="n">1-3</span>낙하·비래 방지용 안전시설</h2>
+<h3>① 낙하물방지망 · 방호선반</h3>
+<ul>
+<li>설치 높이: <b>10m 이내</b>마다</li>
+<li>내민 길이: 벽면에서 <b>2m 이상</b></li>
+<li>수평면과의 각도: <b>20° ~ 30°</b></li>
+</ul>
+<div class="mn"><div class="t">"낙하물방지망은 10m마다, 2m 내밀고, 20~30°"</div></div>
+<div class="trap">추락방호망(내민 길이 3m)과 낙하물방지망(2m)을 바꾼 보기 주의</div>
+<h3>② 기타 대책</h3>
+<ul>
+<li><b>수직보호망</b>: 비계 바깥에 수직으로 설치해 낙하·비산 방지</li>
+<li><b>투하설비</b>: 높이 <b>3m 이상</b>에서 물체를 던질 때 투하설비 설치·감시인 배치</li>
+<li>출입금지 구역 설정, 안전모 착용, 자재 결속</li>
+</ul>
+<div class="mn"><div class="t">"3m 넘는 곳에서 던지려면 투하설비"</div></div>
+<div class="sum">낙하물방지망 10m·2m·20~30°! 3m 이상 투하는 투하설비·감시인!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 2 · 건설공구 및 장비 안전수칙</div>
+
+<!-- s4 -->
+<section id="s4" data-nav="④공구·장비">
+<h2><span class="n">2</span>건설공구 · 건설장비의 종류 및 안전수칙</h2>
+<h3>① 건설공구</h3>
+<ul>
+<li>해머: 장갑 착용 금지, 자루 확인 / 그라인더: 덮개, 숫돌 교체 후 시운전 / 전동공구: 누전차단기·접지 / 공기압 공구: 호스 연결 확인</li>
+</ul>
+<h3>② 차량계 건설기계</h3>
+<ul>
+<li>종류: 불도저, 굴착기(백호), 로더, 스크레이퍼, 모터그레이더, 롤러, 항타기·항발기, 천공기</li>
+<li><b>작업계획서</b>: 사용 기계의 종류·성능, <b>운행 경로</b>, <b>작업 방법</b></li>
+<li>전도·전락 방지: <b>유도자</b> 배치, 지반 부동침하 방지, 갓길 붕괴 방지, 도로 폭 유지</li>
+<li>낙하물 위험 시 <b>헤드가드</b> (불도저·트랙터·셔블·로더 등)</li>
+<li>최고속도 <b>10km/h 초과</b> 기계는 제한속도를 정하고 준수</li>
+<li>버킷·디퍼 아래 출입 금지, 승차석 외 탑승 금지, <b>주된 용도 외 사용 금지</b>(버킷으로 사람 운반 금지)</li>
+</ul>
+<div class="mn"><div class="t">"작업계획서 = 기계·경로·방법" / "10km/h 넘으면 제한속도"</div></div>
+<h3>③ 항타기 · 항발기</h3>
+<ul>
+<li>무너짐 방지: 연약지반은 받침, 버팀대 <b>3개 이상</b>, 버팀줄 <b>3개 이상</b></li>
+<li>권상용 와이어로프 안전계수 <b>5 이상</b>, 권상장치 드럼에 <b>2회 이상</b> 감긴 상태 유지</li>
+</ul>
+<div class="mn"><div class="t">"버팀대·버팀줄 3개, 와이어 5배, 드럼 2바퀴"</div></div>
+<div class="sum">작업계획서 = 기계·경로·방법! 유도자·헤드가드·10km/h! 항타기 3개·5배·2바퀴!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<section id="s5" data-nav="⑤최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s5">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="5과목_3_산업안전보건관리비.html"><small>← 이전</small>3. 건설업 산업안전보건관리비 관리</a><a class="nx" href="5과목_5_비계거푸집_가시설.html"><small>다음 →</small>5. 비계·거푸집 가시설 위험방지</a></div>
+<script>
+const S={
+"s1":[
+["안전난간 상부 난간대의 높이는?",["바닥에서 60cm 이상","바닥에서 75cm 이상","바닥에서 90cm 이상","바닥에서 150cm 이상"],2,"90cm 이상입니다."],
+["안전난간 발끝막이판의 높이는?",["5cm 이상","10cm 이상","15cm 이상","20cm 이상"],1,"10cm 이상입니다."],
+["추락방호망 설치 위치 기준은?",["작업면에서 수직거리 5m 이하","작업면에서 수직거리 10m 이하","15m 이하","20m 이하"],1,"10m 이하입니다."],
+["추락방호망의 처짐 기준은?",["짧은 변 길이의 5% 이상","짧은 변 길이의 12% 이상","긴 변 길이의 20% 이상","처짐 없이 팽팽하게"],1,"12% 이상입니다."],
+["그물코 10cm 매듭 없는 방망사의 신품 인장강도는?",["110kg","200kg","240kg","300kg"],2,"240kg입니다."],
+["슬레이트 지붕 위 작업 시 발판 폭은?",["20cm 이상","30cm 이상","40cm 이상","50cm 이상"],1,"30cm 이상입니다."]
+],
+"s2":[
+["모래 지반의 굴착면 기울기는?",["1 : 0.5","1 : 1.0","1 : 1.2","1 : 1.8"],3,"모래 1.8입니다."],
+["경암의 굴착면 기울기는?",["1 : 0.5","1 : 1.0","1 : 1.2","1 : 1.8"],0,"경암 0.5입니다."],
+["토사 붕괴의 외적 원인이 아닌 것은?",["굴착 기울기 과다","지하수 침투","상부 하중 증가","절토면 토질 불량"],3,"토질 불량은 내적 원인입니다."],
+["굴착면 붕괴 방지 대책으로 틀린 것은?",["흙막이 설치","배수","굴착 단부에 자재 적재","기울기 준수"],2,"상부 하중은 금지입니다."]
+],
+"s3":[
+["낙하물방지망의 설치 높이 간격은?",["5m 이내마다","10m 이내마다","15m 이내마다","20m 이내마다"],1,"10m 이내마다입니다."],
+["낙하물방지망의 내민 길이는?",["벽면에서 1m 이상","벽면에서 2m 이상","벽면에서 3m 이상","벽면에서 5m 이상"],1,"2m 이상입니다."],
+["낙하물방지망과 수평면의 각도는?",["0~10°","10~20°","20~30°","45°"],2,"20~30°입니다."],
+["물체를 투하할 때 투하설비를 설치해야 하는 높이는?",["1m 이상","2m 이상","3m 이상","5m 이상"],2,"3m 이상입니다."]
+],
+"s4":[
+["차량계 건설기계 작업계획서에 포함할 사항이 아닌 것은?",["기계의 종류·성능","운행 경로","작업 방법","운전자 학력"],3,"기계·경로·방법입니다."],
+["제한속도를 정해야 하는 차량계 건설기계의 최고속도 기준은?",["5km/h 초과","10km/h 초과","20km/h 초과","30km/h 초과"],1,"10km/h 초과입니다."],
+["항타기 권상용 와이어로프의 안전계수는?",["3 이상","4 이상","5 이상","10 이상"],2,"5 이상입니다."],
+["항타기의 무너짐 방지를 위한 버팀대 수는?",["1개 이상","2개 이상","3개 이상","4개 이상"],2,"3개 이상입니다."],
+["굴착기 버킷으로 근로자를 운반하는 것은?",["허용","주된 용도 외 사용으로 금지","관리감독자 허가 시 허용","야간에만 허용"],1,"금지입니다."]
+],
+"final":[
+["추락방호망을 건축물 바깥에 설치할 때 내민 길이는?",["1m 이상","2m 이상","3m 이상","4m 이상"],2,"3m 이상입니다."],
+["안전난간이 견뎌야 하는 하중은?",["50kg 이상","80kg 이상","100kg 이상","150kg 이상"],2,"100kg 이상입니다."],
+["연암 및 풍화암의 굴착면 기울기는?",["1 : 0.5","1 : 1.0","1 : 1.2","1 : 1.8"],1,"연암 1.0입니다."],
+["그 밖의 흙의 굴착면 기울기는?",["1 : 0.5","1 : 1.0","1 : 1.2","1 : 1.8"],2,"그 밖의 흙 1.2입니다."],
+["차량계 건설기계 전도 방지 대책이 아닌 것은?",["유도자 배치","지반 부동침하 방지","갓길 붕괴 방지","과속 운행"],3,"과속은 금지입니다."],
+["항타기 권상장치 드럼에 와이어로프가 감겨 있어야 하는 횟수는?",["1회 이상","2회 이상","3회 이상","5회 이상"],1,"2회 이상입니다."],
+["추락 방지 대책의 우선순위로 옳은 것은?",["안전대→방호망→발판·난간","발판·난간→방호망→안전대","방호망→안전대→발판","순서 무관"],1,"발판·난간이 먼저입니다."],
+["낙하물방지망과 추락방호망 비교로 옳은 것은?",["둘 다 내민 길이 2m","낙하물방지망 2m, 추락방호망 3m","낙하물방지망 3m, 추락방호망 2m","둘 다 3m"],1,"낙하 2m, 추락 3m입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s5_p4';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

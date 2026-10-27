@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>화공안전 비상조치 계획·대응</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_4과목_목차.html">목차</a><h1>8. 화공안전 비상조치 계획·대응</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①비상조치계획</a><a href="#s2">②교육훈련·매뉴얼</a><a href="#s3">③최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 비상조치계획 및 평가</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①비상조치계획">
+<h2><span class="n">1</span>비상조치 계획</h2>
+<h3>① 비상조치계획에 포함할 사항 (공정안전보고서)</h3>
+<ul>
+<li>비상조치를 위한 <b>장비·인력</b> 보유 현황</li>
+<li>사고 발생 시 각 부서·관련 기관과의 <b>비상연락체계</b></li>
+<li>비상조치 <b>조직의 임무</b>와 수행 절차</li>
+<li>비상조치계획에 따른 <b>교육계획</b></li>
+<li><b>주민 홍보</b> 계획</li>
+</ul>
+<div class="mn"><div class="t">"장비·연락·조직·교육·주민" → "장연조교주"(장연이 조교에게 주다)</div></div>
+<h3>② 작성 시 고려사항</h3>
+<ul>
+<li>사고 시나리오(누출·화재·폭발)와 피해 범위 평가</li>
+<li>비상경보 방법, 대피 경로·집결 장소, 인원 확인 방법</li>
+<li>비상 시 공정 정지 절차(긴급차단), 응급의료, 외부 기관(소방·병원·지자체) 협조</li>
+</ul>
+<div class="mn"><div class="t">"무엇이 터질지 → 어떻게 알리고 → 어디로 피하고 → 어떻게 멈추고 → 누가 돕나"</div></div>
+<div class="sum">장비·연락·조직·교육·주민! 시나리오·경보·대피·정지·외부 협조!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②교육훈련·매뉴얼">
+<h2><span class="n">2</span>비상대응 교육 훈련 · 자체매뉴얼 개발</h2>
+<h3>① 교육훈련</h3>
+<ul>
+<li>비상대응 조직원·전 근로자 대상, 정기적인 <b>모의훈련</b>(연 1회 이상 권장)</li>
+<li>훈련 후 평가 → 문제점 개선 → 계획·매뉴얼 보완</li>
+<li>훈련 유형: 도상(탁상) 훈련, 부분 훈련, 종합 훈련</li>
+</ul>
+<h3>② 자체매뉴얼</h3>
+<ul><li>시나리오별(누출·화재·폭발·정전) 대응 절차, 역할 분담, 비상연락망, 비상장비 위치, 대피도</li></ul>
+<h3>③ 누출 사고 시 기본 대응</h3>
+<ul>
+<li>누출원 <b>차단</b> → <b>점화원 제거</b> → 경보·<b>대피</b> → 확산 방지(방류벽·흡착) → 보고</li>
+<li>대피 방향: 바람을 <b>등지거나 옆</b>으로(바람 부는 쪽 위로), 공기보다 무거운 가스면 <b>높은 곳</b>으로</li>
+</ul>
+<div class="mn"><div class="t">"잠그고, 끄고, 알리고, 피한다 — 바람 위로, 무거운 가스면 높은 곳으로"</div></div>
+<div class="sum">모의훈련 → 평가 → 개선! 잠그고·끄고·알리고·피한다!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<section id="s3" data-nav="③최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s3">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="4과목_7_화학물질_안전관리.html"><small>← 이전</small>7. 화학물질 안전관리 실행</a><a class="nx" href="4과목_9_화공_안전운전점검.html"><small>다음 →</small>9. 화공 안전운전·점검</a></div>
+<script>
+const S={
+"s1":[
+["공정안전보고서의 비상조치계획에 포함할 사항이 아닌 것은?",["장비·인력 보유 현황","비상연락체계","주민 홍보 계획","제품 판매 계획"],3,"'장연조교주'입니다."],
+["비상조치계획 작성 시 고려사항이 아닌 것은?",["사고 시나리오와 피해 범위","대피 경로와 집결 장소","공정 정지 절차","생산 목표량"],3,"생산 목표는 관련 없습니다."],
+["비상조치 조직에 대해 계획에 담아야 하는 것은?",["조직의 임무와 수행 절차","조직원 급여","조직원 학력","조직원 취미"],0,"임무와 절차입니다."]
+],
+"s2":[
+["비상대응 훈련 후 해야 할 일은?",["평가하고 개선한다","기록을 폐기한다","다음 해까지 보류","책임자를 처벌한다"],0,"평가 → 개선입니다."],
+["공기보다 무거운 독성 가스가 누출되었을 때 대피 방향은?",["지하실","낮은 곳","높은 곳","바람 부는 쪽 아래"],2,"무거운 가스는 높은 곳으로 피합니다."],
+["누출 사고 시 가장 먼저 할 일은?",["누출원 차단","언론 보도","보험 청구","제품 출하"],0,"누출원 차단입니다."],
+["자체매뉴얼에 포함할 내용이 아닌 것은?",["시나리오별 대응 절차","비상연락망","대피도","제품 단가표"],3,"단가표는 관련 없습니다."]
+],
+"final":[
+["비상조치계획에 따른 교육계획은 어디에 포함되는가?",["공정안전보고서의 비상조치계획","안전보건관리규정만","취업규칙","재무제표"],0,"비상조치계획에 포함됩니다."],
+["누출 시 점화원을 제거하는 이유는?",["화재·폭발 방지","소음 감소","온도 상승","압력 증가"],0,"착화를 막습니다."],
+["비상 시 대피할 때 바람과의 관계로 옳은 것은?",["바람이 불어가는 쪽으로","바람이 불어오는 쪽(바람 위)으로","바람과 무관","정면으로 맞서 이동"],1,"바람 위쪽으로 피합니다."],
+["비상조치계획의 '주민 홍보 계획'이 필요한 이유는?",["사업장 인근 지역 피해 가능성","판매 증진","채용 홍보","세금 감면"],0,"인근 주민 보호입니다."],
+["모의훈련 종류 중 실제 행동 없이 회의실에서 하는 것은?",["도상(탁상) 훈련","종합 훈련","부분 훈련","실기 훈련"],0,"도상훈련입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s4_p8';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

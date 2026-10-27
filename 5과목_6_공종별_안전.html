@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>공사 및 작업 종류별 안전</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_5과목_목차.html">목차</a><h1>6. 공사 및 작업 종류별 안전</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①양중공사</a><a href="#s2">②해체공사</a><a href="#s3">③콘크리트·PC</a><a href="#s4">④운반·하역</a><a href="#s5">⑤최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 양중 및 해체 공사</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①양중공사">
+<h2><span class="n">1-1</span>양중공사 시 안전수칙 (철골 포함)</h2>
+<h3>① 타워크레인</h3>
+<ul>
+<li>작업계획서(설치·조립·해체): 타워크레인의 종류·형식, 설치·조립·해체 <b>순서</b>, 작업도구·장비·가설·방호설비, 작업인원 구성과 임무, 지지 방법</li>
+<li>강풍: 순간풍속 <b>10m/s 초과</b> → 설치·수리·점검·해체 중지 / <b>20m/s 초과</b> → 운전 중지</li>
+<li>신호수 배치, 인양물 아래 출입금지, 정격하중 준수, 와이어로프 점검</li>
+</ul>
+<h3>② 이동식 크레인</h3>
+<ul><li>아웃트리거 완전 확장, 지반 침하 방지(받침), 고압선 이격거리 유지, 붐 아래 출입금지</li></ul>
+<h3>③ 철골공사</h3>
+<ul>
+<li>작업 중지 기준: 풍속 <b>10m/s 이상</b>, 강우량 <b>1mm/h 이상</b>, 강설량 <b>1cm/h 이상</b></li>
+<li>풍압 등 외압에 대한 내력 검토 대상: 높이 <b>20m 이상</b>, 폭과 높이 비 <b>1:4 이상</b>, 연면적당 철골량 <b>50kg/㎡ 이하</b>, 기둥이 타이플레이트형, 이음부가 현장용접, 단면 구조에 현저한 차이</li>
+<li>추락 방지: 안전대 부착설비(구명줄), 추락방호망, 승강로(답단 간격 30cm 이내)</li>
+</ul>
+<div class="mn"><div class="t">"바람 10·비 1mm·눈 1cm면 철골 작업 중지" / "타워크레인 10은 설치 중지, 20은 운전 중지"</div></div>
+<div class="sum">타워크레인 10·20! 철골 10m/s·1mm·1cm 중지! 20m·1:4·50kg/㎡면 외압 검토!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②해체공사">
+<h2><span class="n">1-2</span>해체공사 시 안전수칙</h2>
+<h3>① 해체 작업계획서</h3>
+<ul><li>해체 방법 및 해체 순서도면, 가설·방호·환기·살수·방화설비 방법, 사업장 내 연락 방법, 해체물 처분계획, 해체작업용 기계·기구 작업계획서, 화약류 사용계획서</li></ul>
+<h3>② 해체 공법</h3>
+<div class="tw"><table>
+<tr><th>공법</th><th>특징·주의</th></tr>
+<tr><td>압쇄기</td><td>셔블에 부착해 콘크리트를 압쇄 — 기계 중량·안정성 확인</td></tr>
+<tr><td>대형·핸드 브레이커</td><td>타격 해체 — 소음·진동·분진</td></tr>
+<tr><td>팽창제</td><td>천공 지름 30~50mm, 천공 간격 30~70cm / 저소음·저진동</td></tr>
+<tr><td>절단톱·와이어쏘</td><td>절단 해체 — 냉각수, 회전날 접촉 주의</td></tr>
+<tr><td>화약 발파</td><td>화약류 사용계획, 대피·경계</td></tr>
+</table></div>
+<h3>③ 안전수칙</h3>
+<ul>
+<li>작업구역 출입금지, 강풍·폭우·폭설 시 작업 중지</li>
+<li><b>위에서 아래로</b> 해체, 상하 동시 작업 금지</li>
+<li>살수로 분진 억제, 석면 사전조사·제거</li>
+</ul>
+<div class="mn"><div class="t">"해체는 위에서 아래로, 위아래 동시 작업 금지, 물 뿌리며"</div></div>
+<div class="sum">해체계획서 = 방법·순서·설비·연락·처분! 압쇄기·브레이커·팽창제! 위에서 아래로!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 2 · 콘크리트 및 PC 공사</div>
+
+<!-- s3 -->
+<section id="s3" data-nav="③콘크리트·PC">
+<h2><span class="n">2</span>콘크리트공사 · PC공사 시 안전수칙</h2>
+<h3>① 콘크리트 타설 (안전보건규칙 제334조)</h3>
+<ul>
+<li>당일 작업 시작 전 거푸집·동바리의 변형·변위·지반 침하 점검</li>
+<li>작업 중 <b>감시자</b>를 두어 거푸집·동바리 변형 확인 → 이상 시 작업 중지·대피</li>
+<li><b>편심</b>이 생기지 않게 골고루 분산 타설</li>
+<li>진동기는 적절히 사용 (과다 사용 시 측압 증가로 거푸집 붕괴 위험)</li>
+<li>설계도서상 양생기간 준수 후 해체</li>
+</ul>
+<h3>② 콘크리트 펌프(카)</h3>
+<ul><li>아웃트리거 확장, 붐 조작 시 주변 고압선 확인, 호스 선단의 요동 방지, 붐 아래 출입금지</li></ul>
+<h3>③ PC(프리캐스트 콘크리트) 공사</h3>
+<ul>
+<li>인양 고리·인양 기구 확인, 신호수 배치, 부재 아래 출입금지</li>
+<li>설치 직후 접합 전까지 <b>임시 지지</b>(버팀대), 강풍 시 작업 중지</li>
+<li>부재 적치 시 전도 방지</li>
+</ul>
+<div class="mn"><div class="t">"타설은 감시자·고르게·진동 적당히, PC는 매달고·받치고·접합"</div></div>
+<div class="sum">감시자 두고 편심 없이! 펌프카 고압선! PC는 임시 지지!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 3 · 운반 및 하역작업</div>
+
+<!-- s4 -->
+<section id="s4" data-nav="④운반·하역">
+<h2><span class="n">3</span>운반작업 · 하역작업 시 안전수칙</h2>
+<h3>① 운반작업</h3>
+<ul>
+<li>인력 운반: 중량물은 몸 가까이·다리 힘으로, <b>긴 물건은 앞쪽을 높게</b>, 2인 이상이면 보조를 맞추고 신호</li>
+<li>차량계 하역운반기계(지게차·구내운반차·화물자동차) 작업계획서: 운행 경로, 작업 방법</li>
+<li>화물 적재: 하중이 한쪽으로 치우치지 않게, 붕괴·낙하 방지 로프, 운전자 시야 확보</li>
+</ul>
+<h3>② 하역작업</h3>
+<ul>
+<li>바닥에서 높이 <b>2m 이상</b> 화물 적재·하역 시 <b>승강설비</b> 설치</li>
+<li>높이 2m 이상 하적단과 인접 하적단 사이 간격: 밑부분 기준 <b>10cm 이상</b></li>
+<li>부두·안벽 선을 따라 통로 폭 <b>90cm 이상</b></li>
+<li>섬유로프 사용 금지: 꼬임이 끊어진 것, 심하게 손상·부식된 것</li>
+<li>화물자동차 짐 싣기·내리기 작업(일정 중량 이상) 시 작업지휘자 지정</li>
+</ul>
+<div class="mn"><div class="t">"2m 넘으면 승강설비, 하적단 사이 10cm, 부두 통로 90cm"</div></div>
+<div class="sum">긴 물건은 앞을 높게! 2m 승강설비·10cm 간격·90cm 통로!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<section id="s5" data-nav="⑤최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s5">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="5과목_5_비계거푸집_가시설.html"><small>← 이전</small>5. 비계·거푸집 가시설 위험방지</a><a class="nx" href="산업안전기사_5과목_목차.html"><small>목차 →</small>5과목 목차</a></div>
+<script>
+const S={
+"s1":[
+["타워크레인 설치·해체 작업을 중지해야 하는 순간풍속은?",["5m/s 초과","10m/s 초과","20m/s 초과","30m/s 초과"],1,"10m/s 초과입니다."],
+["타워크레인 운전을 중지해야 하는 순간풍속은?",["10m/s 초과","15m/s 초과","20m/s 초과","25m/s 초과"],2,"20m/s 초과입니다."],
+["철골 작업을 중지해야 하는 강우량은?",["시간당 0.5mm 이상","시간당 1mm 이상","시간당 5mm 이상","시간당 10mm 이상"],1,"1mm/h 이상입니다."],
+["철골 작업을 중지해야 하는 강설량은?",["시간당 0.5cm 이상","시간당 1cm 이상","시간당 3cm 이상","시간당 5cm 이상"],1,"1cm/h 이상입니다."],
+["철골 구조물 중 외압에 대한 내력 검토가 필요한 높이는?",["10m 이상","15m 이상","20m 이상","31m 이상"],2,"20m 이상입니다."]
+],
+"s2":[
+["해체 작업계획서에 포함할 사항이 아닌 것은?",["해체 방법·순서도면","해체물 처분계획","사업장 내 연락 방법","근로자 급여 지급 방법"],3,"급여는 관련 없습니다."],
+["팽창제 해체 공법의 천공 지름은?",["10~20mm","30~50mm","60~80mm","100mm 이상"],1,"30~50mm입니다."],
+["해체 작업 순서 원칙은?",["아래에서 위로","위에서 아래로","가운데부터","순서 무관"],1,"위에서 아래로입니다."],
+["해체 작업 시 분진 억제 방법은?",["살수","송풍","건조","가열"],0,"물을 뿌립니다."]
+],
+"s3":[
+["콘크리트 타설 중 거푸집·동바리 변형을 확인하는 사람은?",["감시자","설계자","발주자","감리원만"],0,"감시자를 둡니다."],
+["콘크리트 타설 방법으로 옳은 것은?",["한쪽부터 집중 타설","편심이 없게 골고루 분산 타설","진동기를 최대한 오래 사용","거푸집 점검 생략"],1,"분산 타설합니다."],
+["PC 부재 설치 직후 접합 전까지 필요한 조치는?",["임시 지지(버팀대)","즉시 해체","살수","도장"],0,"임시 지지입니다."],
+["콘크리트 펌프카 붐 조작 시 특히 확인할 것은?",["주변 고압선","작업자 나이","콘크리트 색","날씨 예보만"],0,"고압선 감전 위험입니다."]
+],
+"s4":[
+["화물 적재·하역 시 승강설비를 설치해야 하는 높이는?",["1m 이상","1.5m 이상","2m 이상","3m 이상"],2,"2m 이상입니다."],
+["높이 2m 이상 하적단 사이 간격은?",["5cm 이상","10cm 이상","20cm 이상","50cm 이상"],1,"10cm 이상입니다."],
+["부두·안벽 선을 따라 설치하는 통로 폭은?",["60cm 이상","80cm 이상","90cm 이상","120cm 이상"],2,"90cm 이상입니다."],
+["긴 물건을 인력으로 운반하는 방법은?",["앞쪽을 높게","뒤쪽을 높게","수평으로 머리 위에","끌어서"],0,"앞쪽을 높게 합니다."],
+["사용 금지 섬유로프가 아닌 것은?",["꼬임이 끊어진 것","심하게 손상된 것","심하게 부식된 것","새것"],3,"새것은 사용 가능합니다."]
+],
+"final":[
+["철골 작업을 중지해야 하는 풍속은?",["5m/s 이상","10m/s 이상","15m/s 이상","20m/s 이상"],1,"10m/s 이상입니다."],
+["철골 구조물 외압 검토 대상인 폭과 높이 비는?",["1:2 이상","1:3 이상","1:4 이상","1:5 이상"],2,"1:4 이상입니다."],
+["타워크레인 설치·조립·해체 작업계획서 내용이 아닌 것은?",["타워크레인 종류·형식","설치·조립·해체 순서","작업인원 구성과 임무","운전원 급여"],3,"급여는 해당 없습니다."],
+["해체 작업 시 금지 사항은?",["살수","출입금지 구역 설정","상하 동시 작업","위에서 아래로 해체"],2,"위아래 동시 작업은 금지입니다."],
+["진동기를 과다하게 사용할 때 생기는 위험은?",["측압 증가로 거푸집 붕괴","콘크리트 강도 증가","타설 속도 감소","양생 기간 단축"],0,"측압이 커집니다."],
+["이동식 크레인 작업 시 안전 조치가 아닌 것은?",["아웃트리거 완전 확장","지반 침하 방지","붐 아래 출입금지","아웃트리거 미확장 상태로 최대하중 인양"],3,"아웃트리거는 반드시 확장합니다."],
+["연면적당 철골량이 얼마 이하일 때 외압 검토 대상인가?",["30kg/㎡","50kg/㎡","80kg/㎡","100kg/㎡"],1,"50kg/㎡ 이하입니다."],
+["차량계 하역운반기계 작업계획서 내용은?",["운행 경로와 작업 방법","근로자 급여","화물 판매가","운전자 취미"],0,"운행 경로·작업 방법입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s5_p6';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>
