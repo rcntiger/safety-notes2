@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>설비진단 및 검사</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_3과목_목차.html">목차</a><h1>5. 설비진단 및 검사</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①표면 검사</a><a href="#s2">②내부 검사</a><a href="#s3">③소음방지</a><a href="#s4">④진동방지</a><a href="#s5">⑤최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 비파괴검사의 종류 및 특징</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①표면 검사">
+<h2><span class="n">1-1</span>육안검사 · 누설검사 · 침투검사 · 자분탐상검사</h2>
+<div class="tw"><table>
+<tr><th>검사</th><th>원리</th><th>특징</th></tr>
+<tr><td><b>육안검사</b> (VT)</td><td>눈·확대경·내시경으로 관찰</td><td>가장 기본, 표면 결함만, 간편·저렴</td></tr>
+<tr><td><b>누설검사</b> (LT)</td><td>기포·가압·헬륨·할로겐 등으로 새는 곳 확인</td><td>용기·배관의 <b>기밀성</b> 확인</td></tr>
+<tr><td><b>침투검사</b> (PT)</td><td>표면에 열린 결함에 침투액을 스며들게 한 뒤 현상제로 드러냄</td><td><b>비자성체·비금속</b>도 가능 / <b>표면</b> 결함만, 다공성 재료 불가</td></tr>
+<tr><td><b>자분탐상검사</b> (MT)</td><td>자화시킨 뒤 자분(쇳가루)이 결함부에 모이는 것을 봄</td><td><b>강자성체</b>의 표면·표면 바로 아래 결함 / 비자성체(오스테나이트 스테인리스·알루미늄·구리) 불가</td></tr>
+</table></div>
+<div class="mn"><div class="t">"침투는 아무 재료나 겉만, 자분은 쇠(자성체)만 겉과 바로 밑까지"</div>
+<div class="s">침투검사 순서: "전·침·세·현·관" → 전처리 → 침투 → 세척 → 현상 → 관찰(→ 후처리)</div></div>
+<div class="trap">알루미늄·스테인리스(오스테나이트계)에는 자분탐상 불가 → 침투검사를 씀</div>
+<div class="sum">육안은 기본, 누설은 기밀, 침투는 겉(재료 무관), 자분은 쇠만!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②내부 검사">
+<h2><span class="n">1-2</span>초음파검사 · 음향검사 · 방사선투과검사</h2>
+<div class="tw"><table>
+<tr><th>검사</th><th>원리</th><th>장점</th><th>단점</th></tr>
+<tr><td><b>초음파검사</b> (UT)</td><td>초음파를 보내 결함에서 반사되는 신호 분석 (펄스반사법·투과법·공진법)</td><td><b>내부</b> 결함, 두꺼운 재료, 두께 측정, 방사선 위험 없음</td><td>접촉매질 필요, 숙련 필요, 형상이 복잡하면 어려움</td></tr>
+<tr><td><b>음향방출검사</b> (AE)</td><td>재료가 변형·균열될 때 내는 탄성파(소리)를 감지</td><td><b>가동 중</b> 실시간 감시, 균열 진행 탐지</td><td>이미 정지한 결함은 검출 어려움</td></tr>
+<tr><td><b>방사선투과검사</b> (RT)</td><td>X선·γ선을 투과시켜 필름에 상을 얻음</td><td><b>내부</b> 결함(기공·슬래그), 결과를 <b>기록·보존</b></td><td>방사선 피폭 위험, 방향에 따라 미세 균열 검출 어려움</td></tr>
+</table></div>
+<ul><li>참고: 와류탐상검사(ET) — 전도체 표면을 비접촉·고속으로 검사</li></ul>
+<div class="mn"><div class="t">"속은 초음파·방사선, 돌아가는 중엔 음향방출, 기록 남기려면 방사선"</div>
+<div class="s">초음파 = 메아리(반사), 방사선 = 엑스레이 사진, 음향방출 = 금이 가며 내는 비명</div></div>
+<div class="trap">'가동 중 실시간 균열 감시' = 음향방출 / '필름으로 기록 보존' = 방사선투과</div>
+<div class="sum">속은 초음파·방사선, 가동 중엔 음향방출, 기록은 방사선!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 2 · 소음·진동 방지 기술</div>
+
+<!-- s3 -->
+<section id="s3" data-nav="③소음방지">
+<h2><span class="n">2-1</span>소음방지 방법</h2>
+<h3>① 대책 단계</h3>
+<div class="tw"><table>
+<tr><th>단계</th><th>방법</th></tr>
+<tr><td><b>음원</b> 대책</td><td>저소음 기계, 소음기(머플러), 방진, 공명 방지, 회전체 밸런싱, 정비·윤활</td></tr>
+<tr><td><b>전파경로</b> 대책</td><td>차음벽·방음벽, 흡음재, 거리 두기, 방향(지향성) 변경</td></tr>
+<tr><td><b>수음자</b> 대책</td><td>귀마개·귀덮개, 방음 감시실, 노출시간 단축</td></tr>
+</table></div>
+<div class="mn"><div class="t">"발전수" → 발생원 → 전파경로 → 수음자 (2과목 유해요인과 같음)</div></div>
+<h3>② 흡음 vs 차음</h3>
+<ul>
+<li><b>흡음</b>: 소리 에너지를 <b>흡수</b> — 다공질 재료(유리섬유, 암면, 흡음판)</li>
+<li><b>차음</b>: 소리가 <b>통과하지 못하게</b> 막음 — 무겁고 빈틈없는 재료(콘크리트, 납판)</li>
+<li>질량 법칙: 벽의 면밀도(무게) 또는 주파수가 2배가 되면 투과손실이 약 <b>6dB</b> 증가</li>
+</ul>
+<div class="mn"><div class="t">"흡음은 스펀지(가볍고 구멍), 차음은 벽(무겁고 빽빽)" / "무게 2배면 6dB 더 막는다"</div></div>
+<ul><li>소음기 종류: 흡음형, 팽창형, 공명형, 간섭형</li></ul>
+<div class="sum">발전수! 흡음은 스펀지, 차음은 무거운 벽, 무게 2배면 +6dB!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<!-- s4 -->
+<section id="s4" data-nav="④진동방지">
+<h2><span class="n">2-2</span>진동방지 방법</h2>
+<h3>① 대책 단계</h3>
+<ul>
+<li><b>진동원</b> 대책: 가진력 감소, 회전체 밸런싱, 정비, 저진동 기계</li>
+<li><b>전달경로</b> 대책: 방진재(스프링·방진고무·공기스프링)로 차단, 거리 두기, 방진구(트렌치)</li>
+<li><b>수진측</b> 대책: 구조물 강성 증가, 공진 회피</li>
+</ul>
+<h3>② 방진(진동 절연)의 원리</h3>
+<ul>
+<li>진동수비(가진 진동수 ÷ 고유진동수)가 <b>√2보다 커야</b> 전달률이 1보다 작아져 방진 효과가 생김</li>
+<li>→ 방진 장치의 고유진동수는 <b>낮게</b> 설계</li>
+<li>진동수비가 1 부근이면 <b>공진</b> → 진동 증폭</li>
+</ul>
+<div class="mn"><div class="t">"진동수비 √2(약 1.41)를 넘어야 방진, 1 근처는 공진"</div></div>
+<h3>③ 방진재 비교</h3>
+<div class="tw"><table>
+<tr><th>방진재</th><th>장점</th><th>단점</th></tr>
+<tr><td>금속 스프링</td><td><b>저주파</b> 차진, 큰 하중, 내구성</td><td>감쇠가 작아 공진 시 진폭 큼, 고주파 차진 약함(서징)</td></tr>
+<tr><td>방진고무</td><td><b>고주파</b> 차진, 형상 자유, 감쇠 있음</td><td>내유성·내열성 약함, 노화</td></tr>
+<tr><td>공기스프링</td><td>높이 조절, 저주파 차진 우수</td><td>구조 복잡, 비쌈</td></tr>
+</table></div>
+<div class="mn"><div class="t">"스프링은 저주파, 고무는 고주파"</div></div>
+<div class="sum">진동수비 √2 넘어야 방진, 고유진동수는 낮게! 스프링 저주파·고무 고주파!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<section id="s5" data-nav="⑤최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s5">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="3과목_4_기계안전시설_관리.html"><small>← 이전</small>4. 기계안전시설 관리</a><a class="nx" href="산업안전기사_3과목_목차.html"><small>목차 →</small>3과목 목차</a></div>
+<script>
+const S={
+"s1":[
+["강자성체의 표면과 표면 바로 아래 결함을 찾는 검사는?",["침투검사","자분탐상검사","초음파검사","육안검사"],1,"자분탐상입니다."],
+["알루미늄 부품의 표면 균열 검사에 적합한 방법은?",["자분탐상검사","침투검사","누설검사","음향방출검사"],1,"비자성체는 침투검사입니다."],
+["침투검사의 순서로 옳은 것은?",["전처리→침투→세척→현상→관찰","침투→전처리→현상→세척→관찰","전처리→현상→침투→세척→관찰","세척→침투→전처리→현상→관찰"],0,"'전·침·세·현·관'입니다."],
+["용기·배관의 기밀성을 확인하는 검사는?",["누설검사","자분탐상검사","방사선투과검사","침투검사"],0,"누설검사입니다."],
+["침투검사로 검출할 수 없는 것은?",["표면에 열린 균열","비자성체 표면 결함","내부 기공","비금속 표면 결함"],2,"침투검사는 표면만 봅니다."]
+],
+"s2":[
+["재료 내부 결함과 두께를 측정할 수 있고 방사선 위험이 없는 검사는?",["초음파검사","방사선투과검사","침투검사","자분탐상검사"],0,"초음파검사입니다."],
+["가동 중인 설비의 균열 진행을 실시간으로 감시하는 검사는?",["초음파검사","음향방출검사","침투검사","육안검사"],1,"음향방출검사입니다."],
+["결과를 필름으로 기록·보존할 수 있는 검사는?",["방사선투과검사","침투검사","누설검사","음향방출검사"],0,"방사선투과입니다."],
+["방사선투과검사의 단점은?",["표면 결함만 검출","방사선 피폭 위험","기록 보존 불가","강자성체만 가능"],1,"피폭 위험입니다."],
+["초음파검사에서 가장 많이 쓰는 방법은?",["펄스반사법","투과법","공진법","자화법"],0,"펄스반사법입니다."]
+],
+"s3":[
+["소음 대책 중 음원 대책은?",["차음벽 설치","귀마개 착용","소음기(머플러) 부착","거리 두기"],2,"소음기는 음원 대책입니다."],
+["다공질 재료로 소리 에너지를 흡수하는 것은?",["흡음","차음","방진","제진"],0,"흡음입니다."],
+["차음재로 적합한 재료의 특성은?",["가볍고 구멍이 많다","무겁고 빈틈이 없다","탄성이 크다","투명하다"],1,"무겁고 빽빽해야 합니다."],
+["질량 법칙에서 벽의 면밀도가 2배가 되면 투과손실은 약?",["3dB 증가","6dB 증가","10dB 증가","2배 증가"],1,"약 6dB 증가합니다."]
+],
+"s4":[
+["방진 효과가 나타나는 진동수비 조건은?",["1보다 작을 때","1일 때","√2보다 클 때","0일 때"],2,"√2보다 커야 합니다."],
+["진동수비가 1 부근일 때 나타나는 현상은?",["방진","공진","감쇠","차음"],1,"공진입니다."],
+["방진을 위해 방진 장치의 고유진동수는?",["높게","낮게","가진 진동수와 같게","상관없음"],1,"낮게 설계합니다."],
+["고주파 진동 차단에 유리하고 형상이 자유로운 방진재는?",["금속 스프링","방진고무","공기스프링","콘크리트"],1,"방진고무입니다."],
+["진동 대책 중 전달경로 대책은?",["회전체 밸런싱","방진고무 설치","구조물 강성 증가","저진동 기계 교체"],1,"방진재는 전달경로 대책입니다."]
+],
+"final":[
+["오스테나이트계 스테인리스강의 표면 결함 검사에 부적합한 것은?",["침투검사","자분탐상검사","육안검사","와류탐상검사"],1,"비자성체라 자분탐상 불가입니다."],
+["두꺼운 강판 내부 결함 검사에 가장 적합한 것은?",["육안검사","침투검사","초음파검사","누설검사"],2,"내부·두꺼운 재료는 초음파입니다."],
+["압력용기 운전 중 균열 발생을 감시하는 검사는?",["음향방출검사","방사선투과검사","자분탐상검사","침투검사"],0,"가동 중엔 음향방출입니다."],
+["표면 결함만 검출할 수 있는 검사끼리 묶은 것은?",["침투·육안","초음파·방사선","방사선·음향방출","초음파·침투"],0,"침투·육안은 표면만입니다."],
+["소음 대책 중 수음자 대책은?",["흡음재 시공","방음 감시실 설치","소음기 부착","밸런싱"],1,"사람 쪽 대책입니다."],
+["저주파 진동 차단에 유리하고 큰 하중을 견디는 방진재는?",["금속 스프링","방진고무","흡음재","유리섬유"],0,"스프링은 저주파입니다."],
+["방사선투과검사에 사용하는 것은?",["X선·γ선","초음파","자분","침투액"],0,"X선·γ선입니다."],
+["차음과 흡음에 대한 설명으로 옳은 것은?",["흡음은 소리 통과를 막는다","차음은 소리 에너지를 흡수한다","흡음재는 다공질 재료다","차음재는 가벼울수록 좋다"],2,"흡음재는 다공질입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s3_p5';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

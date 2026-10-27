@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>산업안전기사 3과목</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--ok:#2f9e44}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--ok:#51cf66}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.55}
+main{max-width:760px;margin:0 auto;padding:16px 12px 40px}
+h1{font-size:20px;margin:4px 0}
+.sub{color:var(--sub);font-size:13.5px;margin:0 0 12px}
+.sn{display:flex;gap:6px;margin-bottom:12px}
+.sn a{font-size:13px;padding:4px 12px;border:1px solid var(--line);border-radius:14px;text-decoration:none;color:var(--ink);background:var(--card)}
+.sn a.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.tot{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:14px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;text-decoration:none;color:var(--ink)}
+.card.off{opacity:.5}
+.ct{display:flex;justify-content:space-between;gap:8px}
+.ct b{font-size:16px}
+.pg{font-size:12.5px;color:var(--sub);flex:none}
+ul{margin:6px 0 8px;padding-left:18px;color:var(--sub);font-size:13.5px}
+.mb{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.mb i{display:block;height:100%;width:0;background:var(--ok)}
+.tot .mb{margin-top:8px}
+</style></head><body><main>
+<h1>📗 산업안전기사 필기 · 3과목</h1>
+<p class="sub">기계·기구 및 설비 안전 관리 (20문항) · 출제기준 2027.1.1~2029.12.31</p>
+<div class="sn"><a href="산업안전기사_1과목_목차.html">1과목</a><a href="산업안전기사_2과목_목차.html">2과목</a><a class="on" href="산업안전기사_3과목_목차.html">3과목</a></div>
+<div class="tot">전체 진도 <b id="tp">0%</b><div class="mb"><i id="tb"></i></div></div>
+<a class="card" href="3과목_1_기계공정의_안전.html"><div class="ct"><b>1. 기계공정의 안전</b><span class="pg" data-key="s3_p1"></span></div><ul><li>기계공정의 특수성 분석</li><li>기계의 위험 안전조건 분석</li></ul><div class="mb"><i></i></div></a><a class="card" href="3과목_2_기계분야_재해조사_관리.html"><div class="ct"><b>2. 기계분야 산업재해 조사 및 관리</b><span class="pg" data-key="s3_p2"></span></div><ul><li>재해조사</li><li>산재분류 및 통계분석</li><li>안전점검·검사·인증 및 진단</li></ul><div class="mb"><i></i></div></a><a class="card" href="3과목_3_기계설비_위험요인.html"><div class="ct"><b>3. 기계설비 위험요인 분석</b><span class="pg" data-key="s3_p3"></span></div><ul><li>공작기계의 안전</li><li>프레스 및 전단기의 안전</li><li>기타 산업용 기계 기구</li><li>운반기계 및 양중기</li></ul><div class="mb"><i></i></div></a><a class="card" href="3과목_4_기계안전시설_관리.html"><div class="ct"><b>4. 기계안전시설 관리</b><span class="pg" data-key="s3_p4"></span></div><ul><li>안전시설 관리 계획하기</li><li>안전시설 설치하기</li><li>안전시설 유지·관리하기</li></ul><div class="mb"><i></i></div></a><a class="card" href="3과목_5_설비진단_검사.html"><div class="ct"><b>5. 설비진단 및 검사</b><span class="pg" data-key="s3_p5"></span></div><ul><li>비파괴검사의 종류 및 특징</li><li>소음·진동 방지 기술</li></ul><div class="mb"><i></i></div></a>
+</main>
+<script>
+let T=0,D=0;
+document.querySelectorAll('.pg').forEach(el=>{
+  if(!el.dataset.key)return;
+  let st={};try{st=JSON.parse(localStorage.getItem(el.dataset.key))||{}}catch(e){}
+  const n=st._n||0,d=Object.keys(st).filter(k=>k!=='_n'&&st[k]===true).length;
+  T+=n;D+=Math.min(d,n);
+  el.textContent=n?d+'/'+n+' 단원':'미시작';
+  const bar=el.closest('.card').querySelector('.mb i');if(n)bar.style.width=(d/n*100)+'%';
+});
+const pct=T?Math.round(D/T*100):0;document.getElementById('tp').textContent=pct+'%';document.getElementById('tb').style.width=pct+'%';
+</script></body></html>

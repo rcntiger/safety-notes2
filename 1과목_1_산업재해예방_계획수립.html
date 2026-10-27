@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>산업재해예방 계획 수립</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_1과목_목차.html">목차</a><h1>1. 산업재해예방 계획 수립</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①안전·위험</a><a href="#s2">②제이론</a><a href="#s3">③경제적 안전도</a><a href="#s4">④예방활동기법</a><a href="#s5">⑤예산</a><a href="#s6">⑥조직 구성</a><a href="#s7">⑦산안위</a><a href="#s8">⑧경영시스템</a><a href="#s9">⑨관리규정</a><a href="#s10">⑩개선·방지계획</a><a href="#s11">⑪최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 안전관리</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①안전·위험">
+<h2><span class="n">1-1</span>안전과 위험의 개념</h2>
+<h3>① 용어 구분</h3>
+<div class="tw"><table>
+<tr><th>용어</th><th>뜻</th></tr>
+<tr><td>위험 (Hazard)</td><td>사고를 일으킬 수 있는 잠재적 원인 = <b class="k">유해·위험요인</b></td></tr>
+<tr><td>위험성 (Risk)</td><td>위험요인이 사고로 이어질 <b class="k">가능성(빈도) × 중대성(강도)</b></td></tr>
+<tr><td>사고 (Accident)</td><td>원하지 않고 비효율적인, 변형된 사건</td></tr>
+<tr><td>재해 (Loss)</td><td>사고의 결과로 생긴 인적·물적 손실</td></tr>
+<tr><td>아차사고 (Near Miss)</td><td>인적·물적 손실이 <b class="k">없는</b> 사고</td></tr>
+<tr><td>산업재해</td><td>노무를 제공하는 사람이 업무 관련 설비·물질이나 작업 때문에 <b class="k">사망·부상·질병</b>에 걸리는 것</td></tr>
+<tr><td>중대재해</td><td>사망 <b class="k">1</b>명 이상 · 3개월 이상 요양 부상자 동시 <b class="k">2</b>명 이상 · 부상자·직업성 질병자 동시 <b class="k">10</b>명 이상</td></tr>
+</table></div>
+<div class="mn"><div class="t">"해저드는 씨앗, 리스크는 싹 틀 확률 × 얼마나 클지"</div>
+<div class="s">Hazard(원인 자체) ≠ Risk(가능성 × 중대성). <b>위험성 = 가·중</b> → "가중(加重)되는 위험성" / 중대재해는 "1·2·10"</div></div>
+<div class="trap">"위험성 = 빈도 + 강도"처럼 더하기로 낸 보기 주의. 곱(조합)입니다.</div>
+
+<h3>② 사고의 본질적 특성</h3>
+<div class="mn"><div class="t">"시간 · 우법 · 필우 · 재불" → 시간 맞춰 온 우(友)법, 필우(筆友)는 재불(再不)</div>
+<div class="s">사고의 <b>시간</b>성 · <b>우</b>연성 중의 <b>법</b>칙성 · <b>필</b>연성 중의 <b>우</b>연성 · 사고의 <b>재</b>현 <b>불</b>가능성</div></div>
+<div class="trap">"재현 가능성"은 오답. 똑같은 사고는 다시 만들 수 없음</div>
+
+<h3>③ 재해 발생 형태</h3>
+<ul>
+<li><b>단순자극형(집중형)</b>: 요인이 한곳에 집중되어 순간적으로 발생</li>
+<li><b>연쇄형</b>: 하나의 요인이 다른 요인을 낳으며 사슬처럼 이어짐</li>
+<li><b>복합형</b>: 집중형 + 연쇄형</li>
+</ul>
+<div class="mn"><div class="t">"한 번에 쾅(집중), 줄줄이(연쇄), 둘 다(복합)"</div></div>
+<div class="sum">해저드는 씨앗, 리스크는 가중! 시간 우법 필우 재불!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②제이론">
+<h2><span class="n">1-2</span>안전보건관리 제이론</h2>
+<h3>① 하인리히 도미노 이론 (5단계)</h3>
+<div class="mn"><div class="t">"사개불사재" → 사(四)개 도미노 사이에 불(火)이 붙어 사재(私財)를 태운다</div>
+<div class="s">① <b>사</b>회적 환경·유전적 요소 → ② <b>개</b>인적 결함 → ③ <b>불</b>안전한 행동·상태 → ④ <b>사</b>고 → ⑤ <b>재</b>해(상해)</div></div>
+<ul>
+<li>핵심: <b class="k">3단계(불안전한 행동·상태)</b>를 빼면 도미노가 멈춘다 → 사고 예방</li>
+<li>직접원인 비율: 불안전한 <b class="k">행동 88%</b> · 불안전한 <b class="k">상태 10%</b> · 불가항력 <b class="k">2%</b></li>
+</ul>
+<div class="mn"><div class="t">"가운데 불만 끄면 산다" / "팔팔(88)한 사람이 사고 친다"</div></div>
+
+<h3>② 버드 신도미노 이론</h3>
+<div class="mn"><div class="t">"통기직사상" → 통기(通氣)창으로 들어온 직사광선에 상처 입다</div>
+<div class="s">① <b>통</b>제의 부족(관리) → ② <b>기</b>본원인(기원) → ③ <b>직</b>접원인(징후) → ④ <b>사</b>고(접촉) → ⑤ <b>상</b>해(손실)</div></div>
+<div class="mn"><div class="t">괄호 속 단어: "관기징접손" → 관기(官妓)가 징을 접고 손을 씻다</div>
+<div class="s"><b>관</b>리 · <b>기</b>원 · <b>징</b>후 · <b>접</b>촉 · <b>손</b>실</div></div>
+<ul><li>근원은 <b class="k">관리(통제) 부족</b>, 예방은 <b class="k">기본원인(4M)</b> 제거 — 기본원인 = 개인적 요인 + 작업상 요인</li></ul>
+<div class="trap">하인리히는 "3단계 제거", 버드는 "기본원인 제거·관리 부족이 근원"</div>
+
+<h3>③ 아담스 · 웨버 이론</h3>
+<div class="tw"><table>
+<tr><th>이론</th><th>5단계</th><th>암기</th></tr>
+<tr><td>아담스</td><td>관리구조 → 작전적 에러 → 전술적 에러 → 사고 → 상해</td><td>"관(官)이 작전·전술 짜다 사상자"</td></tr>
+<tr><td>웨버</td><td>유전·환경 → 인간의 실수 → 불안전 행동·상태 → 사고 → 상해</td><td>"유실물(유·실·불) 사고"</td></tr>
+</table></div>
+<div class="mn"><div class="t">아담스: "작전은 윗선(경영자·감독자), 전술은 현장(불안전 행동·상태)"</div></div>
+
+<h3>④ 재해 구성 비율</h3>
+<div class="tw"><table>
+<tr><th>이론</th><th>비율</th><th>의미</th></tr>
+<tr><td>하인리히</td><td><b>1 : 29 : 300</b> (합 330)</td><td>중상해 : 경상해 : 무상해 사고</td></tr>
+<tr><td>버드</td><td><b>1 : 10 : 30 : 600</b> (합 641)</td><td>중상·폐질 : 경상 : 무상해 사고(물적손실) : 무상해·무사고(아차사고)</td></tr>
+</table></div>
+<div class="mn"><div class="t">"하인(下人)은 이구(29) 삼백(300), 버드(새)는 일·십·삼십·육백 짹짹"</div>
+<div class="s">비율 문제는 배수로 계산 (하인리히 경상 58건 → 무상해 600건)</div></div>
+
+<h3>⑤ 재해예방 4원칙</h3>
+<div class="mn"><div class="t">"손원예대" → 손님은 원래 예약 대기</div>
+<div class="s"><b>손</b>실우연 · <b>원</b>인계기(연계) · <b>예</b>방가능 · <b>대</b>책선정의 원칙</div></div>
+<ul>
+<li><b>손실우연</b>: 사고 결과 손실의 크기는 <b class="k">우연</b></li>
+<li><b>원인계기</b>: 사고에는 반드시 원인이 있고, 원인은 <b class="k">필연</b>·복합적</li>
+<li><b>예방가능</b>: 천재지변을 뺀 인재는 모두 예방 가능 / <b>대책선정</b>: 원인에 맞는 대책(3E)이 반드시 있다</li>
+</ul>
+<div class="trap">"손실은 우연, 원인은 필연" — 둘을 바꾼 보기 주의</div>
+
+<h3>⑥ 사고예방대책 기본원리 5단계</h3>
+<div class="mn"><div class="t">"조·사·분·선·적" → 조사관이 분석해서 선택하고 적용한다</div>
+<div class="s">① 안전<b>조</b>직 → ② <b>사</b>실의 발견 → ③ <b>분</b>석·평가 → ④ 시정방법의 <b>선</b>정 → ⑤ 시정책의 <b>적</b>용(3E)</div></div>
+<div class="mn"><div class="t">3E: "기교관(技巧官)" → 기술 · 교육 · 관리</div>
+<div class="s"><b>E</b>ngineering · <b>E</b>ducation · <b>E</b>nforcement → 4E는 + <b>E</b>nvironment</div></div>
+<div class="trap">Economy(경제)는 3E가 아님</div>
+<div class="sum">사개불사재·통기직사상! 하인 이구삼백, 버드 일십삼십육백! 손원예대, 조사분선적, 기교관!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<!-- s3 -->
+<section id="s3" data-nav="③경제적 안전도">
+<h2><span class="n">1-3</span>생산성과 경제적 안전도</h2>
+<h3>① 재해손실비 산정 방식</h3>
+<div class="tw"><table>
+<tr><th>학자</th><th>방식</th><th>암기</th></tr>
+<tr><td>하인리히</td><td>직접비 : 간접비 = <b>1 : 4</b> → 총비용 = 직접비 × 5</td><td>"하인은 일사(1:4)분란"</td></tr>
+<tr><td>시몬즈</td><td>총비용 = <b>보험 코스트 + 비보험 코스트</b></td><td>"시몬즈는 보험 둘"</td></tr>
+<tr><td>버드</td><td>보험비 1 : 비보험 재산비용 5~50 : 비보험 기타 1~3</td><td>"버드는 빙산"</td></tr>
+<tr><td>콤페스</td><td>총비용 = <b>공동비용 + 개별비용</b></td><td>"콤퍼스로 원 두 개"</td></tr>
+</table></div>
+<h3>② 시몬즈 비보험 코스트</h3>
+<p>A×휴업상해 + B×통원상해 + C×응급조치 + D×무상해사고 (건수)</p>
+<div class="mn"><div class="t">"휴통응무" → 휴(休)일에 통(痛)증 오면 응급실, 무(無)사하길</div></div>
+<div class="trap">사망·영구 전노동불능 상해는 비보험 코스트 산정 항목에서 <mark>제외</mark></div>
+<h3>③ 직접비 vs 간접비</h3>
+<ul>
+<li><b>직접비</b> = 산재보험 급여: 요양·휴업·장해·간병·유족급여, 상병보상연금, 장의비, 직업재활급여</li>
+<li><b>간접비</b>: 인적손실(시간), 물적손실(설비), 생산손실(중단), 특수손실 등</li>
+</ul>
+<div class="mn"><div class="t">"직접비는 보험에서 나가는 돈, 간접비는 공장이 멈춰서 잃는 돈"</div>
+<div class="s">직접비 8종: "요휴장간 유상장직" → 요가 강사가 휴강하자 장간(장기간) 유상으로 장직을 맡다</div></div>
+<div class="trap">생산중단·설비손실은 간접비. 직접비 1억 → 하인리히 총비용 5억</div>
+<h3>④ 안전과 생산성</h3>
+<ul><li>안전관리 효과: 재해 감소 → 생산성·품질 향상, 근로자 사기 향상, 손실비 감소, 기업 신뢰도 상승</li></ul>
+<div class="trap">"안전관리는 원가를 높여 생산성을 떨어뜨린다"는 오답</div>
+<div class="sum">하인 일사, 시몬즈 보험 둘(휴통응무), 버드 빙산, 콤페스 원 두 개!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<!-- s4 -->
+<section id="s4" data-nav="④예방활동기법">
+<h2><span class="n">1-4</span>재해예방활동기법</h2>
+<h3>① 무재해운동</h3>
+<div class="mn"><div class="t">3원칙: "무참선" → 무(無)념무상으로 참선(參禪)한다</div>
+<div class="s"><b>무</b>의 원칙(모든 위험요인 제거) · <b>참</b>가의 원칙(전원 참가) · <b>선</b>취의 원칙(안전제일, 미리 발견·해결)</div></div>
+<div class="mn"><div class="t">3기둥: "최관소" → 위에서 아래로 최고 · 관리 · 소집단</div>
+<div class="s"><b>최</b>고경영자의 엄격한 경영자세 · <b>관</b>리감독자에 의한 안전보건 추진(라인화) · 직장 <b>소</b>집단 자주활동 활성화</div></div>
+<h3>② 위험예지훈련 4라운드</h3>
+<div class="mn"><div class="t">"현본대목" → 현재 본대(本隊)의 대목표</div>
+<div class="s">1R <b>현</b>상파악(어떤 위험?) → 2R <b>본</b>질추구(이것이 위험 포인트) → 3R <b>대</b>책수립(당신이라면?) → 4R <b>목</b>표설정(우리는 이렇게 하자)</div></div>
+<h3>③ 브레인스토밍 4원칙</h3>
+<div class="mn"><div class="t">"비자대수" → 비자(visa) 받으러 대수(多數)가 몰렸다</div>
+<div class="s"><b>비</b>판금지 · <b>자</b>유분방 · <b>대</b>량발언 · <b>수</b>정발언(편승)</div></div>
+<h3>④ TBM (Tool Box Meeting)</h3>
+<ul><li>작업 전 현장에서 짧게(5~15분) 소수 인원이 하는 위험예지 미팅</li></ul>
+<div class="mn"><div class="t">5단계: "도점작위확" → 도장(도점) 찍고 작위(爵位) 확인</div>
+<div class="s"><b>도</b>입 → <b>점</b>검정비 → <b>작</b>업지시 → <b>위</b>험예지 → <b>확</b>인</div></div>
+<h3>⑤ 안전점검 종류</h3>
+<div class="mn"><div class="t">"정수특임" → 정수기 특임(특별임무) 점검</div>
+<div class="s"><b>정</b>기점검(계획) · <b>수</b>시점검(일상, 작업 전·중·후) · <b>특</b>별점검(기계 신설·변경, 천재지변 후) · <b>임</b>시점검(이상 발견 시)</div></div>
+<div class="sum">무참선 하며 최관소 기둥 세우고, 현본대목·비자대수·도점작위확·정수특임!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<!-- s5 -->
+<section id="s5" data-nav="⑤예산">
+<h2><span class="n">1-5</span>안전보건예산 편성 및 계상</h2>
+<h3>① 사업장 안전보건예산</h3>
+<ul>
+<li>대표이사 안전보건계획(500명 이상)에 <b class="k">안전보건 예산</b>과 시설 현황을 포함 → 이사회 보고·승인 ("방·조·<b>예</b>·실")</li>
+<li>안전보건관리책임자가 예산을 확보·집행하도록 관리</li>
+</ul>
+<h3>② 건설업 산업안전보건관리비</h3>
+<ul>
+<li>적용: 총공사금액 <b class="k">2천만 원 이상</b> 건설공사</li>
+<li>계상: <b class="k">발주자</b>가 공사금액에 계상 → <b class="k">수급인(시공자)</b>이 사용</li>
+<li>산정: 대상액(재료비 + 직접노무비) × 공사 종류·규모별 요율</li>
+<li>목적 외 사용 금지, 사용내역 기록·보존</li>
+</ul>
+<div class="mn"><div class="t">"이천만 원부터, 발주자가 쌓고 시공자가 쓴다"</div>
+<div class="s">대상액 = "재직(재료비 + 직접노무비)" → "재직 중인 사람 몫으로 계산"</div></div>
+<h3>③ 산업안전보건관리비 사용 항목</h3>
+<div class="mn"><div class="t">"사람·시설·보호구, 진단·교육·건강, 기술지도·본사·위험성평가"</div>
+<div class="s">안전관리자 등 인건비 · 안전시설비 · 보호구 · 안전보건진단비 · 안전보건교육비 · 근로자 건강장해예방비 · 기술지도비 · 본사 전담조직 인건비 · 위험성평가 등에 따른 비용</div></div>
+<div class="trap">일반 공사용 장비, 공사 진행 자체에 필요한 비용(예: 일반 가설울타리·경비원 인건비)은 사용 불가</div>
+<div class="sum">이천만 원부터 발주자가 쌓고 시공자가 쓴다! 대상액은 재직(재료비+직접노무비)!</div>
+<div class="quiz" data-set="s5"></div>
+<label class="chk"><input type="checkbox" data-k="s5">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 2 · 안전보건관리 체제 및 운용</div>
+
+<!-- s6 -->
+<section id="s6" data-nav="⑥조직 구성">
+<h2><span class="n">2-1</span>안전보건관리조직 구성</h2>
+<h3>① 조직 형태</h3>
+<div class="tw"><table>
+<tr><th>형태</th><th>규모</th><th>장점</th><th>단점</th></tr>
+<tr><td><b>라인형</b><br>(직계식)</td><td>소규모<br><b class="k">100명 미만</b></td><td>명령·지시가 <b>신속·정확</b></td><td>안전 <b>전문지식 부족</b>, 라인에 책임 과중</td></tr>
+<tr><td><b>스탭형</b><br>(참모식)</td><td>중규모<br><b class="k">100~1,000명</b></td><td>안전 <b>전문가</b>가 계획·조사·연구</td><td>생산부문에 안전 <b>책임·권한 없음</b>, 권한 다툼</td></tr>
+<tr><td><b>라인-스탭형</b><br>(직계참모식)</td><td>대규모<br><b class="k">1,000명 이상</b></td><td>둘의 장점 결합, 가장 <b>이상적</b></td><td>명령계통과 조언·권고 <b>혼동</b>, 스탭의 월권</td></tr>
+</table></div>
+<div class="mn"><div class="t">"소라 → 중스 → 대라스" → 작은 소라껍데기, 중간 스님, 큰 라스베가스</div>
+<div class="s">"라인은 빠르지만 모르고, 스탭은 알지만 힘이 없고, 라인스탭은 다 좋지만 헷갈린다"</div></div>
+
+<h3>② 관리자별 역할</h3>
+<div class="mn"><div class="t">"사장은 총괄, 반장은 현장, 참모는 조언"</div>
+<div class="s">안전보건관리책임자 = 총괄 / 관리감독자 = 현장(라인) / 안전·보건관리자 = 보좌·지도·조언(스탭)</div></div>
+
+<h3>③ 안전보건관리책임자 (총괄)</h3>
+<div class="mn"><div class="t">"계규교환 건원통 보위" → 계(契)모임 규칙으로 교환권 받고, 건물 원통하게 보위 섰다</div>
+<div class="s">예방<b>계</b>획 · 관리<b>규</b>정 작성·변경 · 안전보건<b>교</b>육 · 작업<b>환</b>경측정·개선 · <b>건</b>강진단 · 재해 <b>원</b>인조사·재발방지 · 재해 <b>통</b>계 · 안전장치·<b>보</b>호구 적격품 확인 · <b>위</b>험성평가</div></div>
+
+<h3>④ 관리감독자 (현장)</h3>
+<div class="mn"><div class="t">"점보 재정협위" → 점보(Jumbo) 비행기 재정을 협의한다</div>
+<div class="s">기계·설비 <b>점</b>검 · 작업복·<b>보</b>호구·방호장치 점검과 착용 지도 · 산업<b>재</b>해 보고·응급조치 · <b>정</b>리정돈·통로 확보 · 안전·보건관리자 지도에 <b>협</b>조 · <b>위</b>험성평가 참여</div></div>
+
+<h3>⑤ 안전관리자 (보좌·지도·조언)</h3>
+<div class="mn"><div class="t">"위위 적교 순원 통법 기록" → 위위~ 적의 다리를 순찰원이 통과법대로 기록</div>
+<div class="s"><b>위</b>원회 심의·의결 업무 · <b>위</b>험성평가 보좌 · 안전인증 기계 <b>적</b>격품 선정 · 안전<b>교</b>육 보좌 · <b>순</b>회점검·지도·조치 건의 · 재해 <b>원</b>인조사 · 재해 <b>통</b>계 · <b>법</b>령 이행 · 업무 <b>기록</b></div></div>
+
+<h3>⑥ 보건관리자</h3>
+<p>안전관리자 업무의 '안전' → '보건' + 고유 업무</p>
+<div class="mn"><div class="t">"엠뷸런스 의사가 의료행위하며 환기시킨다" (엠·의·의·환)</div>
+<div class="s"><b>M</b>SDS 게시·비치 · 산업보건<b>의</b> 직무 보좌 · <b>의</b>료행위 · 전체<b>환</b>기·국소배기장치 점검</div></div>
+<div class="mn"><div class="t">의료행위(의사·간호사인 경우): "가볍게 응급, 악화 막고 요양, 약"</div>
+<div class="s"><b>가</b>벼운 부상 치료 · <b>응</b>급처치 · <b>악</b>화 방지 · 질병자 <b>요</b>양 지도 · 의<b>약</b>품 투여</div></div>
+<div class="trap">MSDS·환기장치 = 보건관리자 / 보호구 착용지도·정리정돈 = 관리감독자 / 규정 작성·예방계획 = 책임자</div>
+<div class="sum">소라·중스·대라스! 사장은 계규교환, 반장은 점보재정, 참모는 위위적교, 보건은 엠의의환!</div>
+<div class="quiz" data-set="s6"></div>
+<label class="chk"><input type="checkbox" data-k="s6">이 단원 암기 완료</label>
+</section>
+
+<!-- s7 -->
+<section id="s7" data-nav="⑦산안위">
+<h2><span class="n">2-2</span>산업안전보건위원회 운영</h2>
+<div class="law">산업안전보건법 제24조 · 시행령 제34조~제39조</div>
+<h3>① 설치 대상</h3>
+<ul>
+<li>원칙: 상시근로자 <b class="k">100명 이상</b> (일부 위험 제조업 등은 <b class="k">50명 이상</b>)</li>
+<li>건설업: 공사금액 <b class="k">120억 원 이상</b> (토목공사업 <b class="k">150억 원 이상</b>)</li>
+</ul>
+<div class="mn"><div class="t">"백 명이면 위원회, 건설은 백이십억(토목 백오십억)"</div>
+<div class="s">안전보건관리규정의 100명과 같은 숫자 → "규정도 백, 위원회도 백"</div></div>
+<h3>② 구성 (노사 동수)</h3>
+<div class="tw"><table>
+<tr><th>근로자위원</th><th>사용자위원</th></tr>
+<tr><td>근로자대표<br>명예산업안전감독관<br>근로자대표가 지명한 <b>9명 이내</b> 근로자</td><td>사업 대표자<br>안전관리자 1명 · 보건관리자 1명<br>산업보건의<br>대표자가 지명한 <b>9명 이내</b> 부서장</td></tr>
+</table></div>
+<div class="mn"><div class="t">"양쪽 다 대표 + 9명, 근로자 쪽엔 명예감독관, 사용자 쪽엔 안전·보건·의사"</div></div>
+<div class="trap">안전관리자·보건관리자·산업보건의 = <mark>사용자위원</mark> / 명예산업안전감독관 = <mark>근로자위원</mark></div>
+<h3>③ 운영</h3>
+<ul>
+<li>정기회의 <b class="k">분기마다</b> 위원장이 소집 / 임시회의는 필요할 때</li>
+<li>의결: 재적위원 <b class="k">과반수 출석</b> + 출석위원 <b class="k">과반수 찬성</b></li>
+<li>위원장: 위원 중에서 <b class="k">호선</b> (노사 각 1명 공동위원장 가능)</li>
+<li>회의록 작성 · <b class="k">2년</b> 보존</li>
+</ul>
+<div class="mn"><div class="t">"분기마다 모여 과반·과반, 호선으로 뽑고 2년 보관"</div></div>
+<h3>④ 심의·의결 사항</h3>
+<div class="mn"><div class="t">"계규교환 건원통 + 기계" (책임자 업무와 거의 같음)</div>
+<div class="s">예방<b>계</b>획 · 관리<b>규</b>정 · 안전보건<b>교</b>육 · 작업<b>환</b>경 · <b>건</b>강관리 · 중대재해 <b>원</b>인조사·재발방지 · 재해<b>통</b>계 · 유해위험 <b>기계</b> 도입 시 안전조치</div></div>
+<div class="trap">임금·복리후생은 심의·의결 사항이 아님</div>
+<div class="sum">백 명이면 위원회, 양쪽 대표+9명, 분기마다 과반·과반, 2년 보관!</div>
+<div class="quiz" data-set="s7"></div>
+<label class="chk"><input type="checkbox" data-k="s7">이 단원 암기 완료</label>
+</section>
+
+<!-- s8 -->
+<section id="s8" data-nav="⑧경영시스템">
+<h2><span class="n">2-3</span>안전보건경영시스템</h2>
+<h3>① KOSHA-MS · ISO 45001</h3>
+<ul>
+<li><b>KOSHA-MS</b>: 안전보건<b class="k">공단</b>이 인증하는 국내 안전보건경영시스템</li>
+<li><b>ISO 45001</b>: 국제표준(2018), 기존 <b class="k">OHSAS 18001</b>을 대체</li>
+<li>둘 다 <b class="k">PDCA</b> 사이클이 기반</li>
+</ul>
+<div class="mn"><div class="t">"KOSHA는 공단표, ISO는 세계표, 둘 다 PDCA로 돈다"</div>
+<div class="s">ISO 45001 구성 "상리계지 운성개" → 상리(上里) 계곡지에 운석이 개 위로 떨어지다<br>조직<b>상</b>황 · <b>리</b>더십과 근로자 참여 · <b>계</b>획 · <b>지</b>원 · <b>운</b>영 · <b>성</b>과평가 · <b>개</b>선</div></div>
+
+<h3>② PDCA 사이클 (데밍 사이클)</h3>
+<div class="mn"><div class="t">"Please Do Check Again" / 구조 "목방 교실 검 조표"</div></div>
+<div class="tw"><table>
+<tr><th>단계</th><th>내용</th><th>ISO 45001</th></tr>
+<tr><td>P 계획</td><td><b>목</b>표 설정, <b>방</b>법 결정</td><td>상황·리더십·계획</td></tr>
+<tr><td>D 실시</td><td><b>교</b>육훈련, <b>실</b>시</td><td>지원·운영</td></tr>
+<tr><td>C 검토</td><td>결과를 목표와 비교 <b>검</b>토</td><td>성과평가</td></tr>
+<tr><td>A 조치</td><td>개선<b>조</b>치, <b>표</b>준화</td><td>개선</td></tr>
+</table></div>
+<div class="trap">C와 A 순서 바꾼 보기 단골 / 반복할수록 수준이 오르는 <mark>나선형 상승</mark></div>
+
+<h3>③ 안전보건관리계획</h3>
+<div class="mn"><div class="t">수립 유의사항: "독경(讀經)하던 실직자가 점점 근사해진다"</div>
+<div class="s"><b>독</b>자적(사업장 실태) · <b>경</b>영층 방침 명확 · <b>실</b>현 가능 · <b>직</b>장 단위 구체적 · <b>점</b>진적으로 높은 목표 · <b>근</b>원적 해결</div></div>
+<div class="mn"><div class="t">기본 방향: "유달산을 오른다" → 유지 → 달성 → 선취</div></div>
+<div class="mn"><div class="t">평가척도: "절에서 상 받은 평범한 도사"</div>
+<div class="s"><b>절</b>대척도: 재해 건수 · <b>상</b>대척도: 도수율·강도율 · <b>평</b>정척도: 우수/보통/불량 · <b>도</b>수척도: 중앙값·%</div></div>
+<div class="trap">도수<b>율</b>은 상대척도! 도수<b>척도</b>(중앙값·%)와 구분</div>
+
+<h3>④ 대표이사 안전보건계획 (법 제14조)</h3>
+<ul>
+<li>대상: 상시근로자 <b class="k">500명 이상</b> 회사 / 시공능력 <b class="k">상위 1,000위</b> 건설회사</li>
+<li>매년 <b class="k">이사회 보고·승인</b></li>
+</ul>
+<div class="mn"><div class="t">"오백 명 회사 대표는 방에서 조용히 예습실"</div>
+<div class="s">경영<b>방</b>침 · <b>조</b>직 구성·인원·역할 · <b>예</b>산·시설 현황 · 전년도 <b>실</b>적·다음 연도 계획</div></div>
+<div class="sum">KOSHA 공단표, ISO 세계표, Please Do Check Again! 독경 실직자가 유달산에서 절상평도!</div>
+<div class="quiz" data-set="s8"></div>
+<label class="chk"><input type="checkbox" data-k="s8">이 단원 암기 완료</label>
+</section>
+
+<!-- s9 -->
+<section id="s9" data-nav="⑨관리규정">
+<h2><span class="n">2-4</span>안전보건관리규정</h2>
+<div class="law">산업안전보건법 제25조~제28조 · 시행규칙 별표2·3</div>
+<h3>① 작성 대상 · 기한</h3>
+<ul>
+<li>원칙: 상시근로자 <b class="k">100명 이상</b> / 사무실형 업종은 <b class="k">300명 이상</b></li>
+<li>기한: 작성(변경) 사유 발생일부터 <b class="k">30일 이내</b></li>
+</ul>
+<div class="mn"><div class="t">"기본 100, 앉아서 일하면 300 / 백 명이면 한 달"</div>
+<div class="s">300명 업종 → <b>"농어민이 IT로 돈 벌어 서비스한다"</b><br>농업·어업 / 소프트웨어·컴퓨터프로그래밍·정보서비스 / 금융보험·임대(부동산 제외) / 전문과학기술(연구개발 제외)·사업지원·사회복지</div></div>
+<h3>② 포함 사항 · 세부내용</h3>
+<div class="mn"><div class="t">법 제25조: "조교작사" → 조교가 작사했다</div>
+<div class="s"><b>조</b>직과 직무 · <b>교</b>육 · <b>작</b>업장 안전·보건 관리 · <b>사</b>고조사·대책 · 기타</div></div>
+<div class="mn"><div class="t">별표3 세부내용: "총조교 안보사 위보" → 총 맞은 조교가 안보사에게 위로 보고한다</div>
+<div class="s"><b>총</b>칙 – <b>조</b>직 – <b>교</b>육 – <b>안</b>전관리 – <b>보</b>건관리 – <b>사</b>고조사 – <b>위</b>험성평가 – <b>보</b>칙</div></div>
+<ul>
+<li><b>안전관리</b>: 방호장치, 자율검사, 위험물질 보관, 작업허가, 보호구, 안전표지</li>
+<li><b>보건관리</b>: 건강진단, 작업환경측정, 유해물질 취급, 질병자 근로금지, 보건표지</li>
+</ul>
+<h3>③ 절차 · 효력 · 벌칙</h3>
+<ul>
+<li>산업안전보건위원회 <b class="k">심의·의결</b> (없으면 근로자대표 <b class="k">동의</b>)</li>
+<li>단체협약·취업규칙에 반하면 그 부분은 단체협약·취업규칙을 따름 / 법에 없는 사항은 근로기준법 준용</li>
+<li>사업주·근로자 모두 준수 / 미작성 시 <b class="k">500만 원 이하</b> 과태료</li>
+</ul>
+<div class="mn"><div class="t">"위원회 없으면 대표님 · 단취가 이긴다 · 모르면 근기법 · 안 쓰면 오백"</div></div>
+<h3>④ 작성 시 유의사항</h3>
+<div class="mn"><div class="t">"상명한 현이(현의)가 정직(정즉)하다"</div>
+<div class="s">법정기준 <b>상</b>회 · 직무권한 <b>명</b>확 · <b>현</b>장 실정 · 현장 <b>의</b>견 반영 · <b>정</b>기 검토 · 법령 개정 시 <b>즉</b>시 개정</div></div>
+<div class="sum">백 명이면 한 달 안에, 조교가 작사하고, 위원회 없으면 대표님, 안 쓰면 오백!</div>
+<div class="quiz" data-set="s9"></div>
+<label class="chk"><input type="checkbox" data-k="s9">이 단원 암기 완료</label>
+</section>
+
+<!-- s10 -->
+<section id="s10" data-nav="⑩개선·방지계획">
+<h2><span class="n">2-4+</span>관련 법정계획: 개선계획 · 방지계획서</h2>
+<h3>① 안전보건개선계획 (법 제49조~제50조)</h3>
+<p>재해가 많거나 위험한 사업장에 <b class="k">고용노동부장관이 명령</b>해서 수립 (사고 후)</p>
+<div class="mn"><div class="t">명령 대상: "재중이가 질러버렸다" → 재·중·질·노</div>
+<div class="s"><b>재</b>해율이 업종 평균보다 높음 · <b>중</b>대재해 발생 · 직업성 <b>질</b>병자 연 2명 이상(1천 명 이상 3명) · <b>노</b>출기준 초과</div></div>
+<div class="mn"><div class="t">진단 받아 수립: 재·중·질·확</div>
+<div class="s"><b>재</b>해율 평균의 <mark>2배 이상</mark> · <b>중</b>대재해 · <b>질</b>병자 · 화재·폭발·누출로 주변까지 피해 <b>확</b>산</div></div>
+<div class="mn"><div class="t">포함 내용: "시골 관광 교회 예약" → 시·관·교·예</div>
+<div class="s"><b>시</b>설 · 안전보건<b>관</b>리체제 · 안전보건<b>교</b>육 · 재해<b>예</b>방·작업환경 개선</div></div>
+<ul>
+<li>위원회 <b class="k">심의</b> (없으면 근로자대표 <b class="k">의견</b>)</li>
+<li>명령일부터 <b class="k">60일 이내</b> 지방고용노동관서 제출 → <b class="k">15일 이내</b> 심사 결과 통보</li>
+</ul>
+<div class="mn"><div class="t">"육십에 내고 보름에 답"</div></div>
+
+<h3>② 유해위험방지계획서 (법 제42조)</h3>
+<p>위험 설비 설치·대형 공사 <b class="k">전</b>에 <b class="k">공단</b>에 제출 (예방)</p>
+<div class="mn"><div class="t">제조업 300kW 이상 13개 업종: "금비 기자 식고, 목기 일가 화반전"</div>
+<div class="s"><b>금</b>속가공 · <b>비</b>금속광물 · <b>기</b>타기계 · <b>자</b>동차 · <b>식</b>료품 · <b>고</b>무·플라스틱 · <b>목</b>재 · <b>기</b>타제품 · <b>1</b>차금속 · <b>가</b>구 · <b>화</b>학 · <b>반</b>도체 · <b>전</b>자부품</div></div>
+<div class="mn"><div class="t">설비: "용왕님 화나서 건강 밀크 마심" → 용해로 · 화학설비 · 건조설비 · 가스집합 용접장치 · 밀폐·환기·배기설비</div></div>
+<div class="mn"><div class="t">건설: "삼일절(31m)에 삼만(3만㎡) 명이 오천(5천㎡) 원 들고, 오십(50m) 미터 다리 건너 이천만(2천만 톤) 톤 댐 보고, 열(10m) 미터 땅 파고 터널로!"</div></div>
+<div class="mn"><div class="t">"제조는 보름 전, 건설은 전날, 두 부씩 공단으로" / 첨부: "평양 개가 배 작업한다"</div>
+<div class="s">각 층 <b>평</b>면도 · 설비 <b>개</b>요 · <b>배</b>치도면 · <b>작</b>업방법 개요 / 심사 15일 이내, 결과 "적·조·부" / 확인: 제조 시운전, 건설 6개월마다</div></div>
+
+<h3>③ 한눈 비교</h3>
+<div class="tw"><table>
+<tr><th>구분</th><th>주체·절차</th><th>기한·제출처</th></tr>
+<tr><td>관리규정</td><td>사업주 / 위원회 심의·<b>의결</b>, 없으면 대표 <b>동의</b></td><td>30일 내 작성</td></tr>
+<tr><td>대표이사 계획</td><td>500명↑ / <b>이사회</b> 보고·승인</td><td>매년</td></tr>
+<tr><td>개선계획</td><td>장관 <b>명령</b> / 위원회 <b>심의</b>, 없으면 대표 <b>의견</b></td><td>60일 내, <b>노동관서</b></td></tr>
+<tr><td>방지계획서</td><td>제조 300kW 13업종·설비·건설</td><td>제조 15일 전 / 건설 전날, <b>공단</b> 2부</td></tr>
+</table></div>
+<div class="trap">규정은 의결·동의(강하게), 개선계획은 심의·의견(약하게) / 개선계획은 노동관서, 방지계획서는 공단</div>
+<div class="sum">재중이가 질러서 장관 명령, 육십에 내고 보름에 답! 방지계획서는 보름 전·전날, 두 부 들고 공단으로!</div>
+<div class="quiz" data-set="s10"></div>
+<label class="chk"><input type="checkbox" data-k="s10">이 단원 암기 완료</label>
+</section>
+
+<section id="s11" data-nav="⑪최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s11">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="산업안전기사_1과목_목차.html"><small>← 목차</small>1과목 목차</a><a class="nx" href="1과목_2_안전보호구_관리.html"><small>다음 →</small>2. 안전보호구 관리</a></div>
+<script>
+const S={
+"s1":[
+["유해·위험요인이 사고로 이어질 가능성과 중대성을 조합한 것은?",["위험(Hazard)","위험성(Risk)","사고(Accident)","재해(Loss)"],1,"위험성 = 가능성 × 중대성('가중')입니다."],
+["인적·물적 손실이 없는 사고를 무엇이라 하는가?",["중대재해","아차사고","산업재해","휴업재해"],1,"Near Miss, 아차사고입니다."],
+["사고의 본질적 특성이 아닌 것은?",["사고의 시간성","우연성 중의 법칙성","필연성 중의 우연성","사고의 재현 가능성"],3,"'시간 우법 필우 재불' — 재현 불가능성입니다."],
+["요인이 한곳에 집중되어 순간적으로 재해가 발생하는 형태는?",["단순자극형","연쇄형","복합형","분산형"],0,"'한 번에 쾅' — 단순자극형(집중형)입니다."],
+["중대재해에 해당하지 않는 것은?",["사망자 1명","3개월 이상 요양 부상자 동시 2명","부상자 동시 10명","1개월 요양 부상자 동시 5명"],3,"중대재해는 '1·2·10'입니다."]
+],
+"s2":[
+["하인리히 도미노 이론의 3단계는?",["사회적 환경 및 유전적 요소","개인적 결함","불안전한 행동 및 불안전한 상태","사고"],2,"'사개불사재'의 '불'입니다."],
+["버드의 신도미노 이론에서 재해의 근원적 원인(1단계)은?",["통제의 부족(관리)","기본원인(기원)","직접원인(징후)","사고(접촉)"],0,"'통기직사상'의 '통'입니다."],
+["아담스 이론에서 '작전적 에러'의 주체는?",["작업자","경영자·감독자","설비","환경"],1,"'작전은 윗선, 전술은 현장'입니다."],
+["버드의 1:10:30:600에서 600이 의미하는 것은?",["중상 또는 폐질","경상","무상해 사고(물적손실)","무상해·무사고(아차사고)"],3,"600은 손실 없는 아차사고입니다."],
+["하인리히가 제시한 재해 직접원인 중 불안전한 행동의 비율은?",["2%","10%","50%","88%"],3,"행동 88, 상태 10, 불가항력 2입니다."],
+["'사고 결과로 생긴 손실의 크기는 우연적이다'는 원칙은?",["손실우연의 원칙","원인계기의 원칙","예방가능의 원칙","대책선정의 원칙"],0,"손실은 우연, 원인은 필연입니다."],
+["사고예방대책 기본원리 5단계의 순서로 옳은 것은?",["조직→사실발견→분석평가→시정방법 선정→시정책 적용","사실발견→조직→분석평가→시정책 적용→시정방법 선정","조직→분석평가→사실발견→시정방법 선정→시정책 적용","분석평가→조직→사실발견→시정방법 선정→시정책 적용"],0,"'조사분선적'입니다."],
+["재해예방 대책의 3E가 아닌 것은?",["Engineering","Education","Enforcement","Economy"],3,"'기교관' — 기술·교육·관리입니다."]
+],
+"s3":[
+["하인리히 방식의 직접비와 간접비 비율은?",["1:1","1:2","1:4","1:10"],2,"'하인은 일사분란'입니다."],
+["재해손실비 중 직접비가 아닌 것은?",["요양급여","휴업급여","장해급여","생산 중단에 따른 손실"],3,"생산 중단 손실은 간접비입니다."],
+["시몬즈 방식의 비보험 코스트 산정 항목이 아닌 것은?",["휴업상해","통원상해","응급조치","사망"],3,"'휴통응무' — 사망은 제외입니다."],
+["직접비가 1억 원일 때 하인리히 방식의 총재해비용은?",["2억 원","4억 원","5억 원","10억 원"],2,"1 + 4 = 5억 원입니다."],
+["총재해비용을 공동비용과 개별비용의 합으로 본 학자는?",["하인리히","시몬즈","버드","콤페스"],3,"'콤퍼스로 원 두 개'입니다."]
+],
+"s4":[
+["무재해운동의 3원칙이 아닌 것은?",["무의 원칙","참가의 원칙","선취의 원칙","보상의 원칙"],3,"'무참선'입니다."],
+["무재해운동의 3기둥이 아닌 것은?",["최고경영자의 경영자세","관리감독자에 의한 안전보건 추진","직장 소집단 자주활동 활성화","외부 전문기관 위탁 관리"],3,"'최관소'입니다."],
+["위험예지훈련 4라운드의 순서로 옳은 것은?",["현상파악→본질추구→대책수립→목표설정","본질추구→현상파악→대책수립→목표설정","현상파악→대책수립→본질추구→목표설정","목표설정→현상파악→본질추구→대책수립"],0,"'현본대목'입니다."],
+["브레인스토밍의 4원칙이 아닌 것은?",["비판금지","자유분방","대량발언","결론의 신속한 도출"],3,"'비자대수'입니다."],
+["TBM 5단계 중 첫 단계는?",["도입","점검정비","작업지시","위험예지"],0,"'도점작위확'입니다."],
+["기계 신설·변경 또는 천재지변 후에 실시하는 점검은?",["정기점검","수시점검","특별점검","임시점검"],2,"'정수특임'의 특별점검입니다."]
+],
+"s5":[
+["산업안전보건관리비를 계상해야 하는 건설공사의 총공사금액은?",["1천만 원 이상","2천만 원 이상","5천만 원 이상","1억 원 이상"],1,"'이천만 원부터'입니다."],
+["산업안전보건관리비를 공사금액에 계상하는 자는?",["발주자","수급인","안전관리자","고용노동부장관"],0,"'발주자가 쌓고 시공자가 쓴다'입니다."],
+["산업안전보건관리비 계상의 기준이 되는 대상액은?",["재료비+직접노무비","재료비+간접노무비","직접노무비+경비","총공사금액 전체"],0,"'재직(재료비+직접노무비)'입니다."],
+["산업안전보건관리비 사용 항목이 아닌 것은?",["안전시설비","보호구 구입비","안전보건교육비","공사 진행용 일반 장비 임대료"],3,"공사 자체에 필요한 비용에는 쓸 수 없습니다."]
+],
+"s6":[
+["상시근로자 100명 미만 소규모 사업장에 적합한 조직은?",["라인형","스탭형","라인-스탭형","프로젝트형"],0,"'소라'입니다."],
+["스탭형 조직의 단점은?",["명령 전달이 느리다","생산부문에 안전 책임·권한이 없다","안전 전문가가 없다","소규모에만 적합하다"],1,"'스탭은 알지만 힘이 없다'입니다."],
+["라인-스탭형 조직의 단점은?",["안전 지식 부족","명령계통과 조언·권고의 혼동","명령 전달 지연이 없음","전문가 부재"],1,"'다 좋지만 헷갈린다'입니다."],
+["안전보건관리책임자의 업무가 아닌 것은?",["산업재해 예방계획 수립","안전보건관리규정 작성·변경","작업장 정리정돈과 통로 확보 감독","산업재해 통계 기록·유지"],2,"정리정돈은 관리감독자 업무입니다."],
+["관리감독자의 업무가 아닌 것은?",["기계·설비 안전보건 점검","작업복·보호구 착용 지도","MSDS 게시·비치","산업재해 보고와 응급조치"],2,"MSDS는 보건관리자 업무입니다."],
+["안전관리자의 업무에 해당하는 것은?",["사업장 순회점검, 지도 및 조치 건의","작업장 정리정돈 감독","MSDS 게시·비치","응급처치와 의약품 투여"],0,"'순원'의 순회점검입니다."]
+],
+"s7":[
+["산업안전보건위원회의 일반적 설치 대상은?",["상시근로자 50명 이상","상시근로자 100명 이상","상시근로자 300명 이상","상시근로자 500명 이상"],1,"'백 명이면 위원회'입니다."],
+["산업안전보건위원회 정기회의 주기는?",["매월","분기마다","반기마다","매년"],1,"'분기마다 모여'입니다."],
+["근로자위원이 아닌 것은?",["근로자대표","명예산업안전감독관","근로자대표가 지명한 근로자","안전관리자"],3,"안전관리자는 사용자위원입니다."],
+["산업안전보건위원회의 의결 방법은?",["재적 과반수 출석, 출석 과반수 찬성","재적 2/3 출석, 출석 과반수 찬성","출석 위원 전원 찬성","위원장 단독 결정"],0,"'과반·과반'입니다."],
+["산업안전보건위원회 회의록의 보존기간은?",["1년","2년","3년","5년"],1,"'2년 보관'입니다."],
+["건설업(토목공사업 제외)의 위원회 설치 기준 공사금액은?",["50억 원 이상","100억 원 이상","120억 원 이상","150억 원 이상"],2,"건설업 120억, 토목 150억입니다."]
+],
+"s8":[
+["안전보건공단이 인증하는 안전보건경영시스템은?",["ISO 9001","ISO 14001","KOSHA-MS","OHSAS 18001"],2,"'KOSHA는 공단표'입니다."],
+["ISO 45001의 구성 요소가 아닌 것은?",["리더십과 근로자 참여","계획","운영","재무감사"],3,"'상리계지 운성개'입니다."],
+["PDCA 사이클의 순서로 옳은 것은?",["P→C→D→A","P→D→C→A","P→D→A→C","D→P→C→A"],1,"'Please Do Check Again'입니다."],
+["안전보건관리계획 수립 시 유의사항으로 틀린 것은?",["사업장 실태에 맞게 독자적으로","동종 타 사업장 계획을 그대로 준용","직장 단위로 구체적으로","목표는 점진적으로 높은 수준"],1,"'독자적' 수립에 반합니다."],
+["도수율·강도율이 해당하는 평가척도는?",["절대척도","상대척도","평정척도","도수척도"],1,"율(비율)이므로 상대척도입니다."],
+["대표이사 안전보건계획에 포함할 내용이 아닌 것은?",["안전보건 경영방침","조직의 구성·인원·역할","예산과 시설 현황","근로자의 임금 체계"],3,"'방·조·예·실'입니다."]
+],
+"s9":[
+["제조업에서 안전보건관리규정을 작성해야 하는 상시근로자 수는?",["50명 이상","100명 이상","300명 이상","500명 이상"],1,"기본 기준은 100명입니다."],
+["작성 사유 발생일부터 며칠 이내에 작성해야 하는가?",["7일","14일","30일","60일"],2,"'백 명이면 한 달'입니다."],
+["300명 이상일 때 작성 대상이 되는 업종이 아닌 것은?",["금융 및 보험업","사회복지 서비스업","정보서비스업","건설업"],3,"건설업은 100명 기준입니다."],
+["안전보건관리규정에 포함해야 할 사항이 아닌 것은?",["안전보건교육","작업장의 안전 및 보건 관리","사고 조사 및 대책 수립","산업재해보상보험에 관한 사항"],3,"'조교작사'입니다."],
+["위원회가 없는 사업장에서 규정 작성 시 필요한 것은?",["근로자대표의 동의","근로자 과반수 서명","관리감독자 동의","지방고용노동관서 신고"],0,"'위원회 없으면 대표님'입니다."],
+["미작성 시 과태료는?",["100만 원 이하","300만 원 이하","500만 원 이하","1,000만 원 이하"],2,"'안 쓰면 오백'입니다."]
+],
+"s10":[
+["개선계획 수립 명령 대상이 아닌 것은?",["재해율이 업종 평균보다 높은 사업장","조치 미이행으로 중대재해 발생 사업장","유해인자 노출기준 초과 사업장","100명 이상으로 관리규정을 작성한 사업장"],3,"명령 대상은 '재·중·질·노'입니다."],
+["안전보건진단을 받아 수립하는 사업장의 재해율 기준은?",["업종 평균보다 높음","평균의 1.5배 이상","평균의 2배 이상","평균의 3배 이상"],2,"진단 대상은 2배 이상입니다."],
+["명령을 받은 사업주는 개선계획을 며칠 이내에 제출해야 하는가?",["15일","30일","60일","90일"],2,"'육십에 내고 보름에 답'입니다."],
+["제조업 방지계획서 제출 대상 전기 계약용량은?",["100kW 이상","200kW 이상","300kW 이상","500kW 이상"],2,"300kW 이상입니다."],
+["건설업 제출 대상 공사가 아닌 것은?",["높이 31m 이상 건축물","연면적 3만㎡ 이상 건축물","최대 지간길이 30m 다리","깊이 10m 이상 굴착"],2,"다리는 50m 이상입니다."],
+["건설업 방지계획서의 제출 시기는?",["착공 15일 전","착공 7일 전","착공 전날","착공 후 15일 이내"],2,"'건설은 전날'입니다."],
+["유해위험방지계획서의 제출처와 부수는?",["노동관서 1부","노동관서 2부","공단 1부","공단 2부"],3,"'두 부씩 공단으로'입니다."]
+],
+"final":[
+["하인리히 도미노 이론에서 '개인적 결함'은 몇 단계인가?",["1단계","2단계","3단계","4단계"],1,"사회환경(1), 개인결함(2)입니다."],
+["버드 이론에서 '기본원인'을 다른 말로 표현한 것은?",["관리","기원","징후","접촉"],1,"'관기징접손'입니다."],
+["어떤 사업장에서 경상해가 58건이면 하인리히 법칙상 무상해 사고는?",["300건","330건","600건","870건"],2,"29:300 = 58:600입니다."],
+["버드 법칙에서 경상이 20건이면 아차사고는?",["600건","1,200건","1,800건","6,000건"],1,"10:600 = 20:1,200입니다."],
+["직접비가 3천만 원일 때 하인리히 방식의 총재해비용은?",["6천만 원","1억 2천만 원","1억 5천만 원","3억 원"],2,"직접비 × 5입니다."],
+["무재해운동 3원칙 중 '선취의 원칙'의 의미는?",["위험요인을 0으로 만든다","전원이 참여한다","위험요인을 사전에 발견·해결한다","재해 후 신속히 보상한다"],2,"선취 = 미리 발견·해결입니다."],
+["위험예지훈련에서 '이것이 위험의 포인트다'를 찾는 라운드는?",["1R","2R","3R","4R"],1,"2R 본질추구입니다."],
+["상시근로자 1,500명 사업장에 가장 적합한 안전조직은?",["라인형","스탭형","라인-스탭형","직계식"],2,"1,000명 이상은 라인-스탭형입니다."],
+["산업안전보건위원회의 사용자위원이 아닌 것은?",["사업 대표자","보건관리자","산업보건의","명예산업안전감독관"],3,"명예산업안전감독관은 근로자위원입니다."],
+["직무 연결이 틀린 것은?",["책임자 – 산업재해 예방계획 수립","관리감독자 – 보호구 착용 지도","보건관리자 – MSDS 게시·비치","안전관리자 – 안전보건관리규정 작성·변경"],3,"규정 작성·변경은 책임자 업무입니다."],
+["PDCA 중 '표준화'가 이루어지는 단계는?",["Plan","Do","Check","Action"],3,"A단계는 조치와 표준화입니다."],
+["고용노동부장관의 '명령'으로 수립하는 것은?",["안전보건관리규정","대표이사 안전보건계획","안전보건개선계획","유해위험방지계획서"],2,"개선계획만 장관 명령입니다."],
+["산업안전보건위원회의 '심의·의결'을 거쳐야 하는 것은?",["안전보건관리규정","안전보건개선계획","유해위험방지계획서","대표이사 안전보건계획"],0,"규정은 의결·동의, 개선계획은 심의·의견입니다."],
+["상시근로자 250명인 소프트웨어 개발업체의 관리규정 작성 의무는?",["100명 이상이므로 있다","300명 미만이므로 없다","위원회가 결정한다","장관이 지정한다"],1,"IT 업종은 300명 기준입니다."],
+["다음 중 기한이 '60일'인 것은?",["관리규정 작성","개선계획 제출","방지계획서(제조업) 제출","방지계획서 심사"],1,"규정 30일, 개선계획 60일, 방지계획서 15일 전입니다."],
+["한국산업안전보건공단에 제출하는 것은?",["안전보건관리규정","안전보건개선계획","유해위험방지계획서","대표이사 안전보건계획"],2,"방지계획서는 공단입니다."],
+["산업안전보건관리비 계상 대상 총공사금액은?",["1천만 원 이상","2천만 원 이상","5천만 원 이상","1억 원 이상"],1,"2천만 원 이상입니다."],
+["관리규정 작성 대상과 위원회 설치 대상의 공통 기준(일반 업종)은?",["50명 이상","100명 이상","300명 이상","500명 이상"],1,"'규정도 백, 위원회도 백'입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s1_p1';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

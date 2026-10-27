@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>안전보호구 관리</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_1과목_목차.html">목차</a><h1>2. 안전보호구 관리</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①개요</a><a href="#s2">②종류별 특성</a><a href="#s3">③성능·시험</a><a href="#s4">④표지 종류</a><a href="#s5">⑤색채·색도</a><a href="#s6">⑥최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 보호구 및 안전장구 관리</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①개요">
+<h2><span class="n">1</span>보호구의 개요</h2>
+<div class="law">산업안전보건기준에 관한 규칙 제32조 · 법 시행령 제74조·제77조</div>
+<h3>① 구비조건 · 선정 시 유의사항</h3>
+<div class="mn"><div class="t">구비조건: "편하고, 잘 막고, 잘 만들고, 예쁘게"</div>
+<div class="s"><b>편하고</b>: 착용 간편·작업 방해 없음 · <b>잘 막고</b>: 방호성능 충분 · <b>잘 만들고</b>: 재료 품질·구조·끝마무리 양호 · <b>예쁘게</b>: 외양·외관 양호</div></div>
+<div class="mn"><div class="t">선정: "목적 맞고, 합격하고, 방해 없고, 몸에 맞게"</div>
+<div class="s">사용 목적 적합 · <b>안전인증 합격품</b> · 작업에 방해 없음 · 착용 쉽고 크기가 맞을 것</div></div>
+
+<h3>② 작업별 지급 보호구 (규칙 제32조)</h3>
+<div class="tw"><table>
+<tr><th>위험 작업</th><th>보호구</th></tr>
+<tr><td>물체 낙하·비래·추락</td><td>안전모</td></tr>
+<tr><td>높이·깊이 <b class="k">2m 이상</b> 추락 위험</td><td>안전대</td></tr>
+<tr><td>물체 낙하·충격·끼임·감전·정전기 대전</td><td>안전화</td></tr>
+<tr><td>물체가 흩날림</td><td>보안경</td></tr>
+<tr><td>용접 불꽃·물체 흩날림</td><td>보안면</td></tr>
+<tr><td>감전</td><td>절연용 보호구</td></tr>
+<tr><td>고열 화상</td><td>방열복</td></tr>
+<tr><td>선창 등 분진 심한 하역</td><td>방진마스크</td></tr>
+<tr><td><b class="k">영하 18℃ 이하</b> 급냉동어창 하역</td><td>방한모·방한복·방한화·방한장갑</td></tr>
+<tr><td>이륜자동차·자전거로 운반·배달</td><td>(승차용) 안전모</td></tr>
+</table></div>
+<div class="mn"><div class="t">"이(2)미터 위에선 안대(안전대), 영하 18도엔 방한 4종 세트"</div>
+<div class="s">용접 불꽃은 보안<b>면</b>(얼굴 전체), 그냥 흩날림은 보안<b>경</b>(눈만)</div></div>
+
+<h3>③ 안전인증 대상 12종 vs 자율안전확인 3종</h3>
+<div class="mn"><div class="t">안전인증: "머리부터 발끝까지" 매운맛</div>
+<div class="s"><b>머리</b>: 안전모(추락·감전용) · <b>눈·얼굴</b>: 보안경(차광·비산물용), 용접용 보안면 · <b>귀</b>: 방음용 귀마개·귀덮개 · <b>코·입</b>: 방진·방독·송기마스크, 전동식 호흡보호구 · <b>몸</b>: 보호복, 안전대 · <b>손</b>: 안전장갑 · <b>발</b>: 안전화</div></div>
+<div class="mn"><div class="t">자율안전확인: 같은 '모·경·면'의 순한맛</div>
+<div class="s">안전모(추락·감전 <b>제외</b>) · 보안경(차광·비산물 <b>제외</b>) · 보안면(용접용 <b>제외</b>)</div></div>
+<div class="trap">"추락·감전용 안전모", "용접용 보안면"은 <mark>안전인증</mark> 대상</div>
+
+<h3>④ 안전인증 표시사항 · 보관</h3>
+<div class="mn"><div class="t">표시: "형규가 제제(제재) 안 받는다"</div>
+<div class="s"><b>형</b>식·모델명 · <b>규</b>격·등급 · <b>제</b>조자명 · <b>제</b>조번호·제조연월 · <b>안</b>전인증번호</div></div>
+<div class="mn"><div class="t">보관: "그늘에, 혼자, 불 멀리, 씻어서 말려"</div>
+<div class="s">직사광선 피해 통풍 · 부식성 액체·유기용제·기름과 함께 보관 금지 · 발열체 주변 금지 · 땀·흙 묻으면 세척 후 건조</div></div>
+<div class="sum">편하고 잘 막고 잘 만들고 예쁘게! 머리부터 발끝까지 매운맛 12종, 모·경·면 순한맛 3종!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②종류별 특성">
+<h2><span class="n">2</span>보호구의 종류별 특성</h2>
+<h3>① 안전모 종류 · 구조</h3>
+<div class="mn"><div class="t">"A는 위(Above), B는 바닥(Bottom), E는 전기(Electric)"</div>
+<div class="s"><b>AB</b>: 낙하·비래 + 추락 · <b>AE</b>: 낙하·비래 + 감전 · <b>ABE</b>: 낙하·비래 + 추락 + 감전</div></div>
+<ul>
+<li>구조: <b>모체</b> · <b>착장체</b>(머리고정대·머리받침고리·머리받침끈) · <b>충격흡수재</b> · <b>턱끈</b> · <b>챙</b></li>
+<li>무게 <b class="k">440g 이하</b> (턱끈 등 부속품 제외)</li>
+</ul>
+
+<h3>② 호흡보호구</h3>
+<div class="tw"><table>
+<tr><th>종류</th><th>쓰는 곳</th></tr>
+<tr><td>방진마스크</td><td>분진·흄·미스트 (산소 충분)</td></tr>
+<tr><td>방독마스크</td><td>유해가스·증기, 산소 <b class="k">18% 이상</b></td></tr>
+<tr><td>송기마스크</td><td>산소결핍(18% 미만)·고농도·밀폐공간 — 호스마스크, 에어라인마스크, 복합식 에어라인</td></tr>
+<tr><td>전동식 호흡보호구</td><td>전동기로 여과된 공기를 공급</td></tr>
+</table></div>
+<div class="mn"><div class="t">"방독은 18세 이상만 입장" → 미만이면 송기마스크</div></div>
+
+<h3>③ 귀 · 눈 · 발</h3>
+<div class="tw"><table>
+<tr><th>종류</th><th>기호</th><th>특성</th></tr>
+<tr><td>귀마개 1종</td><td>EP-1</td><td>저음부터 고음까지 차음</td></tr>
+<tr><td>귀마개 2종</td><td>EP-2</td><td>주로 고음 차음, 회화음 통과</td></tr>
+<tr><td>귀덮개</td><td>EM</td><td>귀 전체를 덮음</td></tr>
+</table></div>
+<div class="mn"><div class="t">"1종은 1부터 끝까지, 2종은 2층(고음)만" / EP = Ear Plug, EM = Ear Muff</div></div>
+<div class="mn"><div class="t">차광보안경: "자적(자전거) 복용" → 자외선용 · 적외선용 · 복합용 · 용접용</div></div>
+<div class="mn"><div class="t">안전화: "가고 정발하니 절절히 화난다"</div>
+<div class="s"><b>가</b>죽제 · <b>고</b>무제 · <b>정</b>전기 · <b>발</b>등 · <b>절</b>연화 · <b>절</b>연장화 · <b>화</b>학물질용 / 작업 등급: 중·보통·경작업용</div></div>
+
+<h3>④ 안전대</h3>
+<div class="tw"><table>
+<tr><th>종류</th><th>사용 구분</th></tr>
+<tr><td>벨트식</td><td>1개걸이용, U자걸이용</td></tr>
+<tr><td>안전그네식</td><td>1개걸이용, U자걸이용, <b class="k">추락방지대, 안전블록</b></td></tr>
+</table></div>
+<div class="mn"><div class="t">"추락방지대와 안전블록은 그네만 탄다"</div></div>
+<div class="sum">A는 위·B는 바닥·E는 전기, 방독은 18세 이상, 1종 끝까지·2종 고음만, 블록은 그네만!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<!-- s3 -->
+<section id="s3" data-nav="③성능·시험">
+<h2><span class="n">3</span>보호구의 성능기준 및 시험방법</h2>
+<h3>① 안전모 시험성능 6가지</h3>
+<div class="mn"><div class="t">"못이 관통하고, 충격 받고, 전기·물·불 다 맞고, 결국 턱끈 풀림"</div>
+<div class="s">내<b>관통</b>성 · <b>충격</b>흡수성 · 내<b>전</b>압성 · 내<b>수</b>성 · <b>난</b>연성 · <b>턱</b>끈풀림</div></div>
+<div class="tw"><table>
+<tr><th>항목</th><th>기준</th><th>암기</th></tr>
+<tr><td>내관통성</td><td>AE·ABE <b>9.5mm</b> 이하, AB <b>11.1mm</b> 이하</td><td>전기용은 더 얕게</td></tr>
+<tr><td>충격흡수성</td><td>최고전달충격력 <b>4,450N</b> 미만</td><td>사사오오</td></tr>
+<tr><td>내전압성</td><td>교류 <b>20kV</b> 1분, 충전전류 <b>10mA</b> 이하</td><td>이공·일공</td></tr>
+<tr><td>내수성</td><td>질량증가율 <b>1%</b> 미만</td><td>물 1%</td></tr>
+<tr><td>난연성</td><td>불꽃 내며 타는 시간 <b>5초</b> 이하</td><td>불 5초</td></tr>
+<tr><td>턱끈풀림</td><td><b>150N 이상 250N 이하</b></td><td>백오십~이백오십</td></tr>
+</table></div>
+<div class="trap">내전압성·내수성은 AE·ABE만 / 턱끈은 범위(150~250N)</div>
+
+<h3>② 방진마스크 등급 · 구비조건</h3>
+<div class="tw"><table>
+<tr><th>등급</th><th>포집효율</th><th>사용 장소</th></tr>
+<tr><td>특급</td><td>분리식 <b>99.95%</b>↑ / 안면부여과식 <b>99.0%</b>↑</td><td>베릴륨 등 독성 강한 분진, <b>석면</b></td></tr>
+<tr><td>1급</td><td><b>94.0%</b>↑</td><td>금속흄 등 열적 분진, 기계적 분진</td></tr>
+<tr><td>2급</td><td><b>80.0%</b>↑</td><td>그 밖의 분진</td></tr>
+</table></div>
+<div class="mn"><div class="t">"특급 구구(99), 일급 구사(94), 이급 팔공(80)" / 특급은 "특별한 돌(석면)을 베(베릴륨)는 곳"</div></div>
+<div class="mn"><div class="t">구비조건: "잘 거르고, 숨 편하고, 작고 가볍고, 넓게 보고, 꽉 붙고"</div>
+<div class="s">여과효율 ↑ · 흡·배기 저항 ↓ · 사용적 ↓ · 중량 ↓ · 시야 ↑ · 안면 밀착성 ↑</div></div>
+<div class="trap">"흡기저항이 클 것", "사용적이 클 것"은 오답</div>
+
+<h3>③ 방독마스크 등급 · 정화통</h3>
+<div class="tw"><table>
+<tr><th>등급</th><th>사용 농도</th></tr>
+<tr><td>고농도</td><td><b>2/100</b> 이하 (암모니아 <b>3/100</b>)</td></tr>
+<tr><td>중농도</td><td><b>1/100</b> 이하 (암모니아 <b>1.5/100</b>)</td></tr>
+<tr><td>저농도·최저농도</td><td><b>0.1/100</b> 이하, 긴급용 아님</td></tr>
+</table></div>
+<div class="mn"><div class="t">"고 2, 중 1, 저 0.1 — 암모니아만 1.5배 우대"</div></div>
+<div class="tw"><table>
+<tr><th>정화통</th><th>표시색</th></tr>
+<tr><td>유기화합물용</td><td><span class="sw" style="background:#8b5a2b"></span>갈색</td></tr>
+<tr><td>할로겐용 · 황화수소용 · 시안화수소용</td><td><span class="sw" style="background:#9aa0a6"></span>회색</td></tr>
+<tr><td>아황산용</td><td><span class="sw" style="background:#fcc419"></span>노란색</td></tr>
+<tr><td>암모니아용</td><td><span class="sw" style="background:#40c057"></span>녹색</td></tr>
+</table></div>
+<div class="mn"><div class="t">"유기농은 갈색 흙, 할·황·시는 회색 회사, 아! 노랑, 암모니아는 풀밭 녹색"</div></div>
+<div class="trap">'황'이 들어가도 황화수소는 <mark>회색</mark>, 아황산만 <mark>노란색</mark></div>
+<ul><li><b>파과</b>: 정화통이 흡착능력을 잃어 유해가스가 새어 나오는 상태 → 그때까지가 파과시간</li></ul>
+<div class="sum">관통·충격·전·수·난·턱! 특급 구구·일급 구사·이급 팔공! 유기 갈색·할황시 회색·아황산 노랑·암모니아 녹색!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<!-- s4 -->
+<section id="s4" data-nav="④표지 종류">
+<h2><span class="n">4</span>안전보건표지의 종류·용도 및 적용</h2>
+<div class="law">산업안전보건법 시행규칙 별표6·별표7·별표9</div>
+<h3>① 종류와 개수 (총 43종)</h3>
+<div class="tw"><table>
+<tr><th>종류</th><th>개수</th><th>모양 · 색</th></tr>
+<tr><td>금지표지</td><td><b>8</b></td><td>흰 바탕, <b>빨간 원 + 사선</b>, 그림은 검정</td></tr>
+<tr><td>경고표지</td><td><b>15</b></td><td>노란 바탕, <b>검은 삼각형</b> 테두리 (화학물질류는 빨간 마름모)</td></tr>
+<tr><td>지시표지</td><td><b>9</b></td><td><b>파란 원</b> 바탕, 그림은 흰색</td></tr>
+<tr><td>안내표지</td><td><b>8</b></td><td><b>녹색</b> 바탕 + 흰 그림 (또는 흰 바탕 + 녹색)</td></tr>
+<tr><td>출입금지표지</td><td><b>3</b></td><td>흰 바탕, 글자 검정·빨강</td></tr>
+</table></div>
+<div class="mn"><div class="t">"팔(8)자 좋은 경(15)찰이 지(9)구를 안(8)고 삼(3)천리" → 8·15·9·8·3 = 43</div>
+<div class="s">8·15는 광복절! "금지 8, 경고 15 = 8·15", 지시 9, 안내 8, 출입금지 3</div></div>
+
+<h3>② 금지표지 8종</h3>
+<div class="mn"><div class="t">"출보차사 탑금화물" → 출보(出步)한 차사(差使)가 탑에서 금화(金貨)물을 지켰다</div>
+<div class="s"><b>출</b>입금지 · <b>보</b>행금지 · <b>차</b>량통행금지 · <b>사</b>용금지 · <b>탑</b>승금지 · <b>금</b>연 · <b>화</b>기금지 · <b>물</b>체이동금지</div></div>
+
+<h3>③ 경고표지 15종</h3>
+<ul>
+<li><b>빨간 마름모</b>(화학물질): 인화성 · 산화성 · 폭발성 · 급성독성 · 부식성 · 발암성·변이원성·생식독성·전신독성·호흡기과민성 물질</li>
+<li><b>노란 삼각형</b>: 방사성물질 · 고압전기 · 매달린 물체 · 낙하물 · 고온 · 저온 · 몸균형 상실 · 레이저광선 · 위험장소</li>
+</ul>
+<div class="mn"><div class="t">"화학물질은 빨간 마름모(다이아몬드), 물리적 위험은 노란 삼각형"</div>
+<div class="s">빨간 마름모 6종: "인산폭급부발" → 인산(燐酸)이 폭급(暴急)하게 부발(浮發)</div></div>
+<div class="trap">방사성물질·고압전기는 노란 삼각형(경고). 빨간 마름모로 착각 주의</div>
+
+<h3>④ 지시표지 9종</h3>
+<div class="mn"><div class="t">"보호구 착용 지시 = 파란 원" → 9종 모두 '○○ 착용'</div>
+<div class="s">보안경 · 방독마스크 · 방진마스크 · 보안면 · 안전모 · 귀마개 · 안전화 · 안전장갑 · 안전복 착용</div></div>
+
+<h3>⑤ 안내표지 8종 · 출입금지표지 3종</h3>
+<div class="mn"><div class="t">안내: "녹응들세 비비좌우" → 녹색 응급 들것 세안, 비상 비상구 좌우</div>
+<div class="s"><b>녹</b>십자 · <b>응</b>급구호 · <b>들</b>것 · <b>세</b>안장치 · <b>비</b>상용기구 · <b>비</b>상구 · <b>좌</b>측비상구 · <b>우</b>측비상구</div></div>
+<div class="mn"><div class="t">출입금지(관계자외 출입금지) 3종: "허석금" → 허(許)락 없이 석(石)금(禁)</div>
+<div class="s"><b>허</b>가대상물질 작업장 · <b>석</b>면 취급·해체 작업장 · <b>금</b>지대상물질 취급 실험실 등</div></div>
+<div class="trap">녹십자표지는 '안내표지'입니다(지시 아님)</div>
+
+<h3>⑥ 설치 기준</h3>
+<ul>
+<li>근로자가 쉽게 알아볼 수 있는 장소·시설·물체에 설치·부착</li>
+<li>표지 속 그림·부호 크기는 표지 전체 규격의 <b class="k">30% 이상</b></li>
+<li>야간에 필요하면 야광물질 사용 / 흔들리거나 쉽게 파손되지 않게 견고하게</li>
+</ul>
+<div class="sum">팔자 좋은 경찰이 지구를 안고 삼천리(8·15·9·8·3)! 화학은 빨간 마름모, 보호구는 파란 원, 안내는 녹색!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<!-- s5 -->
+<section id="s5" data-nav="⑤색채·색도">
+<h2><span class="n">5</span>안전보건표지의 색채 및 색도기준</h2>
+<div class="law">시행규칙 별표8</div>
+<div class="tw"><table>
+<tr><th>색채</th><th>색도기준</th><th>용도</th><th>사용 예</th></tr>
+<tr><td><span class="sw" style="background:#e03131"></span>빨간색</td><td><b>7.5R 4/14</b></td><td>금지 / 경고</td><td>정지신호, 소화설비, 유해행위 금지 / 화학물질 취급장소 경고</td></tr>
+<tr><td><span class="sw" style="background:#fcc419"></span>노란색</td><td><b>5Y 8.5/12</b></td><td>경고</td><td>화학물질 외 위험경고, 주의표지, 기계방호물</td></tr>
+<tr><td><span class="sw" style="background:#1c7ed6"></span>파란색</td><td><b>2.5PB 4/10</b></td><td>지시</td><td>특정 행위의 지시, 사실의 고지</td></tr>
+<tr><td><span class="sw" style="background:#2f9e44"></span>녹색</td><td><b>2.5G 4/10</b></td><td>안내</td><td>비상구, 피난소, 사람·차량 통행표지</td></tr>
+<tr><td><span class="sw" style="background:#fff"></span>흰색</td><td><b>N9.5</b></td><td>보조색</td><td>파란색·녹색의 보조색</td></tr>
+<tr><td><span class="sw" style="background:#111"></span>검은색</td><td><b>N0.5</b></td><td>보조색</td><td>문자, 빨간색·노란색의 보조색</td></tr>
+</table></div>
+<div class="mn"><div class="t">빨강: "칠오(7.5) 사(4)에 십사(14)" → 빨간 날 칠오(75)세 할머니 사(四)월 십사일 생신</div></div>
+<div class="mn"><div class="t">노랑: "오(5) 팔점오(8.5) 십이(12)" → 노란 오팔(5·8.5) 보석 열두(12) 개</div></div>
+<div class="mn"><div class="t">파랑·녹색: "쌍둥이 이점오(2.5) 사(4)에 십(10)" → PB와 G만 다름</div></div>
+<div class="mn"><div class="t">흰색·검은색: "흰 건 거의 10(N9.5), 검은 건 거의 0(N0.5)"</div>
+<div class="s">보조색: "파랑·녹색엔 흰 글씨, 빨강·노랑엔 검은 글씨"</div></div>
+<div class="trap">빨간색은 금지와 <mark>경고</mark>(화학물질) 두 용도 / 소화설비는 빨간색 / 흰색이 보조하는 건 파랑·녹색</div>
+<ul><li>색도기준 읽는 법: <b>색상 명도/채도</b> (예: 7.5R 4/14 → 색상 7.5R, 명도 4, 채도 14)</li></ul>
+<div class="sum">빨강 7.5R 4/14, 노랑 5Y 8.5/12, 파랑·녹색 쌍둥이 2.5 4/10, 흰 N9.5·검 N0.5!</div>
+<div class="quiz" data-set="s5"></div>
+<label class="chk"><input type="checkbox" data-k="s5">이 단원 암기 완료</label>
+</section>
+
+<section id="s6" data-nav="⑥최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s6">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="1과목_1_산업재해예방_계획수립.html"><small>← 이전</small>1. 산업재해예방 계획 수립</a><a class="nx" href="1과목_3_산업안전심리.html"><small>다음 →</small>3. 산업안전심리</a></div>
+<script>
+const S={
+"s1":[
+["보호구의 구비조건으로 틀린 것은?",["착용이 간편할 것","작업에 방해가 되지 않을 것","방호성능이 충분할 것","기능만 고려하고 마무리는 상관없을 것"],3,"끝마무리·외관도 양호해야 합니다."],
+["높이 또는 깊이 몇 m 이상 추락 위험 장소에서 안전대를 지급하는가?",["1m","1.5m","2m","3m"],2,"'이(2)미터 위에선 안대'입니다."],
+["영하 18℃ 이하 급냉동어창 하역작업에 지급하지 않는 것은?",["방한모","방한복","방한화","방열복"],3,"방한 4종 세트입니다."],
+["안전인증 대상 보호구가 아닌 것은?",["방독마스크","안전대","전동식 호흡보호구","용접용이 아닌 일반 보안면"],3,"일반 보안면은 자율안전확인입니다."],
+["자율안전확인 대상 보호구는?",["추락·감전 방지용 안전모","용접용 보안면","차광·비산물 위험방지용이 아닌 보안경","방진마스크"],2,"'모·경·면 순한맛'입니다."],
+["안전인증 제품의 표시사항이 아닌 것은?",["형식 또는 모델명","제조번호 및 제조연월","안전인증번호","사용 유효기간"],3,"'형규가 제제 안 받는다'입니다."],
+["보호구 보관 방법으로 틀린 것은?",["직사광선을 피해 통풍이 잘되는 곳","부식성 액체·유기용제와 함께 보관","발열체 주변 보관 금지","오염 시 세척 후 건조"],1,"'혼자' 보관합니다."]
+],
+"s2":[
+["추락 위험 방지용 안전모의 기호에 포함되는 문자는?",["A","B","E","C"],1,"B = Bottom입니다."],
+["안전모의 무게 기준(부속품 제외)은?",["340g 이하","440g 이하","540g 이하","640g 이하"],1,"440g 이하입니다."],
+["방독마스크를 사용할 수 있는 산소농도는?",["16% 이상","18% 이상","19.5% 이상","21% 이상"],1,"'방독은 18세 이상만 입장'입니다."],
+["주로 고음을 차음하고 회화음은 통과시키는 귀마개는?",["EP-1","EP-2","EM","EP-3"],1,"'2종은 2층(고음)만'입니다."],
+["안전화의 종류가 아닌 것은?",["정전기 안전화","발등 안전화","절연장화","방열 안전화"],3,"'가고 정발 절절 화'입니다."],
+["안전블록을 사용할 수 있는 안전대는?",["벨트식","안전그네식","둘 다","둘 다 불가"],1,"'그네만 탄다'입니다."]
+],
+"s3":[
+["안전모 시험성능 기준 항목이 아닌 것은?",["내관통성","충격흡수성","내열성","턱끈풀림"],2,"내열성이 아니라 난연성입니다."],
+["AE·ABE종 안전모의 내관통성 기준은?",["9.5mm 이하","11.1mm 이하","15mm 이하","20mm 이하"],0,"전기용은 더 얕게 9.5mm입니다."],
+["안전모 충격흡수성의 최고전달충격력 기준은?",["2,450N 미만","3,450N 미만","4,450N 미만","5,450N 미만"],2,"'사사오오'입니다."],
+["안전모 턱끈풀림 기준은?",["50~100N","100~200N","150~250N","200~300N"],2,"150~250N입니다."],
+["분리식 특급 방진마스크의 포집효율은?",["94.0% 이상","99.0% 이상","99.95% 이상","80.0% 이상"],2,"분리식 특급 99.95%입니다."],
+["방진마스크의 구비조건으로 틀린 것은?",["여과효율이 좋을 것","흡·배기 저항이 클 것","사용적이 적을 것","시야가 넓을 것"],1,"저항은 작아야 합니다."],
+["정화통 표시색이 회색이 아닌 것은?",["할로겐용","황화수소용","시안화수소용","아황산용"],3,"아황산만 노란색입니다."],
+["암모니아용 정화통의 표시색은?",["갈색","회색","노란색","녹색"],3,"'풀밭 녹색'입니다."]
+],
+"s4":[
+["안전보건표지 중 경고표지의 개수는?",["8종","9종","15종","3종"],2,"8·15·9·8·3 — 경고 15종입니다."],
+["금지표지가 아닌 것은?",["출입금지","화기금지","탑승금지","안전모 착용"],3,"착용은 지시표지(파란 원)입니다."],
+["빨간 마름모 경고표지가 아닌 것은?",["인화성물질 경고","급성독성물질 경고","부식성물질 경고","고압전기 경고"],3,"고압전기는 노란 삼각형입니다."],
+["녹십자표지는 어느 표지에 속하는가?",["금지표지","경고표지","지시표지","안내표지"],3,"안내표지입니다."],
+["지시표지에 해당하는 것은?",["보안경 착용","세안장치","낙하물 경고","보행금지"],0,"지시표지 9종은 모두 '착용'입니다."],
+["안전보건표지 속 그림·부호의 크기 기준은?",["전체 규격의 10% 이상","전체 규격의 20% 이상","전체 규격의 30% 이상","전체 규격의 50% 이상"],2,"30% 이상입니다."],
+["출입금지표지(관계자외 출입금지)의 대상이 아닌 것은?",["허가대상물질 작업장","석면 취급·해체 작업장","금지대상물질 취급 실험실","소화설비 설치장소"],3,"'허석금'입니다."]
+],
+"s5":[
+["빨간색의 색도기준은?",["7.5R 4/14","5Y 8.5/12","2.5PB 4/10","2.5G 4/10"],0,"'칠오 사에 십사'입니다."],
+["노란색의 색도기준은?",["7.5R 4/14","5Y 8.5/12","2.5PB 4/10","N9.5"],1,"'오팔 십이'입니다."],
+["비상구, 피난소, 사람·차량 통행표지에 쓰는 색은?",["빨간색","노란색","파란색","녹색"],3,"녹색 = 안내입니다."],
+["특정 행위의 지시 및 사실의 고지에 쓰는 색은?",["빨간색","노란색","파란색","녹색"],2,"파란색 = 지시입니다."],
+["흰색이 보조색으로 쓰이는 색은?",["빨간색·노란색","파란색·녹색","빨간색·파란색","노란색·녹색"],1,"'파랑·녹색엔 흰 글씨'입니다."],
+["화학물질 취급장소에서의 유해·위험 경고에 쓰는 색은?",["빨간색","노란색","파란색","녹색"],0,"빨간색은 금지와 화학물질 경고 두 용도입니다."]
+],
+"final":[
+["산소농도 16%인 탱크 내부 작업 시 착용할 호흡보호구는?",["방진마스크","방독마스크","송기마스크","특급 방진마스크"],2,"18% 미만이면 송기마스크입니다."],
+["추락과 감전 위험이 함께 있는 전기공사에 맞는 안전모는?",["AB","AE","ABE","A"],2,"A·B·E 모두 갖춘 ABE입니다."],
+["석면 해체 작업에 사용하는 방진마스크 등급은?",["특급","1급","2급","등급 무관"],0,"석면은 특급입니다."],
+["황화수소용 정화통의 표시색은?",["갈색","회색","노란색","녹색"],1,"'할황시 회사'는 회색입니다."],
+["AB종 안전모에 적용하지 않는 시험항목은?",["내관통성","충격흡수성","내전압성","턱끈풀림"],2,"E가 없으니 내전압성 시험이 없습니다."],
+["암모니아 농도 2.5%인 장소에서 쓸 수 있는 방독마스크 등급은?",["고농도","중농도","저농도","사용 불가"],0,"암모니아 고농도는 3/100 이하입니다."],
+["안전보건표지 총 종류 수는?",["35종","40종","43종","45종"],2,"8+15+9+8+3 = 43종입니다."],
+["노란 바탕에 검은 삼각형 테두리로 표시하는 표지는?",["금지표지","경고표지","지시표지","안내표지"],1,"물리적 위험 경고표지입니다."],
+["파란색의 색도기준은?",["2.5PB 4/10","2.5G 4/10","5Y 8.5/12","7.5R 4/14"],0,"파랑은 PB, 녹색은 G입니다."],
+["소화설비 표시에 쓰는 색은?",["빨간색","노란색","파란색","녹색"],0,"소화설비·정지신호는 빨간색입니다."],
+["검은색이 보조색으로 쓰이는 색은?",["파란색","녹색","빨간색·노란색","흰색"],2,"'빨강·노랑엔 검은 글씨'입니다."],
+["자율안전확인 대상이 아닌 것은?",["추락·감전 방지용이 아닌 안전모","차광·비산물 방지용이 아닌 보안경","용접용이 아닌 보안면","용접용 보안면"],3,"용접용 보안면은 안전인증입니다."],
+["방진마스크 구비조건으로 옳은 것은?",["사용적이 클 것","안면 밀착성이 좋을 것","흡기저항이 클 것","중량이 무거울 것"],1,"꽉 붙어야 합니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s1_p2';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

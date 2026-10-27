@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>인간의 행동과학</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_1과목_목차.html">목차</a><h1>4. 인간의 행동과학</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①인간관계·사회행동</a><a href="#s2">②메커니즘·집단행동</a><a href="#s3">③사고경향·빈발성</a><a href="#s4">④동기부여</a><a href="#s5">⑤주의·부주의</a><a href="#s6">⑥리더십</a><a href="#s7">⑦사기·집단역학</a><a href="#s8">⑧피로</a><a href="#s9">⑨생체리듬·위험일</a><a href="#s10">⑩최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 조직과 인간행동</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①인간관계·사회행동">
+<h2><span class="n">1-1</span>인간관계 · 사회행동의 기초</h2>
+<h3>① 호손 실험 (메이요)</h3>
+<ul>
+<li>웨스턴 일렉트릭社 호손 공장 실험: 조명 같은 <b>물리적 조건</b>보다 <b class="k">인간관계·비공식 조직·감정</b>이 생산성에 더 큰 영향</li>
+<li>→ 인간관계론의 출발점</li>
+</ul>
+<div class="mn"><div class="t">"호손(好孫) — 좋은 손주는 조명이 아니라 관계로 큰다"</div></div>
+
+<h3>② 레빈의 행동법칙 B = f(P · E)</h3>
+<div class="tw"><table>
+<tr><th>기호</th><th>뜻</th><th>예</th></tr>
+<tr><td>B</td><td>인간의 행동 (Behavior)</td><td>—</td></tr>
+<tr><td>P</td><td>개체 (Person)</td><td>연령, 경험, 심신 상태, 성격, 지능</td></tr>
+<tr><td>E</td><td>심리적 환경 (Environment)</td><td>인간관계, 작업환경, 작업조건</td></tr>
+</table></div>
+<div class="mn"><div class="t">"행동(B)은 피(P)와 이(E)의 함수 — 사람과 환경의 곱"</div>
+<div class="s">P는 '내 몸 안의 것', E는 '내 밖의 것'</div></div>
+<div class="trap">'지능·성격·경험'은 P, '인간관계·작업환경'은 E</div>
+
+<h3>③ 사회행동의 기본 형태</h3>
+<div class="tw"><table>
+<tr><th>형태</th><th>세부</th></tr>
+<tr><td>협력</td><td>조력, 분업</td></tr>
+<tr><td>대립</td><td>공격, 경쟁</td></tr>
+<tr><td>도피</td><td>고립, 정신병, 자살</td></tr>
+<tr><td>융합</td><td>강제, 타협, 통합</td></tr>
+</table></div>
+<div class="mn"><div class="t">"협대도융" → 협상 대표가 도망치다 결국 융합</div>
+<div class="s">협력(조력·분업) · 대립(공격·경쟁) · 도피(고립·정신병·자살) · 융합(강제·타협·통합)</div></div>
+<div class="sum">호손은 관계로 큰다! B = f(P·E), 협대도융!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②메커니즘·집단행동">
+<h2><span class="n">1-2</span>인간관계 메커니즘 · 집단행동 · 행동특성</h2>
+<h3>① 인간관계 메커니즘</h3>
+<div class="tw"><table>
+<tr><th>메커니즘</th><th>뜻</th></tr>
+<tr><td>동일화</td><td>다른 사람의 행동·태도를 자기에게 받아들이거나 닮은 점을 찾음</td></tr>
+<tr><td>투사</td><td>자기 속의 억압된 것을 남의 것으로 여김</td></tr>
+<tr><td>커뮤니케이션</td><td>언어·몸짓 등으로 의미를 주고받음</td></tr>
+<tr><td>모방</td><td>남의 행동·판단을 본보기로 같거나 비슷하게 행동</td></tr>
+<tr><td>암시</td><td>남의 판단·행동을 <b class="k">무비판적으로, 논리적 근거 없이</b> 받아들임</td></tr>
+</table></div>
+<div class="mn"><div class="t">"동투커모암" → 동쪽 투수(동투)가 커피모임(커모)에서 암시를 받았다</div></div>
+<div class="trap">"무비판적·논리적 근거 없이" = 암시 / "본보기로 따라 함" = 모방</div>
+
+<h3>② 집단행동</h3>
+<div class="tw"><table>
+<tr><th>통제 있는 집단행동</th><th>통제 없는 집단행동 (군중행동)</th></tr>
+<tr><td>관습 · 제도적 행동 · 유행</td><td>군중 · 모브(폭동) · 패닉 · 심리적 전염</td></tr>
+</table></div>
+<div class="mn"><div class="t">통제 있음: "관제 유행" → 관(官)에서 정한 제도도 유행처럼 / 통제 없음: "군모 쓴 패거리의 심리" → 군·모·패·심</div></div>
+<div class="trap">'유행'은 통제 있는 집단행동, '패닉'은 통제 없는 집단행동</div>
+
+<h3>③ 인간의 일반적인 행동특성</h3>
+<ul>
+<li><b>간결성의 원리</b>: 최소 에너지로 목적을 이루려 함 → 생략행위·지름길 반응·억측판단의 원인</li>
+<li><b>주의의 일점집중</b>: 돌발 위험 앞에서 의식이 한 점에 쏠려 판단이 멈춤</li>
+<li><b>리스크 테이킹</b>: 객관적 위험을 주관적으로 판단해 위험을 감수하고 행동 (안전태도가 나쁠수록 증가)</li>
+</ul>
+<div class="mn"><div class="t">"귀찮으면 줄이고(간결성), 놀라면 굳고(일점집중), 괜찮겠지 하고 건넌다(리스크 테이킹)"</div></div>
+<div class="sum">동투커모암! 관제 유행 vs 군모패심! 간결성·일점집중·리스크 테이킹!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 2 · 재해 빈발성 및 행동과학</div>
+
+<!-- s3 -->
+<section id="s3" data-nav="③사고경향·빈발성">
+<h2><span class="n">2-1</span>사고경향 · 성격의 유형 · 재해 빈발성</h2>
+<h3>① 사고경향성</h3>
+<ul>
+<li>같은 조건에서도 <b>특정인이 사고를 반복</b>하는 경향 → 사고경향자(재해 빈발자)</li>
+<li>사고경향자 성격: 충동적, 감정 불안정, 공격적, 자기중심적, 주의 산만</li>
+<li>A형 성격(성급·경쟁적·공격적) → 스트레스·심혈관 질환 위험 ↑ / B형(느긋·여유)</li>
+</ul>
+
+<h3>② 재해 빈발 이론</h3>
+<div class="tw"><table>
+<tr><th>설</th><th>내용</th></tr>
+<tr><td>기회설</td><td>작업 자체에 위험이 많아서 재해가 잦다 → <b>작업환경 개선</b></td></tr>
+<tr><td>암시설</td><td>한 번 재해를 겪으면 겁·신경과민으로 대응능력이 떨어져 재해 반복</td></tr>
+<tr><td>빈발경향자설</td><td>소질적 결함 때문에 재해가 잦다</td></tr>
+</table></div>
+<div class="mn"><div class="t">"기암빈" → 기암(奇巖) 절벽에 사는 빈(貧)자는 자주 다친다</div>
+<div class="s"><b>기</b>회설 · <b>암</b>시설 · <b>빈</b>발경향자설</div></div>
+
+<h3>③ 재해 누발자 유형</h3>
+<div class="tw"><table>
+<tr><th>유형</th><th>원인</th></tr>
+<tr><td>미숙성 누발자</td><td>기능 미숙, 환경에 익숙하지 못함</td></tr>
+<tr><td>상황성 누발자</td><td>작업이 어려움, 기계설비 결함, 환경상 주의집중 곤란, 심신의 근심</td></tr>
+<tr><td>습관성 누발자</td><td>재해 경험으로 겁쟁이·신경과민, 슬럼프</td></tr>
+<tr><td>소질성 누발자</td><td>지능·성격·감각운동기능의 결함 (주의 산만, 흥분성 등)</td></tr>
+</table></div>
+<div class="mn"><div class="t">"미상습소" → 미상(未詳)의 습(濕)한 소(所)에서 자꾸 미끄러진다</div>
+<div class="s"><b>미</b>숙성 · <b>상</b>황성 · <b>습</b>관성 · <b>소</b>질성</div></div>
+<div class="trap">'기계설비 결함·작업 어려움' = 상황성 / '재해 경험 후 신경과민' = 습관성 (암시설과 연결)</div>
+<div class="sum">기암빈 절벽, 미상습소에서 미끄러진다!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<!-- s4 -->
+<section id="s4" data-nav="④동기부여">
+<h2><span class="n">2-2</span>동기부여</h2>
+<h3>① 매슬로 욕구 5단계</h3>
+<div class="mn"><div class="t">"생안사존자" → 생쥐가 안전한 사회에서 존경받는 자(者)가 되다</div>
+<div class="s">① <b>생</b>리적 → ② <b>안</b>전 → ③ <b>사</b>회적(소속·애정) → ④ <b>존</b>경(인정) → ⑤ <b>자</b>아실현</div></div>
+<h3>② 알더퍼 ERG</h3>
+<ul><li><b>E</b>xistence(존재) · <b>R</b>elatedness(관계) · <b>G</b>rowth(성장) — 상위 욕구가 좌절되면 하위 욕구로 퇴행(좌절-퇴행)</li></ul>
+<h3>③ 허즈버그 2요인 이론</h3>
+<div class="tw"><table>
+<tr><th>위생요인 (불만 요인)</th><th>동기요인 (만족 요인)</th></tr>
+<tr><td>회사 정책·관리, 감독, <b>급여</b>, 대인관계, 작업조건</td><td><b>성취</b>, 인정, 일 자체, 책임, 성장·승진</td></tr>
+</table></div>
+<div class="mn"><div class="t">"위생은 일 밖(환경), 동기는 일 안(내용)"</div>
+<div class="s">위생요인을 채우면 '불만이 없어질' 뿐, 만족(동기)은 동기요인에서 나온다</div></div>
+<div class="trap">급여·작업조건은 동기요인이 아니라 <mark>위생요인</mark></div>
+<h3>④ 맥그리거 X · Y 이론</h3>
+<div class="tw"><table>
+<tr><th>X 이론</th><th>Y 이론</th></tr>
+<tr><td>인간은 게으르고 일을 싫어함<br>명령·통제·처벌 필요<br>물질적·저차원 욕구<br>→ 권위적 관리</td><td>인간은 일을 즐기고 자율·자기통제<br>책임을 추구<br>정신적·고차원 욕구<br>→ 분권·참여·직무확장</td></tr>
+</table></div>
+<div class="mn"><div class="t">"X는 엑스(×) — 일 싫어, Y는 Yes — 일 좋아"</div></div>
+<h3>⑤ 맥클리랜드 성취동기 이론</h3>
+<div class="mn"><div class="t">"성권친" → 성(城)의 권력자와 친해지기 / 성취 · 권력 · 친화 욕구</div>
+<div class="s">성취욕구가 높은 사람: 적당한 위험 감수, 즉각적 피드백 선호, 스스로 책임지려 함</div></div>
+<h3>⑥ 데이비스 동기부여 이론</h3>
+<div class="tw"><table>
+<tr><th>식</th></tr>
+<tr><td>지식 × 기능 = <b>능력</b></td></tr>
+<tr><td>상황 × 태도 = <b>동기유발</b></td></tr>
+<tr><td>능력 × 동기유발 = <b>인간의 성과</b></td></tr>
+<tr><td>인간의 성과 × 물질의 성과 = <b>경영의 성과</b></td></tr>
+</table></div>
+<div class="mn"><div class="t">"지기는 능력, 상태는 동기, 능동이 인간, 인물이 경영"</div>
+<div class="s"><b>지</b>식×<b>기</b>능=능력 · <b>상</b>황×<b>태</b>도=동기 · <b>능</b>력×<b>동</b>기=인간 성과 · <b>인</b>간×<b>물</b>질=경영 성과</div></div>
+<h3>⑦ 이론 비교</h3>
+<div class="tw"><table>
+<tr><th>매슬로</th><th>알더퍼</th><th>허즈버그</th><th>맥그리거</th></tr>
+<tr><td>생리·안전</td><td>E</td><td rowspan="2">위생요인</td><td rowspan="2">X 이론</td></tr>
+<tr><td>사회적</td><td>R</td></tr>
+<tr><td>존경·자아실현</td><td>G</td><td>동기요인</td><td>Y 이론</td></tr>
+</table></div>
+<div class="sum">생안사존자, ERG, 위생은 밖·동기는 안, X는 싫어·Y는 좋아, 성권친, 지기·상태·능동·인물!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<!-- s5 -->
+<section id="s5" data-nav="⑤주의·부주의">
+<h2><span class="n">2-3</span>주의와 부주의</h2>
+<h3>① 주의의 특성</h3>
+<div class="tw"><table>
+<tr><th>특성</th><th>뜻</th></tr>
+<tr><td>선택성</td><td>여러 자극 중 소수만 골라 주의 (동시에 다 못 봄)</td></tr>
+<tr><td>방향성</td><td>주시하는 곳은 잘 보이고 멀어질수록 약해짐</td></tr>
+<tr><td>변동성</td><td>주의는 일정하게 유지되지 않고 강약이 주기적으로 바뀜</td></tr>
+</table></div>
+<div class="mn"><div class="t">"선방변" → 골키퍼의 선방(善防)도 시간이 지나면 변(變)한다</div></div>
+
+<h3>② 부주의의 원인 (현상)</h3>
+<div class="tw"><table>
+<tr><th>현상</th><th>예</th></tr>
+<tr><td>의식의 단절</td><td>질병 등으로 의식이 끊김</td></tr>
+<tr><td>의식의 우회</td><td>걱정·고민으로 의식이 딴 데로 감</td></tr>
+<tr><td>의식수준의 저하</td><td>피로·단조로운 작업으로 의식이 흐려짐</td></tr>
+<tr><td>의식의 과잉</td><td>돌발 상황에서 지나친 긴장 → 일점집중</td></tr>
+</table></div>
+<div class="mn"><div class="t">"끊기고(단절), 돌아가고(우회), 떨어지고(저하), 넘친다(과잉)"</div></div>
+<div class="trap">걱정거리로 인한 부주의 = 의식의 <mark>우회</mark> / 단조로운 작업 = 의식수준 <mark>저하</mark></div>
+
+<h3>③ 의식수준 5단계 (하시모토)</h3>
+<div class="tw"><table>
+<tr><th>Phase</th><th>상태</th><th>신뢰성</th></tr>
+<tr><td>0</td><td>무의식·실신</td><td>0</td></tr>
+<tr><td>I</td><td>의식 흐림 (피로·단조·졸음)</td><td>0.9 이하</td></tr>
+<tr><td>II</td><td>이완 (정상, 휴식·정례작업)</td><td>0.99 ~ 0.99999</td></tr>
+<tr><td>III</td><td>명료 (정상, 적극·판단·창조)</td><td><b class="k">0.999999 이상</b></td></tr>
+<tr><td>IV</td><td>과긴장 (흥분·패닉, 일점집중)</td><td>0.9 이하</td></tr>
+</table></div>
+<div class="mn"><div class="t">"0 실신, 1 졸음, 2 휴식, 3 최고, 4 패닉" — 3단계가 가장 믿을 만하다</div></div>
+
+<h3>④ 부주의 대책</h3>
+<ul>
+<li><b>외적 원인</b>(작업환경·작업순서 부적당) → 환경 정비, 작업순서 정비, 표준작업 제도</li>
+<li><b>내적 원인</b>(소질·의식 우회·경험 미숙) → 적성 배치, 카운슬링(상담), 안전교육</li>
+</ul>
+<div class="mn"><div class="t">"밖이 문제면 환경을, 안이 문제면 사람을 고친다" / 의식의 우회 → 카운슬링</div></div>
+<div class="sum">선방변! 끊기고·돌아가고·떨어지고·넘친다! 3단계가 최고, 우회엔 카운슬링!</div>
+<div class="quiz" data-set="s5"></div>
+<label class="chk"><input type="checkbox" data-k="s5">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 3 · 집단관리와 리더십</div>
+
+<!-- s6 -->
+<section id="s6" data-nav="⑥리더십">
+<h2><span class="n">3-1</span>리더십의 유형 · 리더십과 헤드십</h2>
+<h3>① 의사결정 방식에 따른 유형</h3>
+<ul>
+<li><b>권위형(전제형)</b>: 리더가 결정·지시 → 신속하지만 사기 저하</li>
+<li><b>민주형</b>: 집단 토의로 결정 → 참여·사기 향상</li>
+<li><b>자유방임형</b>: 구성원에게 맡김 → 리더 역할 최소</li>
+</ul>
+<h3>② 관리격자 (블레이크 · 머튼)</h3>
+<p>(가로 = 업적·생산에 대한 관심, 세로 = 인간에 대한 관심)</p>
+<div class="tw"><table>
+<tr><th>좌표</th><th>유형</th></tr>
+<tr><td>(1, 1)</td><td>무관심형</td></tr>
+<tr><td>(1, 9)</td><td>인기형 (컨트리클럽형) — 사람만</td></tr>
+<tr><td>(9, 1)</td><td>과업형 (권위형) — 일만</td></tr>
+<tr><td>(5, 5)</td><td>타협형 (중도형)</td></tr>
+<tr><td>(9, 9)</td><td>팀형 (이상형)</td></tr>
+</table></div>
+<div class="mn"><div class="t">"(일, 사람) 순서 — 일만 9면 과업, 사람만 9면 인기, 둘 다 9면 팀"</div></div>
+<div class="trap">(1,9)는 인기형, (9,1)은 과업형. 좌표 순서를 바꾼 보기 주의</div>
+
+<h3>③ 리더십 vs 헤드십</h3>
+<div class="tw"><table>
+<tr><th>구분</th><th>리더십</th><th>헤드십</th></tr>
+<tr><td>권한 부여</td><td>아래(구성원)의 동의·선출</td><td>위에서 위임·임명</td></tr>
+<tr><td>권한 근거</td><td>개인의 능력</td><td>법적·공식적</td></tr>
+<tr><td>지휘 형태</td><td>민주적</td><td>권위적</td></tr>
+<tr><td>상사·부하 관계</td><td>개인적 영향</td><td>지배적</td></tr>
+<tr><td>사회적 간격</td><td>좁음</td><td>넓음</td></tr>
+<tr><td>책임 귀속</td><td>상사와 부하</td><td>상사</td></tr>
+</table></div>
+<div class="mn"><div class="t">"리더는 따르게 만들고, 헤드는 앉혀준다" — 헤드십은 임명·법적·권위·간격 넓음</div></div>
+
+<h3>④ 리더의 권한</h3>
+<div class="tw"><table>
+<tr><th>조직이 부여한 권한</th><th>리더 스스로 만든 권한</th></tr>
+<tr><td>보상적 · 강압적 · 합법적</td><td>위임된(준거적) · 전문성</td></tr>
+</table></div>
+<div class="mn"><div class="t">"회사가 준 건 보강합(보상·강압·합법), 내가 만든 건 위전(위임·전문)"</div></div>
+<div class="sum">(일, 사람) 9·9가 팀! 리더는 따르게, 헤드는 앉혀준다! 회사는 보강합, 나는 위전!</div>
+<div class="quiz" data-set="s6"></div>
+<label class="chk"><input type="checkbox" data-k="s6">이 단원 암기 완료</label>
+</section>
+
+<!-- s7 -->
+<section id="s7" data-nav="⑦사기·집단역학">
+<h2><span class="n">3-2</span>사기와 집단역학</h2>
+<h3>① 모랄 서베이 (사기조사)</h3>
+<div class="mn"><div class="t">방법: "통사관실태" → 통사(通史)로 관찰한 실태</div>
+<div class="s"><b>통</b>계에 의한 방법(결근·지각·사고·이직률) · <b>사</b>례연구법 · <b>관</b>찰법 · <b>실</b>험연구법 · <b>태</b>도조사법(질문지·면접·집단토의·투사법)</div></div>
+<ul><li>효용: 근로자의 심리·욕구 파악 → 불만 해소, 경영관리 개선 자료, 근로자의 정화작용(카타르시스) 촉진</li></ul>
+
+<h3>② 소시오메트리 (모레노)</h3>
+<ul>
+<li>구성원 사이의 선호·거부 관계를 측정 → <b>소시오그램</b>(도표), <b>소시오매트릭스</b>(행렬)</li>
+<li>집단 응집성 지수 = 실제 상호 선호 관계 수 ÷ 가능한 상호 선호 관계 총수(<b>nC2</b>)</li>
+</ul>
+<div class="mn"><div class="t">5명 집단에서 서로 선택한 쌍이 4쌍 → 4 ÷ ₅C₂(10) = <b>0.4</b></div></div>
+
+<h3>③ 집단의 성질</h3>
+<ul>
+<li><b>응집성</b>이 높을수록 결속·목표 달성 ↑ (목표가 조직과 어긋나면 오히려 저해) — 작은 규모, 외부 위협, 함께한 시간, 성공 경험이 응집력을 높임</li>
+<li><b>동조 효과</b>: 집단 압력에 맞춰 의견·행동을 바꿈 / <b>시너지 효과</b>: 1+1 &gt; 2 / <b>링겔만 효과</b>(사회적 태만): 인원이 늘수록 1인당 노력 감소</li>
+<li>공식 집단 vs 비공식 집단(호손 실험) / 준거 집단: 자기 태도·행동의 기준으로 삼는 집단</li>
+</ul>
+<div class="mn"><div class="t">"작을수록 뭉치고, 많을수록 숨는다(링겔만)"</div></div>
+<div class="sum">통사관실태로 사기 조사, 소시오메트리는 nC2로 나누기, 작을수록 뭉치고 많을수록 숨는다!</div>
+<div class="quiz" data-set="s7"></div>
+<label class="chk"><input type="checkbox" data-k="s7">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 4 · 생체리듬과 피로</div>
+
+<!-- s8 -->
+<section id="s8" data-nav="⑧피로">
+<h2><span class="n">4-1</span>피로의 증상·대책 · 측정법 · 작업강도</h2>
+<h3>① 피로의 증상과 원인</h3>
+<ul>
+<li>증상: 작업 능률 저하, 동작 둔화, 주의력·판단력 감소, 의욕 저하, 플리커값 감소</li>
+<li>종류: 정신 피로 / 육체 피로, 급성 피로 / 만성 피로(축적)</li>
+<li>원인 — <b>기계적 요인</b>: 기계 종류, 조작부분 배치·감촉, 기계 이해 난이도 / <b>인간적 요인</b>: 생체리듬, 정신·신체 상태, 작업시간·내용·속도·환경</li>
+</ul>
+<h3>② 피로 대책</h3>
+<ul><li>충분한 휴식·수면, 작업부하(양·속도) 조절, 작업환경 정비, 단조로운 작업은 교대·변화, 영양 섭취, 휴식은 <b class="k">짧게 자주</b></li></ul>
+
+<h3>③ 피로의 측정법</h3>
+<div class="tw"><table>
+<tr><th>방법</th><th>측정 항목</th></tr>
+<tr><td>생리학적</td><td>근전도(EMG), 심전도(ECG), 뇌전도(EEG), 산소소비량·에너지대사율, <b>점멸융합주파수(플리커, CFF)</b></td></tr>
+<tr><td>심리학적</td><td>변별역치, 정신작업, 동작분석, 연속반응시간, 집중유지기능, 전신자각증상</td></tr>
+<tr><td>생화학적</td><td>혈색소 농도, 응혈시간, 혈액·소변 성분(스테로이드·아드레날린, 단백), 부신피질 기능</td></tr>
+</table></div>
+<div class="mn"><div class="t">"생리는 전기(○○전도·플리커), 생화학은 피와 오줌, 심리는 반응과 판단"</div>
+<div class="s">피로하면 플리커(CFF) 값이 <b>낮아진다</b> — "지치면 깜빡임이 빨리 보인다"</div></div>
+
+<h3>④ 작업강도 — 에너지대사율 (RMR)</h3>
+<p>RMR = (작업 시 소비에너지 − 안정 시 소비에너지) ÷ 기초대사량 = 작업대사량 ÷ 기초대사량</p>
+<div class="tw"><table>
+<tr><th>RMR</th><th>작업 강도</th></tr>
+<tr><td>0 ~ 2</td><td>경(輕)작업</td></tr>
+<tr><td>2 ~ 4</td><td>보통(中)작업</td></tr>
+<tr><td>4 ~ 7</td><td>중(重)작업</td></tr>
+<tr><td>7 이상</td><td>초중(超重)작업</td></tr>
+</table></div>
+<div class="mn"><div class="t">"영이 경, 이사 보통, 사칠 중, 칠 이상 초중"</div></div>
+<ul><li>참고 — 휴식시간(머렐): R = T(E − 5) ÷ (E − 1.5) &nbsp;(T: 작업시간, E: 작업 에너지소비율 kcal/분)</li></ul>
+<div class="sum">휴식은 짧게 자주! 생리는 전기·생화학은 피와 오줌! RMR 영이 경·이사 보통·사칠 중·칠 초중!</div>
+<div class="quiz" data-set="s8"></div>
+<label class="chk"><input type="checkbox" data-k="s8">이 단원 암기 완료</label>
+</section>
+
+<!-- s9 -->
+<section id="s9" data-nav="⑨생체리듬·위험일">
+<h2><span class="n">4-2</span>생체리듬 · 위험일</h2>
+<h3>① 바이오리듬 3종</h3>
+<div class="tw"><table>
+<tr><th>리듬</th><th>주기</th><th>표시</th><th>관련 기능</th></tr>
+<tr><td>육체적 리듬 (P)</td><td><b>23일</b></td><td>청색 실선</td><td>식욕, 활동력, 지구력, 소화력</td></tr>
+<tr><td>감성적 리듬 (S)</td><td><b>28일</b></td><td>적색 점선</td><td>감정, 주의력, 창조력, 예감·통찰력</td></tr>
+<tr><td>지성적 리듬 (I)</td><td><b>33일</b></td><td>녹색 일점쇄선</td><td>사고력, 기억력, 판단력, 상상력</td></tr>
+</table></div>
+<div class="mn"><div class="t">"몸은 이삼(23)일, 마음은 이팔(28)청춘, 머리는 삼삼(33)하다"</div>
+<div class="s">색: "몸은 파랗게 질리고(청), 감정은 빨갛게 달아오르고(적), 머리는 녹슨다(녹)"</div></div>
+<div class="trap">주의력·창조력은 감성적(S), 기억력·판단력은 지성적(I)</div>
+
+<h3>② 위험일</h3>
+<ul>
+<li>리듬이 (+)→(−) 또는 (−)→(+)로 바뀌며 <b class="k">기준선(0)을 지나는 날</b> → 불안정, 사고 위험 ↑</li>
+<li>여러 리듬의 위험일이 겹치면 더 위험</li>
+</ul>
+<div class="mn"><div class="t">"0선을 건너는 날이 위험일"</div></div>
+
+<h3>③ 하루 생체리듬 변화</h3>
+<ul>
+<li>체온 · 혈압 · 맥박수: <b>주간 상승, 야간 저하</b></li>
+<li>혈액의 수분 · 염분량: <b class="k">주간 감소, 야간 상승</b></li>
+<li>야간: 체중 감소, 소화분비액 감소, 말초 운동기능 저하 → 야간작업 사고 위험 ↑</li>
+<li>교대근무는 아침 → 저녁 → 밤의 <b>정방향</b> 순환이 바람직</li>
+</ul>
+<div class="mn"><div class="t">"밤엔 체온·혈압·맥박이 내려가고, 피의 물·소금만 올라간다"</div></div>
+<div class="sum">몸 23·마음 28·머리 33, 청·적·녹! 0선 건너는 날이 위험일! 밤엔 물·소금만 올라간다!</div>
+<div class="quiz" data-set="s9"></div>
+<label class="chk"><input type="checkbox" data-k="s9">이 단원 암기 완료</label>
+</section>
+
+<section id="s10" data-nav="⑩최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s10">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="1과목_3_산업안전심리.html"><small>← 이전</small>3. 산업안전심리</a><a class="nx" href="1과목_5_안전보건교육.html"><small>다음 →</small>5. 안전보건교육의 내용 및 방법</a></div>
+<script>
+const S={
+"s1":[
+["호손 실험의 결론으로 옳은 것은?",["조명이 밝을수록 생산성이 높다","물리적 작업조건이 생산성을 결정한다","인간관계와 비공식 조직이 생산성에 큰 영향을 준다","임금만이 생산성을 좌우한다"],2,"'관계로 큰다'입니다."],
+["레빈의 B = f(P·E)에서 P에 해당하지 않는 것은?",["연령","성격","지능","인간관계"],3,"인간관계는 E(환경)입니다."],
+["레빈의 행동법칙에서 E가 의미하는 것은?",["경험","심리적 환경","교육","에너지"],1,"E = Environment입니다."],
+["사회행동의 기본 형태가 아닌 것은?",["협력","대립","도피","모방"],3,"'협대도융'입니다."],
+["사회행동 형태 중 '도피'에 해당하는 것은?",["분업","경쟁","고립","타협"],2,"도피 = 고립·정신병·자살입니다."]
+],
+"s2":[
+["남의 판단·행동을 무비판적으로 논리적 근거 없이 받아들이는 것은?",["모방","암시","동일화","투사"],1,"암시입니다."],
+["인간관계 메커니즘이 아닌 것은?",["동일화","투사","모방","고립"],3,"'동투커모암'입니다."],
+["통제 있는 집단행동에 해당하는 것은?",["군중","패닉","유행","모브"],2,"'관제 유행'입니다."],
+["통제 없는 집단행동이 아닌 것은?",["군중","모브","패닉","관습"],3,"관습은 통제 있는 집단행동입니다."],
+["최소 에너지로 목적을 이루려는 인간의 행동특성은?",["간결성의 원리","주의의 일점집중","리스크 테이킹","동조 효과"],0,"간결성의 원리입니다."]
+],
+"s3":[
+["재해 빈발 이론이 아닌 것은?",["기회설","암시설","빈발경향자설","적성설"],3,"'기암빈'입니다."],
+["작업 자체에 위험이 많아 재해가 잦다고 보는 설은?",["기회설","암시설","빈발경향자설","소질설"],0,"기회설입니다."],
+["재해 누발자 유형 중 기계설비의 결함이나 작업의 어려움 때문에 재해가 잦은 유형은?",["미숙성","상황성","습관성","소질성"],1,"상황성입니다."],
+["재해 경험으로 겁쟁이·신경과민이 되어 재해가 반복되는 유형은?",["미숙성","상황성","습관성","소질성"],2,"습관성입니다."],
+["지능·성격·감각운동기능의 결함으로 재해가 잦은 유형은?",["미숙성","상황성","습관성","소질성"],3,"소질성입니다."]
+],
+"s4":[
+["매슬로 욕구 5단계의 순서로 옳은 것은?",["생리→안전→사회적→존경→자아실현","생리→사회적→안전→존경→자아실현","안전→생리→사회적→존경→자아실현","생리→안전→존경→사회적→자아실현"],0,"'생안사존자'입니다."],
+["허즈버그의 위생요인에 해당하는 것은?",["성취","인정","급여","책임"],2,"급여는 위생요인입니다."],
+["허즈버그의 동기요인에 해당하는 것은?",["감독","작업조건","대인관계","일 자체"],3,"'동기는 일 안'입니다."],
+["맥그리거의 Y 이론에 해당하는 것은?",["인간은 일을 싫어한다","명령·통제가 필요하다","자율과 자기통제가 가능하다","물질적 욕구만 중시한다"],2,"'Y는 Yes'입니다."],
+["데이비스 동기부여 이론에서 '상황 × 태도'의 결과는?",["능력","동기유발","인간의 성과","경영의 성과"],1,"'상태는 동기'입니다."],
+["데이비스 이론에서 '지식 × 기능'의 결과는?",["능력","동기유발","인간의 성과","물질의 성과"],0,"'지기는 능력'입니다."],
+["맥클리랜드 성취동기 이론의 3가지 욕구가 아닌 것은?",["성취욕구","권력욕구","친화욕구","생리욕구"],3,"'성권친'입니다."]
+],
+"s5":[
+["주의의 특성이 아닌 것은?",["선택성","방향성","변동성","연속성"],3,"'선방변'입니다."],
+["걱정·고민으로 의식이 다른 곳으로 향해 생기는 부주의는?",["의식의 단절","의식의 우회","의식수준의 저하","의식의 과잉"],1,"의식의 우회입니다."],
+["단조로운 반복 작업에서 생기기 쉬운 부주의는?",["의식의 단절","의식의 우회","의식수준의 저하","의식의 과잉"],2,"의식수준의 저하입니다."],
+["의식수준 단계 중 신뢰성이 가장 높은 단계는?",["Phase I","Phase II","Phase III","Phase IV"],2,"'3이 최고'입니다."],
+["의식수준 Phase IV의 상태는?",["실신","졸음","이완","과긴장(패닉)"],3,"'4는 패닉'입니다."],
+["의식의 우회에 대한 가장 적절한 대책은?",["작업환경 정비","카운슬링(상담)","표준작업 제도","설비 교체"],1,"내적 원인엔 카운슬링입니다."]
+],
+"s6":[
+["관리격자 이론에서 (9,9)형은?",["무관심형","인기형","과업형","팀형"],3,"둘 다 9면 팀형입니다."],
+["관리격자 이론에서 인간에 대한 관심은 높고 업적에 대한 관심은 낮은 유형은?",["(1,1)","(1,9)","(9,1)","(5,5)"],1,"(일, 사람) = (1, 9) 인기형입니다."],
+["헤드십의 특징이 아닌 것은?",["위에서 임명된다","권한 근거가 법적·공식적이다","부하와의 사회적 간격이 좁다","지휘 형태가 권위적이다"],2,"헤드십은 간격이 넓습니다."],
+["리더십의 특징으로 옳은 것은?",["권한이 위에서 위임된다","책임은 상사에게만 있다","구성원의 동의로 권한이 생긴다","지휘 형태가 권위적이다"],2,"리더는 따르게 만듭니다."],
+["리더의 권한 중 조직이 부여한 것이 아닌 것은?",["보상적 권한","강압적 권한","합법적 권한","전문성의 권한"],3,"전문성은 스스로 만든 권한입니다."]
+],
+"s7":[
+["모랄 서베이 방법이 아닌 것은?",["통계에 의한 방법","사례연구법","태도조사법","직무평가법"],3,"'통사관실태'입니다."],
+["구성원 간 선호·거부 관계를 측정하는 기법은?",["소시오메트리","모랄 서베이","브레인스토밍","관리격자"],0,"소시오메트리입니다."],
+["5명 집단에서 상호 선택한 쌍이 4쌍일 때 집단 응집성 지수는?",["0.2","0.4","0.5","0.8"],1,"4 ÷ ₅C₂(10) = 0.4입니다."],
+["집단 인원이 늘수록 1인당 노력이 줄어드는 현상은?",["시너지 효과","동조 효과","링겔만 효과","호손 효과"],2,"사회적 태만, 링겔만 효과입니다."]
+],
+"s8":[
+["피로 측정법 중 생리학적 방법에 해당하는 것은?",["변별역치","연속반응시간","점멸융합주파수(플리커)","혈색소 농도"],2,"플리커는 생리학적입니다."],
+["피로 측정법 중 생화학적 방법에 해당하는 것은?",["근전도","혈색소 농도","동작분석","뇌전도"],1,"'피와 오줌'입니다."],
+["피로가 쌓이면 플리커(CFF) 값은?",["높아진다","낮아진다","변화 없다","처음엔 낮다가 높아진다"],1,"피로하면 낮아집니다."],
+["에너지대사율(RMR)이 5인 작업의 강도는?",["경작업","보통작업","중작업","초중작업"],2,"'사칠 중'입니다."],
+["에너지대사율(RMR) 계산식으로 옳은 것은?",["작업대사량 ÷ 기초대사량","기초대사량 ÷ 작업대사량","작업 시 소비에너지 ÷ 안정 시 소비에너지","안정 시 소비에너지 − 기초대사량"],0,"작업대사량 ÷ 기초대사량입니다."]
+],
+"s9":[
+["감성적 리듬의 주기는?",["23일","28일","33일","30일"],1,"'마음은 이팔청춘'입니다."],
+["지성적 리듬의 주기와 표시는?",["23일, 청색 실선","28일, 적색 점선","33일, 녹색 일점쇄선","33일, 청색 실선"],2,"'머리는 삼삼, 녹슨다'입니다."],
+["육체적 리듬과 관련된 기능은?",["기억력","창조력","지구력","판단력"],2,"몸 = 식욕·활동력·지구력입니다."],
+["바이오리듬의 위험일은?",["리듬이 최고점인 날","리듬이 최저점인 날","리듬이 기준선(0)을 지나는 날","세 리듬이 모두 (+)인 날"],2,"'0선을 건너는 날'입니다."],
+["주간에 감소하고 야간에 상승하는 생체 현상은?",["체온","혈압","맥박수","혈액의 수분·염분량"],3,"'피의 물·소금만 올라간다'입니다."]
+],
+"final":[
+["레빈의 행동법칙에서 '작업환경'은 어디에 해당하는가?",["B","P","E","f"],2,"E(환경)입니다."],
+["남의 행동·판단을 본보기로 삼아 비슷하게 행동하는 인간관계 메커니즘은?",["암시","모방","투사","동일화"],1,"모방입니다."],
+["매슬로 욕구 단계에서 '소속과 애정'은 몇 단계인가?",["2단계","3단계","4단계","5단계"],1,"사회적 욕구, 3단계입니다."],
+["허즈버그 이론에서 위생요인을 충족하면 나타나는 결과는?",["만족이 커진다","불만이 줄어든다","동기가 강해진다","성과가 두 배가 된다"],1,"위생요인은 불만을 없앨 뿐입니다."],
+["알더퍼 ERG 이론에서 R이 의미하는 것은?",["존재","관계","성장","보상"],1,"Relatedness입니다."],
+["재해 누발자 중 기능이 미숙하고 환경에 익숙하지 못한 유형은?",["미숙성","상황성","습관성","소질성"],0,"미숙성입니다."],
+["돌발 상황에서 지나친 긴장으로 한 곳에만 주의가 쏠리는 것은?",["의식의 단절","의식의 우회","의식수준의 저하","의식의 과잉"],3,"의식의 과잉입니다."],
+["정상·이완 상태로 휴식이나 정례작업 시의 의식수준은?",["Phase I","Phase II","Phase III","Phase IV"],1,"'2 휴식'입니다."],
+["관리격자 이론에서 (9,1)형은?",["인기형","과업형","팀형","타협형"],1,"일만 9 = 과업형입니다."],
+["리더의 권한 중 리더 스스로 만든 권한끼리 묶은 것은?",["보상적·강압적","합법적·보상적","위임된·전문성","강압적·전문성"],2,"'위전'입니다."],
+["6명 집단에서 상호 선택한 쌍이 3쌍일 때 집단 응집성 지수는?",["0.2","0.3","0.5","0.6"],0,"3 ÷ ₆C₂(15) = 0.2입니다."],
+["육체적 리듬의 주기는?",["23일","28일","33일","21일"],0,"'몸은 이삼일'입니다."],
+["사기조사(모랄 서베이) 중 결근·지각·사고율·이직률로 판단하는 방법은?",["사례연구법","통계에 의한 방법","관찰법","태도조사법"],1,"통계에 의한 방법입니다."],
+["주의의 특성 중 '주의는 일정 수준을 유지하지 못하고 주기적으로 강약이 바뀐다'는 것은?",["선택성","방향성","변동성","집중성"],2,"변동성입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s1_p4';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

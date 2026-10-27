@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>산업안전심리</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_1과목_목차.html">목차</a><h1>3. 산업안전심리</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①심리검사</a><a href="#s2">②지각·정서</a><a href="#s3">③동기·좌절·갈등</a><a href="#s4">④불안·스트레스</a><a href="#s5">⑤적성·적성검사</a><a href="#s6">⑥직무·배치·인사</a><a href="#s7">⑦사고요인·심리요소</a><a href="#s8">⑧착오·착시·착각</a><a href="#s9">⑨최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 산업심리와 심리검사</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①심리검사">
+<h2><span class="n">1-1</span>심리검사의 종류 · 심리학적 요인</h2>
+<h3>① 심리검사의 구비조건</h3>
+<div class="mn"><div class="t">"표타신객실" → 기차표 끊고 타신 객실</div>
+<div class="s"><b>표</b>준화 · <b>타</b>당성(재려는 것을 제대로 재는가) · <b>신</b>뢰성(반복해도 같은 결과) · <b>객</b>관성 · <b>실</b>용성</div></div>
+<div class="trap">타당성 = '정확히 그것을 재는가', 신뢰성 = '일관되게 재는가'. 둘을 바꾼 보기 주의</div>
+
+<h3>② 심리검사의 종류</h3>
+<ul>
+<li><b>지능검사</b> · <b>적성검사</b>(GATB 등) · <b>흥미검사</b></li>
+<li><b>성격검사</b>: Y-G 성격검사, MMPI(다면적 인성검사), 로르샤흐(잉크반점 투사법), MBTI</li>
+</ul>
+<h3>③ Y-G(矢田部-Guilford) 성격검사 유형</h3>
+<div class="tw"><table>
+<tr><th>유형</th><th>특징</th></tr>
+<tr><td>A형 (평균형)</td><td>조화적·적응적</td></tr>
+<tr><td>B형 (우편형)</td><td>정서 <b>불안정</b> · 활동적·외향적 (부적응·적극형)</td></tr>
+<tr><td>C형 (좌편형)</td><td>정서 <b>안정</b> · 소극적·내향적</td></tr>
+<tr><td>D형 (우하형)</td><td>정서 <b>안정</b> · 활동적 · 사회 적응 → <b class="k">관리자 적합</b></td></tr>
+<tr><td>E형 (좌하형)</td><td>정서 <b>불안정</b> · 소극적 · 부적응</td></tr>
+</table></div>
+<div class="mn"><div class="t">"A는 Average, B는 Bad(불안정·적극), C는 Calm(안정·소극), D는 Dream 리더(안정·적극), E는 Escape(불안정·소극)"</div></div>
+
+<h3>④ 불안전 행동의 배후 요인</h3>
+<ul>
+<li><b>인적 요인</b> — 심리적: 망각, 걱정거리, 무의식 행동, 위험감각 부족, 지름길 반응, 생략행위, 억측판단, 착오 / 생리적: 피로, 수면부족, 알코올, 질병, 나이</li>
+<li><b>외적 요인</b>: 인간관계, 설비(기계), 작업(환경), 관리</li>
+</ul>
+<div class="mn"><div class="t">심리적 요인: "망건(망걱) 쓴 무위(無爲)도사가 지름길로 생(生)억지(억착) 부린다"</div>
+<div class="s"><b>망</b>각 · <b>걱</b>정거리 · <b>무</b>의식 행동 · <b>위</b>험감각 · <b>지</b>름길 반응 · <b>생</b>략행위 · <b>억</b>측판단 · <b>착</b>오</div></div>
+<div class="mn"><div class="t">억측판단이 생기는 배경: "희불과초" → 희망은 불확실, 과거 믿다 초조</div>
+<div class="s"><b>희</b>망적 관측 · 정보·지식의 <b>불</b>확실 · <b>과</b>거의 성공 경험 · <b>초</b>조한 심정</div></div>
+<div class="sum">표타신객실! D는 Dream 리더, E는 Escape! 망걱무위 지생억착, 억측은 희불과초!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②지각·정서">
+<h2><span class="n">1-2</span>지각과 정서</h2>
+<h3>① 지각의 과정</h3>
+<p>감각(자극 수용) → <b>지각</b>(선택 → 조직화 → 해석) → 판단 → 행동</p>
+<ul>
+<li><b>지각의 선택성</b>: 관심·기대·동기에 맞는 정보만 받아들임 → 위험 신호를 놓치는 원인</li>
+<li><b>지각의 항상성</b>: 거리·조명이 바뀌어도 크기·모양·색을 일정하게 인식</li>
+</ul>
+<div class="mn"><div class="t">"보고 싶은 것만 보인다" — 지각의 선택성이 사고를 부른다</div></div>
+
+<h3>② 게슈탈트 지각 원리 (형태 지각)</h3>
+<div class="mn"><div class="t">"근유연폐" → 가까이(근) 있으면 비슷해(유) 보이고, 이어지면(연) 닫힌다(폐)</div>
+<div class="s"><b>근</b>접성 · <b>유</b>사성 · <b>연</b>속성 · <b>폐</b>쇄성 — 낱개를 묶어 하나의 형태로 본다</div></div>
+
+<h3>③ 정서(감정)와 안전</h3>
+<ul>
+<li>분노·공포·불안 같은 강한 정서 → <b class="k">주의 범위가 좁아지고</b> 판단 착오 증가</li>
+<li>정서가 안정되어야 정확한 판단·동작이 가능 → 정서 안정은 안전의 기본 조건</li>
+</ul>
+<h3>④ 위험 지각</h3>
+<ul>
+<li>익숙하거나 스스로 통제한다고 느끼는 위험 → <b class="k">과소평가</b> (숙련자의 방심)</li>
+<li>낯설고 끔찍한 위험 → 과대평가</li>
+</ul>
+<div class="mn"><div class="t">"익숙한 위험이 제일 위험하다"</div></div>
+<div class="sum">보고 싶은 것만 보이고, 근유연폐로 묶어 보고, 흥분하면 좁아지고, 익숙하면 얕본다!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<!-- s3 -->
+<section id="s3" data-nav="③동기·좌절·갈등">
+<h2><span class="n">1-3</span>동기 · 좌절 · 갈등</h2>
+<h3>① 동기</h3>
+<ul>
+<li>동기 = 행동을 일으키고 방향을 정하는 내적 힘 / <b>내재적</b> 동기(일 자체의 즐거움) vs <b>외재적</b> 동기(보상·처벌)</li>
+<li>동기부여 이론(매슬로·허즈버그 등)은 <a href="1과목_4_인간의_행동과학.html#s4">4. 인간의 행동과학</a>에서 정리</li>
+</ul>
+
+<h3>② 욕구 좌절 시 적응기제</h3>
+<div class="tw"><table>
+<tr><th>구분</th><th>기제</th><th>뜻</th></tr>
+<tr><td rowspan="5"><b>방어적</b></td><td>보상</td><td>결함을 다른 장점으로 메워 열등감 해소</td></tr>
+<tr><td>합리화</td><td>그럴듯한 핑계 (여우의 신 포도)</td></tr>
+<tr><td>승화</td><td>억압된 욕구를 사회적으로 가치 있는 방향으로</td></tr>
+<tr><td>동일시</td><td>남의 장점을 자기 것처럼 여김</td></tr>
+<tr><td>투사</td><td>자기 결함·욕구를 남의 탓으로 돌림</td></tr>
+<tr><td rowspan="4"><b>도피적</b></td><td>고립</td><td>현실을 피해 자기 안으로 숨음</td></tr>
+<tr><td>퇴행</td><td>어린 시절 행동으로 돌아감</td></tr>
+<tr><td>억압</td><td>불쾌한 기억을 의식 밖으로 밀어냄</td></tr>
+<tr><td>백일몽</td><td>공상으로 만족</td></tr>
+<tr><td><b>공격적</b></td><td>직접·간접</td><td>폭행·싸움 / 욕설·비난·조소</td></tr>
+</table></div>
+<div class="mn"><div class="t">방어: "보합승동투" → 보합(保合)세 주식에 승동이가 투자했다</div>
+<div class="s"><b>보</b>상 · <b>합</b>리화 · <b>승</b>화 · <b>동</b>일시 · <b>투</b>사</div></div>
+<div class="mn"><div class="t">도피: "고퇴억백" → 고독하게 퇴근해 억지로 백일몽</div>
+<div class="s"><b>고</b>립 · <b>퇴</b>행 · <b>억</b>압 · <b>백</b>일몽</div></div>
+<div class="trap">합리화·투사는 '방어적', 퇴행·억압은 '도피적'. 소속을 바꾼 보기 단골</div>
+
+<h3>③ 갈등의 유형 (레빈)</h3>
+<div class="tw"><table>
+<tr><th>유형</th><th>상황</th><th>예</th></tr>
+<tr><td>접근 – 접근</td><td>둘 다 원하는 것 중 하나만</td><td>짜장 vs 짬뽕</td></tr>
+<tr><td>회피 – 회피</td><td>둘 다 싫은 것 중 하나는 해야</td><td>치과 vs 충치 통증</td></tr>
+<tr><td>접근 – 회피</td><td>한 대상에 좋음·싫음 공존</td><td>맛있지만 살찌는 케이크</td></tr>
+</table></div>
+<div class="mn"><div class="t">"짜장짬뽕, 치과충치, 케이크 살"</div></div>
+<div class="sum">방어는 보합승동투, 도피는 고퇴억백! 갈등은 짜장짬뽕·치과충치·케이크 살!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<!-- s4 -->
+<section id="s4" data-nav="④불안·스트레스">
+<h2><span class="n">1-4</span>불안과 스트레스</h2>
+<h3>① 스트레스 요인</h3>
+<div class="tw"><table>
+<tr><th>내적(내부) 요인 — 내 마음</th><th>외적(외부) 요인 — 바깥 사정</th></tr>
+<tr><td>자존심의 손상<br>업무상 죄책감<br>출세욕의 좌절<br>지나친 경쟁심·욕심<br>과거에의 집착</td><td>경제적 어려움<br>대인관계 갈등·대립<br>가족의 죽음·질병<br>가정 문제<br>직장 환경 변화</td></tr>
+</table></div>
+<div class="mn"><div class="t">"내적은 내 마음(자존심·죄책감·출세욕·경쟁심), 외적은 바깥 사정(돈·사람·가족)"</div></div>
+<div class="trap">"자존심의 손상"은 내적 요인 — 외적 요인을 고르는 문제의 단골 오답</div>
+
+<h3>② 일반적응증후군 (셀리에, GAS)</h3>
+<div class="mn"><div class="t">"경저소" → 경(警)찰이 저(抵)항하다 소(消)진됐다</div>
+<div class="s"><b>경</b>고반응기 → <b>저</b>항기 → <b>소</b>진(탈진)기</div></div>
+
+<h3>③ 각성 수준과 수행 (여키스-도슨 법칙)</h3>
+<ul>
+<li>각성(긴장)이 너무 낮거나 너무 높으면 수행 저하, <b class="k">적당할 때 최고</b> → 역U자 곡선</li>
+</ul>
+<div class="mn"><div class="t">"적당한 긴장이 최고 — 역U자"</div></div>
+
+<h3>④ 불안 · 스트레스 반응과 관리</h3>
+<ul>
+<li>불안: <b>상태불안</b>(상황에 따른 일시적) vs <b>특성불안</b>(성격적·지속적)</li>
+<li>반응: 생리적(심박·혈압 상승) · 심리적(불안·우울) · 행동적(사고·결근·음주)</li>
+<li>관리 — 개인: 운동, 수면, 이완·명상, 상담 / 조직: 직무 재설계, 역할 명확화, 참여 확대</li>
+</ul>
+<div class="sum">내적은 내 마음, 외적은 바깥 사정! 경저소, 적당한 긴장이 최고!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 2 · 직업적성과 배치</div>
+
+<!-- s5 -->
+<section id="s5" data-nav="⑤적성·적성검사">
+<h2><span class="n">2-1</span>직업적성의 분류 · 적성검사의 종류</h2>
+<h3>① 직업적성의 분류</h3>
+<div class="tw"><table>
+<tr><th>기계적 적성</th><th>사무적 적성</th></tr>
+<tr><td>손과 팔의 솜씨<br>공간 시각화<br>기계적 이해</td><td>지능<br>지각 속도<br>정확성</td></tr>
+</table></div>
+<div class="mn"><div class="t">기계적: "손공기" → 손으로 공기(空氣)를 기계처럼 다룬다 / 사무적: "지지정" → 지(智)·지(知)·정(正)</div>
+<div class="s">기계적 = <b>손</b>·<b>공</b>간·<b>기</b>계이해 / 사무적 = <b>지</b>능·<b>지</b>각속도·<b>정</b>확성</div></div>
+<div class="mn"><div class="t">적성의 기본요소: "지흥인직" → 지흥(智興)한 인직(人職)</div>
+<div class="s"><b>지</b>능 · <b>흥</b>미 · <b>인</b>간성(성격) · <b>직</b>업적성</div></div>
+
+<h3>② 적성검사의 종류</h3>
+<div class="mn"><div class="t">"시정계속" → 시정(市井)을 계속 살핀다</div>
+<div class="s"><b>시</b>각적 판단검사(형태 비교·입체도·평면도 판단) · <b>정</b>확도·기민성 검사(교환·회전·조립·분해) · <b>계</b>산에 의한 검사 · <b>속</b>도에 의한 검사(타점 속도)</div></div>
+<h3>③ GATB (일반적성검사) 9가지 적성</h3>
+<p>지능(G) · 언어(V) · 수리(N) · 사무지각(Q) · 공간판단(S) · 형태지각(P) · 운동반응(K) · 손가락 재치(F) · 손의 재치(M)</p>
+<div class="mn"><div class="t">"지언(知言)이 수사(修辭)를 공형(公兄)께 운반, 손가락·손으로"</div>
+<div class="s"><b>지</b>능 · <b>언</b>어 · <b>수</b>리 · <b>사</b>무지각 · <b>공</b>간판단 · <b>형</b>태지각 · <b>운</b>동반응 · <b>손가락</b> 재치 · <b>손</b> 재치</div></div>
+<div class="sum">기계는 손공기, 사무는 지지정, 기본요소 지흥인직, 검사는 시정계속!</div>
+<div class="quiz" data-set="s5"></div>
+<label class="chk"><input type="checkbox" data-k="s5">이 단원 암기 완료</label>
+</section>
+
+<!-- s6 -->
+<section id="s6" data-nav="⑥직무·배치·인사">
+<h2><span class="n">2-2</span>직무분석·직무평가 · 선발·배치 · 인사관리</h2>
+<h3>① 직무분석</h3>
+<div class="mn"><div class="t">방법: "면접하고, 관찰하고, 설문 돌리고, 결정적 사건은 일지에" → 면·관·설·결·일</div>
+<div class="s"><b>면</b>접법 · <b>관</b>찰법 · <b>설</b>문지(질문지)법 · <b>결</b>정적(중요) 사건법 · 작업<b>일</b>지법</div></div>
+<ul>
+<li>결과물: <b>직무기술서</b> = 일의 내용·조건 / <b>직무명세서</b> = 일하는 <b class="k">사람</b>의 요건(지식·기술·능력)</li>
+</ul>
+<div class="mn"><div class="t">"기술서는 일(job), 명세서는 사람(man)"</div></div>
+
+<h3>② 직무평가 (직무의 상대적 가치 → 임금)</h3>
+<div class="tw"><table>
+<tr><th>비계량적 (통째로)</th><th>계량적 (쪼개서)</th></tr>
+<tr><td>서열법 · 분류법</td><td>점수법 · 요소비교법</td></tr>
+</table></div>
+<div class="mn"><div class="t">"서분점요" → 서울 분식집 점심 요리 / 앞 둘은 통째로, 뒤 둘은 쪼개서</div></div>
+
+<h3>③ 선발 및 배치</h3>
+<ul>
+<li>선발 도구(적성검사·면접·시험)는 <b>신뢰도·타당도</b>가 있어야 함</li>
+<li>적정배치 시 고려: 적성검사로 개인 능력 파악 · 직무평가로 자격수준 결정 · 객관적 감정 요소 · 인사관리 기준 원칙 고수</li>
+<li>적정배치 효과: 근로의욕 향상, <b class="k">재해 예방</b>, 생산성 향상, 이직 감소</li>
+</ul>
+
+<h3>④ 인사관리의 주요 기능</h3>
+<div class="mn"><div class="t">"조선(朝鮮) 배를 작(作)상(商)이 만들었다" → 조·선·배·작·상</div>
+<div class="s"><b>조</b>직과 리더십 · <b>선</b>발(적성검사·시험) · <b>배</b>치 · <b>작</b>업분석과 업무평가 · <b>상</b>담 및 노사 간 이해</div></div>
+<div class="trap">'임금 인상', '생산 계획'은 인사관리 주요 기능 보기에서 오답</div>
+<div class="sum">면관설결일로 분석, 기술서는 일·명세서는 사람, 서분점요로 평가, 조선배 작상!</div>
+<div class="quiz" data-set="s6"></div>
+<label class="chk"><input type="checkbox" data-k="s6">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 3 · 인간의 특성과 안전과의 관계</div>
+
+<!-- s7 -->
+<section id="s7" data-nav="⑦사고요인·심리요소">
+<h2><span class="n">3-1</span>안전사고 요인 · 산업안전심리의 요소 · 착상심리</h2>
+<h3>① 안전사고의 인적 요인</h3>
+<div class="tw"><table>
+<tr><th>정신적 요소</th><th>생리적 요소</th></tr>
+<tr><td>안전의식 부족<br>주의력 부족<br>방심·공상<br>개성적 결함 요소<br>판단력 부족·그릇된 판단</td><td>피로<br>영양·에너지 대사<br>근력<br>시력·청력 기능 저하<br>신체 결함 · 수면 부족 · 음주</td></tr>
+</table></div>
+<div class="mn"><div class="t">정신적 요소: "의주 장터에서 방게(방개) 판다" → 의·주·방·개·판</div>
+<div class="s">안전<b>의</b>식 · <b>주</b>의력 · <b>방</b>심·공상 · <b>개</b>성적 결함 · <b>판</b>단력</div></div>
+<ul><li>개성적 결함: 과도한 자존심·자만심, 다혈질·인내력 부족, 약한 마음, 도전적 성격, 경솔성, 과도한 집착, 나태</li></ul>
+<div class="trap">피로·수면부족·시력 저하는 '생리적' 요소. 정신적 요소 고르기에서 오답</div>
+
+<h3>② 산업안전심리의 5요소</h3>
+<div class="mn"><div class="t">"동기감습습" → 동기(同期)가 감기 걸려 습습(쓱쓱) 콧물 닦는 게 습관</div>
+<div class="s"><b>동</b>기 · <b>기</b>질 · <b>감</b>정 · <b>습</b>성 · <b>습</b>관</div></div>
+<ul><li>습관은 나머지 네 요소(동기·기질·감정·습성)의 영향을 받아 형성</li></ul>
+<div class="trap">'지능', '적성', '피로'는 5요소가 아님</div>
+
+<h3>③ 착상심리</h3>
+<p>사람에 대해 <b class="k">근거 없는 고정관념·선입견</b>으로 판단하는 심리</p>
+<ul>
+<li>얼굴을 보면 지능을 알 수 있다 / 아래턱이 마른 사람은 의지가 약하다</li>
+<li>이마가 넓으면 머리가 좋다 / 인간의 능력은 태어날 때부터 정해져 있다</li>
+</ul>
+<div class="mn"><div class="t">"관상(觀相)으로 사람 뽑기 = 착상심리"</div></div>
+<div class="sum">의주 장터에서 방게 판다(정신적 요소)! 동기감습습! 관상으로 판단하면 착상심리!</div>
+<div class="quiz" data-set="s7"></div>
+<label class="chk"><input type="checkbox" data-k="s7">이 단원 암기 완료</label>
+</section>
+
+<!-- s8 -->
+<section id="s8" data-nav="⑧착오·착시·착각">
+<h2><span class="n">3-2</span>착오 · 착시 · 착각현상</h2>
+<h3>① 착오의 요인 (과정별)</h3>
+<div class="tw"><table>
+<tr><th>과정</th><th>요인</th></tr>
+<tr><td><b>인지</b>과정 착오</td><td>생리·심리적 능력 한계, 정보량 저장 한계, 감각차단 현상, 정서 불안정</td></tr>
+<tr><td><b>판단</b>과정 착오</td><td>능력 부족, 정보 부족, 자기합리화, 환경조건 불비</td></tr>
+<tr><td><b>조작</b>과정 착오</td><td>작업자의 기능 미숙, 작업경험 부족</td></tr>
+</table></div>
+<div class="mn"><div class="t">"인판조" → 사람(人)이 판(判)단하고 조(操)작한다 — 순서 그대로</div>
+<div class="s">인지는 '머리 용량', 판단은 '정보·합리화', 조작은 '손 기술'</div></div>
+<div class="trap">'자기합리화'는 판단과정, '기능 미숙'은 조작과정 착오</div>
+
+<h3>② 착시</h3>
+<div class="tw"><table>
+<tr><th>착시</th><th>현상</th><th>암기</th></tr>
+<tr><td>뮐러-라이어</td><td>같은 길이 선이 화살표 방향에 따라 길이가 달라 보임</td><td>뮐러는 화살 길이</td></tr>
+<tr><td>헬름홀츠</td><td>가로줄 사각형은 세로로 길게, 세로줄은 가로로 넓게 보임</td><td>헬름은 줄무늬 옷</td></tr>
+<tr><td>헤링</td><td>평행한 두 직선이 바깥쪽으로 휘어 보임</td><td>헤링(청어)처럼 휜다</td></tr>
+<tr><td>죌너</td><td>평행선이 짧은 사선 때문에 기울어 보임</td><td>죌너는 기울어</td></tr>
+<tr><td>포겐도르프</td><td>사선이 끊긴 부분에서 어긋나 보임</td><td>포겐은 어긋나</td></tr>
+<tr><td>쾰러</td><td>원호 위의 직선이 반대로 휘어 보임 (윤곽 착오)</td><td>쾰러는 호(弧)</td></tr>
+</table></div>
+<div class="mn"><div class="t">"뮐러는 화살 길이, 헬름은 줄무늬, 헤링은 휘고, 죌너는 기울고, 포겐은 어긋나고, 쾰러는 호"</div></div>
+
+<h3>③ 착각현상 (운동의 착각)</h3>
+<div class="mn"><div class="t">"자유가 착각을 부른다" → 자동운동 · 유도운동 · 가현운동</div></div>
+<div class="tw"><table>
+<tr><th>현상</th><th>뜻</th></tr>
+<tr><td><b>자동운동</b></td><td>암실에서 정지한 광점을 보면 움직이는 것처럼 보임</td></tr>
+<tr><td><b>유도운동</b></td><td>정지한 것이 움직이는 것처럼 보임 (옆 기차 출발 시 내가 움직이는 느낌, 구름 사이 달)</td></tr>
+<tr><td><b>가현운동</b> (β운동)</td><td>정지 대상을 연달아 보여주면 움직이는 것처럼 보임 (영화·전광판)</td></tr>
+</table></div>
+<div class="mn"><div class="t">자동운동이 잘 생기는 조건: "작단약단" → 작고 단순하고 약하고 단순할 때</div>
+<div class="s">광점이 <b>작</b>을수록 · 시야가 <b>단</b>순할수록 · 빛의 강도가 <b>약</b>할수록 · 대상이 <b>단</b>순할수록</div></div>
+<div class="trap">"광점이 클수록", "빛이 강할수록"은 오답 / 영화 원리 = 가현운동</div>
+<div class="sum">인판조! 뮐러 화살·헬름 줄무늬·헤링 휘고·죌너 기울고·포겐 어긋나! 자유가(자동·유도·가현), 작단약단!</div>
+<div class="quiz" data-set="s8"></div>
+<label class="chk"><input type="checkbox" data-k="s8">이 단원 암기 완료</label>
+</section>
+
+<section id="s9" data-nav="⑨최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s9">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="1과목_2_안전보호구_관리.html"><small>← 이전</small>2. 안전보호구 관리</a><a class="nx" href="1과목_4_인간의_행동과학.html"><small>다음 →</small>4. 인간의 행동과학</a></div>
+<script>
+const S={
+"s1":[
+["심리검사의 구비조건이 아닌 것은?",["표준화","타당성","신뢰성","주관성"],3,"'표타신객실' — 객관성입니다."],
+["반복 측정해도 일관된 결과가 나오는 심리검사의 특성은?",["타당성","신뢰성","객관성","실용성"],1,"신뢰성 = 일관성, 타당성 = 정확히 재는가입니다."],
+["Y-G 성격검사에서 정서가 안정되고 활동적이며 사회 적응을 잘해 관리자에 적합한 유형은?",["A형","B형","C형","D형"],3,"'D는 Dream 리더'입니다."],
+["Y-G 성격검사에서 정서 불안정·소극적·부적응형은?",["B형","C형","D형","E형"],3,"'E는 Escape'입니다."],
+["억측판단이 생기는 배경이 아닌 것은?",["희망적 관측","정보·지식의 불확실","과거의 성공 경험","충분한 정보 확인"],3,"'희불과초'입니다."]
+],
+"s2":[
+["관심·기대에 맞는 정보만 받아들여 위험 신호를 놓치게 하는 지각의 특성은?",["지각의 항상성","지각의 선택성","지각의 조직화","지각의 연속성"],1,"'보고 싶은 것만 보인다'입니다."],
+["게슈탈트 지각 원리가 아닌 것은?",["근접성","유사성","폐쇄성","분산성"],3,"'근유연폐'입니다."],
+["강한 분노·공포 같은 정서가 안전에 미치는 영향은?",["주의 범위가 넓어진다","주의 범위가 좁아지고 판단 착오가 늘어난다","반응시간이 짧아진다","영향이 없다"],1,"흥분하면 주의가 좁아집니다."],
+["숙련자가 익숙한 작업의 위험을 과소평가하는 이유로 가장 적절한 것은?",["위험에 대한 친숙함과 통제감","정보의 과잉","시력 저하","교육 과다"],0,"'익숙한 위험이 제일 위험하다'입니다."]
+],
+"s3":[
+["방어적 적응기제가 아닌 것은?",["보상","합리화","승화","퇴행"],3,"퇴행은 도피적 기제입니다."],
+["도피적 적응기제에 해당하는 것은?",["동일시","투사","억압","보상"],2,"'고퇴억백'의 억압입니다."],
+["자신의 결함이나 욕구를 다른 사람의 탓으로 돌리는 기제는?",["투사","승화","동일시","고립"],0,"투사입니다."],
+["억압된 욕구를 사회적으로 가치 있는 방향으로 돌리는 기제는?",["합리화","승화","퇴행","백일몽"],1,"승화입니다."],
+["둘 다 싫은 것 중 하나를 선택해야 하는 갈등은?",["접근-접근형","회피-회피형","접근-회피형","이중접근형"],1,"'치과 vs 충치'입니다."]
+],
+"s4":[
+["스트레스의 외적(외부) 요인이 아닌 것은?",["경제적 어려움","대인관계 갈등","가족의 질병","자존심의 손상"],3,"자존심 손상은 내적 요인입니다."],
+["셀리에의 일반적응증후군 단계 순서로 옳은 것은?",["경고→저항→소진","저항→경고→소진","경고→소진→저항","소진→저항→경고"],0,"'경저소'입니다."],
+["여키스-도슨 법칙에 대한 설명으로 옳은 것은?",["각성이 높을수록 수행이 계속 좋아진다","각성이 낮을수록 수행이 좋아진다","적당한 각성 수준에서 수행이 가장 좋다","각성과 수행은 관계가 없다"],2,"역U자 곡선입니다."],
+["스트레스 관리의 조직 차원 대책으로 가장 적절한 것은?",["음주 장려","직무 재설계와 역할 명확화","작업시간 연장","개인에게 책임 전가"],1,"조직은 직무·역할을 손봅니다."]
+],
+"s5":[
+["기계적 적성에 해당하지 않는 것은?",["손과 팔의 솜씨","공간 시각화","기계적 이해","지각 속도"],3,"지각 속도는 사무적 적성입니다."],
+["사무적 적성에 해당하는 것은?",["손과 팔의 솜씨","공간 시각화","정확성","기계적 이해"],2,"사무적 = '지지정'입니다."],
+["적성의 기본요소가 아닌 것은?",["지능","흥미","인간성","체중"],3,"'지흥인직'입니다."],
+["적성검사의 종류가 아닌 것은?",["시각적 판단검사","정확도 및 기민성 검사","속도에 의한 검사","혈액형 검사"],3,"'시정계속'입니다."]
+],
+"s6":[
+["직무분석 방법이 아닌 것은?",["면접법","관찰법","결정적 사건법","서열법"],3,"서열법은 직무평가 방법입니다."],
+["직무 수행에 필요한 인적 요건(지식·기술·능력)을 정리한 문서는?",["직무기술서","직무명세서","작업일지","직무평가표"],1,"'명세서는 사람'입니다."],
+["직무평가 방법 중 계량적 방법은?",["서열법","분류법","점수법","면접법"],2,"점수법·요소비교법이 계량적입니다."],
+["인사관리의 주요 기능이 아닌 것은?",["조직과 리더십","선발","배치","생산량 계획"],3,"'조선배 작상'입니다."],
+["적정배치의 효과로 거리가 먼 것은?",["근로의욕 향상","재해 예방","이직 감소","작업 단조로움 증가"],3,"적정배치는 의욕을 높입니다."]
+],
+"s7":[
+["안전사고 요인 중 정신적 요소가 아닌 것은?",["안전의식 부족","방심 및 공상","판단력 부족","수면 부족"],3,"수면 부족은 생리적 요소입니다."],
+["산업안전심리의 5요소가 아닌 것은?",["동기","기질","감정","지능"],3,"'동기감습습'입니다."],
+["산업안전심리 5요소 중 나머지 요소의 영향을 받아 형성되는 것은?",["동기","기질","습관","감정"],2,"습관입니다."],
+["착상심리의 예로 옳은 것은?",["작업자의 적성을 검사로 측정한다","얼굴을 보면 지능을 알 수 있다고 생각한다","직무분석으로 요건을 정한다","교육 후 평가한다"],1,"근거 없는 선입견입니다."],
+["개성적 결함 요소가 아닌 것은?",["과도한 자존심","다혈질","경솔성","충분한 수면"],3,"수면은 생리적 요소이며 결함도 아닙니다."]
+],
+"s8":[
+["착오 요인 중 판단과정의 착오에 해당하는 것은?",["정보량 저장 한계","자기합리화","작업자의 기능 미숙","감각차단 현상"],1,"자기합리화는 판단과정입니다."],
+["착오 요인 중 조작과정의 착오에 해당하는 것은?",["작업경험 부족","정서 불안정","정보 부족","환경조건 불비"],0,"조작 = 손 기술입니다."],
+["같은 길이의 선이 화살표 방향에 따라 길이가 달라 보이는 착시는?",["뮐러-라이어","헬름홀츠","헤링","죌너"],0,"'뮐러는 화살 길이'입니다."],
+["사선이 끊긴 부분에서 어긋나 보이는 착시는?",["죌너","포겐도르프","쾰러","헤링"],1,"'포겐은 어긋나'입니다."],
+["영화처럼 정지 대상을 연속으로 보여주면 움직이는 것처럼 보이는 현상은?",["자동운동","유도운동","가현운동","잔상"],2,"가현운동(β운동)입니다."],
+["자동운동이 생기기 쉬운 조건으로 틀린 것은?",["광점이 작을 것","시야가 단순할 것","빛의 강도가 클 것","대상이 단순할 것"],2,"'작단약단' — 빛은 약해야 합니다."]
+],
+"final":[
+["Y-G 성격검사에서 관리자에 가장 적합한 유형은?",["A형","B형","D형","E형"],2,"D형(안정·적극)입니다."],
+["'여우의 신 포도'처럼 그럴듯한 핑계를 대는 적응기제는?",["합리화","투사","승화","퇴행"],0,"합리화(방어적)입니다."],
+["맛있지만 살이 찌는 케이크를 앞에 둔 갈등 유형은?",["접근-접근형","회피-회피형","접근-회피형","무갈등형"],2,"한 대상에 좋음·싫음 공존입니다."],
+["스트레스의 내적 요인에 해당하는 것은?",["경제적 빈곤","가족의 죽음","업무상 죄책감","직장 내 대인관계 갈등"],2,"죄책감은 내 마음입니다."],
+["GATB 9가지 적성에 해당하지 않는 것은?",["지능","공간판단","손가락 재치","색채 선호"],3,"색채 선호는 없습니다."],
+["직무명세서에 담기는 내용은?",["작업 순서","작업 조건","필요한 지식·기술·능력","임금 수준"],2,"사람의 요건입니다."],
+["직무평가 방법 중 비계량적 방법끼리 묶은 것은?",["서열법·분류법","점수법·요소비교법","서열법·점수법","분류법·요소비교법"],0,"'서분'은 통째로입니다."],
+["산업안전심리의 5요소를 바르게 나열한 것은?",["동기·기질·감정·습성·습관","동기·지능·감정·습성·습관","동기·기질·적성·습성·습관","흥미·기질·감정·습성·습관"],0,"'동기감습습'입니다."],
+["착오 요인 중 인지과정 착오가 아닌 것은?",["생리·심리적 능력의 한계","정보량 저장의 한계","감각차단 현상","작업자의 기능 미숙"],3,"기능 미숙은 조작과정입니다."],
+["평행한 두 직선이 바깥쪽으로 휘어 보이는 착시는?",["헤링","죌너","뮐러-라이어","헬름홀츠"],0,"'헤링은 휜다'입니다."],
+["정차 중인 기차에서 옆 기차가 출발할 때 내 기차가 움직이는 것처럼 느끼는 현상은?",["자동운동","유도운동","가현운동","잔상효과"],1,"유도운동입니다."],
+["불안전 행동의 배후 요인 중 심리적 요인이 아닌 것은?",["망각","생략행위","억측판단","알코올"],3,"알코올은 생리적 요인입니다."],
+["심리검사에서 '재려는 것을 정확히 재는가'에 해당하는 특성은?",["신뢰성","타당성","표준화","실용성"],1,"타당성입니다."],
+["인사관리의 주요 기능에 해당하는 것은?",["작업분석과 업무평가","원가 절감","재고 관리","설비 투자"],0,"'조선배 작상'의 작업분석입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s1_p3';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

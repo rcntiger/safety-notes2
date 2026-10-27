@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>근골격계질환 예방관리</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_2과목_목차.html">목차</a><h1>4. 근골격계질환 예방관리</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①정의·유형</a><a href="#s2">②부담작업 범위</a><a href="#s3">③OWAS·RULA·REBA</a><a href="#s4">④작업관리·방법연구</a><a href="#s5">⑤문제해결·개선</a><a href="#s6">⑥최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 근골격계 유해요인</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①정의·유형">
+<h2><span class="n">1-1</span>근골격계질환의 정의 및 유형</h2>
+<div class="law">산업안전보건기준에 관한 규칙 제656조~제667조</div>
+<h3>① 정의</h3>
+<p>반복적인 동작, 부적절한 작업자세, 무리한 힘의 사용, 날카로운 면과의 신체 접촉, 진동·온도 등의 요인으로 발생하는 건강장해로서 <b>목·어깨·허리·팔·다리</b>의 신경·근육 및 그 주변 신체조직에 나타나는 질환</p>
+<h3>② 작업 관련 유해요인</h3>
+<div class="mn"><div class="t">"반부과접" → 반찬이 부족해 과자 접시를 든다</div>
+<div class="s"><b>반</b>복성 · <b>부</b>자연스러운(부적절한) 자세 · <b>과</b>도한 힘 · <b>접</b>촉 스트레스 (+ 진동, 저온)</div></div>
+<h3>③ 주요 질환</h3>
+<div class="tw"><table>
+<tr><th>부위</th><th>질환</th></tr>
+<tr><td>손·손목</td><td>수근관 증후군(손목터널), 건초염, 방아쇠 손가락, 결절종, 레이노 증후군(진동 → 손가락 창백)</td></tr>
+<tr><td>팔꿈치</td><td>외상과염(테니스 엘보), 내상과염(골프 엘보)</td></tr>
+<tr><td>어깨·목</td><td>회전근개 손상, 근막통 증후군, 경견완 증후군</td></tr>
+<tr><td>허리</td><td>요통, 추간판 탈출증</td></tr>
+</table></div>
+<div class="mn"><div class="t">"진동 공구 → 하얀 손가락(레이노)", "손목 터널이 눌리면 수근관"</div></div>
+<div class="sum">반부과접! 목·어깨·허리·팔·다리, 레이노는 진동!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②부담작업 범위">
+<h2><span class="n">1-2</span>근골격계 부담작업의 범위 · 유해요인조사</h2>
+<div class="law">고시「근골격계부담작업의 범위 및 유해요인조사 방법에 관한 고시」</div>
+<h3>① 근골격계 부담작업 11가지</h3>
+<div class="tw"><table>
+<tr><th>호</th><th>내용</th></tr>
+<tr><td>1</td><td>하루 <b>4시간</b> 이상 집중적으로 키보드·마우스 조작</td></tr>
+<tr><td>2</td><td>하루 총 <b>2시간</b> 이상 목·어깨·팔꿈치·손목·손으로 같은 동작 반복</td></tr>
+<tr><td>3</td><td>하루 총 2시간 이상 머리 위에 손, 팔꿈치가 어깨 위, 팔꿈치를 몸통에서 들거나 뒤쪽에</td></tr>
+<tr><td>4</td><td>지지되지 않거나 자세를 바꿀 수 없는 조건에서 하루 총 2시간 이상 목·허리를 구부리거나 틂</td></tr>
+<tr><td>5</td><td>하루 총 2시간 이상 쪼그리고 앉거나 무릎을 굽힌 자세</td></tr>
+<tr><td>6</td><td>하루 총 2시간 이상 지지 없이 <b>1kg</b> 이상을 한 손 손가락으로 집어 옮기거나 <b>2kg</b> 이상 힘으로 쥠</td></tr>
+<tr><td>7</td><td>하루 총 2시간 이상 지지 없이 <b>4.5kg</b> 이상을 한 손으로 들거나 같은 힘으로 쥠</td></tr>
+<tr><td>8</td><td>하루 <b>10회</b> 이상 <b>25kg</b> 이상 물체를 듦</td></tr>
+<tr><td>9</td><td>하루 <b>25회</b> 이상 <b>10kg</b> 이상 물체를 무릎 아래·어깨 위·팔 뻗은 상태에서 듦</td></tr>
+<tr><td>10</td><td>하루 총 2시간 이상, <b>분당 2회</b> 이상 <b>4.5kg</b> 이상 물체를 듦</td></tr>
+<tr><td>11</td><td>하루 총 2시간 이상 <b>시간당 10회</b> 이상 손·무릎으로 반복 충격</td></tr>
+</table></div>
+<div class="mn"><div class="t">"키보드만 4시간, 나머지는 2시간"</div>
+<div class="s">무게: 손가락 1·2kg, 한 손 4.5kg / "이십오 킬로 열 번(8호), 십 킬로 이십오 번(9호)" — 숫자 뒤집기 / 4.5kg 분당 2회(10호) / 충격 시간당 10회(11호)</div></div>
+<div class="trap">8호(25kg·10회)와 9호(10kg·25회)의 숫자를 바꾼 보기 주의</div>
+
+<h3>② 유해요인조사</h3>
+<ul>
+<li>정기: <b class="k">3년마다</b> / 신설 사업장은 신설일부터 <b class="k">1년 이내</b> 최초 조사</li>
+<li>수시: 근골격계질환자 발생(업무상 질병 인정), 새 작업·설비 도입, 작업환경 변경 시</li>
+<li>조사 내용: 작업장 상황(설비·공정·작업량·속도), 작업조건(작업시간·자세·방법), 근골격계질환 징후와 증상</li>
+</ul>
+<div class="mn"><div class="t">"처음 1년, 이후 3년마다, 바뀌면 수시"</div></div>
+
+<h3>③ 근골격계질환 예방관리 프로그램 시행 대상</h3>
+<ul>
+<li>근골격계질환 업무상 질병 인정자가 연간 <b class="k">10명 이상</b> 발생</li>
+<li>또는 <b class="k">5명 이상</b> 발생하고 그 수가 사업장 근로자 수의 <b class="k">10% 이상</b></li>
+<li>또는 고용노동부장관이 필요하다고 인정해 명령한 경우</li>
+</ul>
+<div class="mn"><div class="t">"열 명이거나, 다섯 명인데 10% 넘으면 프로그램"</div></div>
+<div class="sum">키보드 4시간·나머지 2시간! 25kg 10회·10kg 25회! 조사는 1년·3년! 프로그램은 10명 또는 5명+10%!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 2 · 인간공학적 유해요인 평가</div>
+
+<!-- s3 -->
+<section id="s3" data-nav="③OWAS·RULA·REBA">
+<h2><span class="n">2</span>OWAS · RULA · REBA 등</h2>
+<div class="tw"><table>
+<tr><th>기법</th><th>평가 부위·특징</th><th>결과</th></tr>
+<tr><td><b>OWAS</b></td><td><b>전신</b> 자세 코드화 — 허리(4)·팔(3)·다리(7)·하중(3). 핀란드 철강회사 개발, 현장 적용 쉬움 / 손목 등 세밀한 평가는 어려움</td><td>조치수준 AC 1~4</td></tr>
+<tr><td><b>RULA</b></td><td><b>상지(Upper Limb)</b> 중심 — 위팔·아래팔·손목(A그룹), 목·몸통·다리(B그룹) + 근육 사용·힘</td><td>최종점수 1~7, 조치수준 1~4</td></tr>
+<tr><td><b>REBA</b></td><td><b>전신(Entire Body)</b> — RULA 보완, 예측하기 어려운 동적 자세(간호·서비스업)</td><td>점수 1~15, 조치수준 0~4</td></tr>
+<tr><td><b>NLE</b></td><td><b>들기</b> 작업 (NIOSH 들기 공식)</td><td>들기지수 LI</td></tr>
+<tr><td><b>JSI</b> (Strain Index)</td><td><b>손·손목</b> 상지말단 — 힘, 지속시간, 빈도, 자세, 속도, 작업시간</td><td>점수</td></tr>
+<tr><td><b>QEC</b></td><td>허리·어깨·팔·손목·목 + 작업자 주관 평가 포함</td><td>노출 점수</td></tr>
+</table></div>
+<div class="mn"><div class="t">"OWAS는 온몸 코드(허·팔·다·하 4·3·7·3), RULA는 상지(Upper), REBA는 전신(Entire Body)·동적, NLE는 들기, JSI는 손목"</div></div>
+
+<h3>OWAS 조치수준 (AC)</h3>
+<ul>
+<li>AC1: 개선 불필요 · AC2: 가까운 시일 내 개선 · AC3: 가능한 한 빨리 개선 · AC4: <b>즉시</b> 개선</li>
+</ul>
+<h3>RULA 조치수준</h3>
+<ul>
+<li>1~2점: 수용 가능 · 3~4점: 계속 관찰·변경 필요 · 5~6점: 곧 조사·변경 · 7점: <b>즉시</b> 조사·변경</li>
+</ul>
+<div class="trap">RULA는 상지 중심(하지는 간단히), 전신·동적 자세는 REBA / OWAS 다리 자세는 7가지</div>
+<div class="sum">OWAS 4·3·7·3 전신 코드, RULA 상지, REBA 전신 동적, NLE 들기, JSI 손목!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<div class="part">세부항목 3 · 근골격계 유해요인 관리</div>
+
+<!-- s4 -->
+<section id="s4" data-nav="④작업관리·방법연구">
+<h2><span class="n">3-1</span>작업관리의 목적 · 방법연구 및 작업측정</h2>
+<h3>① 작업관리</h3>
+<ul>
+<li>작업관리 = <b>방법연구</b>(더 좋은 작업방법) + <b>작업측정</b>(표준시간)</li>
+<li>목적: 최선의 작업방법 개발·표준화, 표준시간 설정, 효율·안전 향상, 재료·설비의 효과적 활용, 근골격계질환 예방</li>
+</ul>
+<div class="mn"><div class="t">"방법은 어떻게(How), 측정은 얼마나(How long)"</div></div>
+
+<h3>② 방법연구 — 공정분석 기호</h3>
+<div class="tw"><table>
+<tr><th>기호</th><th>공정</th></tr>
+<tr><td>○</td><td>작업(가공)</td></tr>
+<tr><td>⇨</td><td>운반</td></tr>
+<tr><td>□</td><td>검사</td></tr>
+<tr><td>D</td><td>지연(정체)</td></tr>
+<tr><td>▽</td><td>저장</td></tr>
+</table></div>
+<div class="mn"><div class="t">"동그라미는 일하고, 화살은 옮기고, 네모는 검사, D는 Delay, 역삼각은 쌓아 둔다"</div></div>
+
+<h3>③ 동작분석 — 서블릭(Therblig)</h3>
+<ul>
+<li>길브레스(Gilbreth)가 만든 기본 동작 기호 (찾기, 선택, 잡기, 운반, 조립, 사용, 분해, 내려놓기, 검사, 휴식, 지연 등)</li>
+<li>비효율적 서블릭(찾기·선택·검사·계획·유지·지연)을 줄이는 것이 개선의 핵심</li>
+</ul>
+<div class="mn"><div class="t">Therblig = Gilbreth를 거꾸로 쓴 말</div></div>
+
+<h3>④ 동작경제의 원칙 (반즈)</h3>
+<ul>
+<li><b>신체 사용</b>: 양손은 동시에 시작·종료, 양손이 동시에 쉬지 않게, 대칭·반대 방향으로, 가장 낮은 등급의 동작, 관성 이용, 곡선 동작, 리듬</li>
+<li><b>작업장 배치</b>: 공구·재료는 정위치에 가까이, 중력 이용 공급, 낙하식 운반, 적절한 조명·의자</li>
+<li><b>공구·설비 설계</b>: 치구·발로 손의 일을 덜기, 공구 결합, 정위치에 놓기</li>
+</ul>
+<div class="mn"><div class="t">"신·작·공" → 몸(신체) · 자리(작업장) · 도구(공구)</div></div>
+<div class="sum">방법은 어떻게, 측정은 얼마나! ○⇨□D▽! 서블릭은 길브레스! 신·작·공!</div>
+<div class="quiz" data-set="s4"></div>
+<label class="chk"><input type="checkbox" data-k="s4">이 단원 암기 완료</label>
+</section>
+
+<!-- s5 -->
+<section id="s5" data-nav="⑤문제해결·개선">
+<h2><span class="n">3-2</span>문제해결 절차 · 작업개선안의 원리 및 도출</h2>
+<h3>① 문제해결(작업개선) 절차</h3>
+<div class="mn"><div class="t">"고르고 → 적고 → 묻고 → 고치고 → 하고 → 지킨다"</div>
+<div class="s">연구 대상 선정 → 현재 방법 기록·분석 → 분석 자료 검토(5W1H) → 개선안 수립 → 개선안 시행 → 결과 평가·표준화</div></div>
+<h3>② 개선의 ECRS 원칙</h3>
+<div class="tw"><table>
+<tr><th>원칙</th><th>질문</th></tr>
+<tr><td><b>E</b>liminate (제거)</td><td>꼭 필요한가? 없앨 수 없나?</td></tr>
+<tr><td><b>C</b>ombine (결합)</td><td>다른 작업과 합칠 수 없나?</td></tr>
+<tr><td><b>R</b>earrange (재배열)</td><td>순서를 바꾸면 나아지나?</td></tr>
+<tr><td><b>S</b>implify (단순화)</td><td>더 간단하게 할 수 없나?</td></tr>
+</table></div>
+<div class="mn"><div class="t">"없애고, 합치고, 바꾸고, 단순하게" — 순서대로 검토 (제거가 1순위)</div>
+<div class="s">5W1H: 누가·무엇을·언제·어디서·왜·어떻게 → 특히 "왜(Why)"를 반복해 묻는다</div></div>
+<h3>③ 근골격계 작업개선</h3>
+<ul>
+<li><b>공학적 개선</b>: 작업대 높이 조절, 공구·설비 재설계, 운반 보조기구(리프트·대차), 작업장 배치 변경</li>
+<li><b>관리적 개선</b>: 작업순환, 휴식시간, 작업속도 조절, 교육, 스트레칭, 적정 인원 배치</li>
+</ul>
+<div class="sum">고르고·적고·묻고·고치고·하고·지킨다! ECRS = 없애고·합치고·바꾸고·단순하게!</div>
+<div class="quiz" data-set="s5"></div>
+<label class="chk"><input type="checkbox" data-k="s5">이 단원 암기 완료</label>
+</section>
+
+<section id="s6" data-nav="⑥최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s6">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="2과목_3_위험성_감소대책.html"><small>← 이전</small>3. 위험성 감소대책 수립·실행</a><a class="nx" href="2과목_5_유해요인_관리.html"><small>다음 →</small>5. 유해요인 관리</a></div>
+<script>
+const S={
+"s1":[
+["근골격계질환의 작업 관련 유해요인이 아닌 것은?",["반복성","부자연스러운 자세","과도한 힘","충분한 휴식"],3,"'반부과접'입니다."],
+["진동 공구 사용으로 손가락이 창백해지는 질환은?",["수근관 증후군","레이노 증후군","테니스 엘보","요통"],1,"레이노 증후군입니다."],
+["손목의 정중신경이 눌려 생기는 질환은?",["수근관 증후군","건초염","외상과염","회전근개 손상"],0,"손목터널(수근관) 증후군입니다."],
+["근골격계질환이 주로 나타나는 부위가 아닌 것은?",["목","어깨","허리","간"],3,"간은 내장기관입니다."]
+],
+"s2":[
+["근골격계 부담작업 중 키보드·마우스 조작 기준 시간은?",["하루 2시간 이상","하루 4시간 이상","하루 6시간 이상","하루 8시간 이상"],1,"'키보드만 4시간'입니다."],
+["하루 10회 이상 몇 kg 이상의 물체를 드는 작업이 부담작업인가?",["10kg","15kg","20kg","25kg"],3,"8호: 25kg 10회입니다."],
+["하루 25회 이상 10kg 이상 물체를 무릎 아래·어깨 위에서 드는 작업은 몇 호인가?",["7호","8호","9호","10호"],2,"9호입니다."],
+["근골격계 유해요인조사의 정기 주기는?",["1년마다","2년마다","3년마다","5년마다"],2,"3년마다입니다."],
+["신설 사업장의 최초 유해요인조사 기한은?",["6개월 이내","1년 이내","2년 이내","3년 이내"],1,"1년 이내입니다."],
+["근골격계질환 예방관리 프로그램 시행 대상으로 옳은 것은?",["질환자 연간 3명 이상","질환자 연간 10명 이상","근로자 50명 이상 모든 사업장","질환자 1명 이상"],1,"10명 이상(또는 5명 이상 + 10%)입니다."]
+],
+"s3":[
+["허리·팔·다리·하중을 코드화해 전신 자세를 평가하는 기법은?",["OWAS","RULA","NLE","JSI"],0,"OWAS입니다."],
+["OWAS에서 다리 자세의 분류 수는?",["3가지","4가지","5가지","7가지"],3,"허리4·팔3·다리7·하중3입니다."],
+["상지(팔·손목·목) 중심으로 평가하는 기법은?",["OWAS","RULA","REBA","NLE"],1,"RULA = Upper Limb입니다."],
+["간호사처럼 예측하기 어려운 동적 전신 자세 평가에 적합한 기법은?",["RULA","REBA","JSI","NLE"],1,"REBA입니다."],
+["들기 작업을 평가하는 기법은?",["OWAS","NLE","QEC","RULA"],1,"NIOSH 들기 공식입니다."],
+["RULA 최종점수 7점의 조치수준은?",["수용 가능","계속 관찰","곧 변경","즉시 조사·변경"],3,"7점은 즉시입니다."]
+],
+"s4":[
+["작업관리를 구성하는 두 가지는?",["방법연구와 작업측정","시간연구와 비용분석","동작분석과 재고관리","품질관리와 공정관리"],0,"방법 + 측정입니다."],
+["공정분석 기호 중 '검사'는?",["○","⇨","□","▽"],2,"네모는 검사입니다."],
+["공정분석 기호 '▽'의 의미는?",["작업","운반","지연","저장"],3,"역삼각은 저장입니다."],
+["서블릭(Therblig)을 개발한 사람은?",["테일러","길브레스","반즈","왓슨"],1,"길브레스입니다."],
+["동작경제의 원칙 중 신체 사용에 관한 원칙으로 틀린 것은?",["양손은 동시에 시작하고 끝낸다","양손이 동시에 쉬지 않게 한다","직선 동작보다 급격히 방향이 바뀌는 동작을 쓴다","관성을 이용한다"],2,"부드러운 곡선 동작이 좋습니다."]
+],
+"s5":[
+["작업개선의 ECRS 원칙이 아닌 것은?",["제거","결합","재배열","확대"],3,"Simplify(단순화)입니다."],
+["ECRS 중 가장 먼저 검토하는 것은?",["Eliminate","Combine","Rearrange","Simplify"],0,"제거가 1순위입니다."],
+["근골격계 작업개선 중 공학적 개선에 해당하는 것은?",["작업순환","휴식시간 부여","작업대 높이 조절","스트레칭 교육"],2,"설비 변경은 공학적입니다."],
+["근골격계 작업개선 중 관리적 개선에 해당하는 것은?",["운반 대차 도입","공구 재설계","작업순환 배치","리프트 설치"],2,"작업순환은 관리적입니다."]
+],
+"final":[
+["팔꿈치 바깥쪽 통증(테니스 엘보)의 질환명은?",["외상과염","내상과염","건초염","결절종"],0,"외상과염입니다."],
+["하루 총 2시간 이상, 분당 2회 이상 4.5kg 이상 물체를 드는 작업은?",["7호","8호","9호","10호"],3,"10호입니다."],
+["하루 총 2시간 이상 시간당 10회 이상 손·무릎으로 반복 충격을 가하는 작업은?",["9호","10호","11호","6호"],2,"11호입니다."],
+["근로자 40명 사업장에서 근골격계질환자가 연간 5명 발생했다면 예방관리 프로그램 대상인가?",["대상 아님","대상(5명 이상이고 10% 이상)","10명 미만이라 무조건 아님","장관 명령 시에만"],1,"5명이 40명의 12.5%이므로 대상입니다."],
+["OWAS 조치수준 AC4의 의미는?",["개선 불필요","가까운 시일 내 개선","가능한 빨리 개선","즉시 개선"],3,"AC4는 즉시입니다."],
+["손·손목 상지말단의 위험을 평가하는 기법은?",["JSI","OWAS","REBA","NLE"],0,"JSI(Strain Index)입니다."],
+["REBA의 점수 범위는?",["1~4","1~7","1~15","0~100"],2,"REBA는 1~15점입니다."],
+["공정분석 기호 'D'의 의미는?",["작업","지연","검사","저장"],1,"D = Delay입니다."],
+["동작경제의 원칙 3가지 분류가 아닌 것은?",["신체 사용","작업장 배치","공구·설비 설계","임금 체계"],3,"'신·작·공'입니다."],
+["작업 개선 시 '왜(Why)'를 반복해 묻는 분석 도구는?",["5W1H","PDCA","ECRS","OWAS"],0,"5W1H입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s2_p4';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>

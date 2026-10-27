@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>위험성 감소대책 수립·실행</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6475;--line:#e3e6ec;--acc:#d9480f;--acc2:#1c7ed6;--mn:#fff4e6;--mnb:#ffa94d;--ok:#2f9e44;--trap:#fff5f5;--trapb:#fa5252;--hl:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1d2027;--ink:#e7e9ee;--sub:#9aa3b2;--line:#2c313b;--acc:#ff8a4c;--acc2:#4dabf7;--mn:#2b2218;--mnb:#c77a2c;--ok:#51cf66;--trap:#2b1a1c;--trapb:#e03131;--hl:#4a3f12}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;font-size:15.5px}
+a{color:var(--acc2)}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.top h1{font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .home{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);flex:none}
+.prog{font-size:12px;color:var(--sub);flex:none}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a.done{border-color:var(--ok);color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
+.part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
+h2{font-size:18px;margin:2px 0 4px;display:flex;align-items:center;gap:8px}
+h2 .n{background:var(--acc);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;flex:none}
+h3{font-size:15.5px;margin:16px 0 6px;color:var(--acc2)}
+.law{font-size:12.5px;color:var(--sub);margin-bottom:6px}
+p{margin:4px 0}
+ul{padding-left:18px;margin:4px 0}li{margin:2px 0}
+b.k{color:var(--acc)}
+.mn{background:var(--mn);border-left:4px solid var(--mnb);border-radius:8px;padding:8px 10px;margin:8px 0}
+.mn .t{font-weight:700}
+.mn .s{font-size:14px;color:var(--sub)}
+.trap{background:var(--trap);border-left:4px solid var(--trapb);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14.5px}
+.trap:before{content:"⚠ 함정 ";font-weight:700;color:var(--trapb)}
+mark{background:var(--hl);color:inherit;padding:0 2px;border-radius:3px}
+.tw{overflow-x:auto;margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--bg)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--sub);cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--ok)}
+.sum{text-align:center;font-weight:700;padding:10px;border-radius:8px;background:var(--bg);margin-top:10px}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q p{margin:0 0 6px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(47,158,68,.12)}
+.opt.wrong{border-color:var(--trapb);background:rgba(250,82,82,.12)}
+.exp{display:none;margin-top:6px;font-size:14px;background:var(--bg);border-radius:8px;padding:7px 10px}
+.q.show .exp{display:block}
+.score{font-size:13px;color:var(--sub)}
+.quiz{margin-top:14px;border-top:2px solid var(--acc2);padding-top:8px}
+.quiz.final{border-top:0;padding-top:0}
+.qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.qh b{color:var(--acc2)}
+.rs{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--sub);cursor:pointer}
+.pn{display:flex;gap:8px;max-width:760px;margin:0 auto;padding:0 8px 40px}
+.pn a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:14px}
+.pn a small{display:block;color:var(--sub);font-size:12px}
+.pn a.nx{text-align:right}
+.note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a class="home" href="산업안전기사_2과목_목차.html">목차</a><h1>3. 위험성 감소대책 수립·실행</h1><span class="prog" id="prog">0</span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <nav id="nav"><a href="#s1">①개선대책 종류</a><a href="#s2">②허용 위험수준</a><a href="#s3">③효과 분석</a><a href="#s4">④최종 점검</a></nav>
+</header>
+<main>
+<div class="part">세부항목 1 · 위험성 감소대책 수립 및 실행</div>
+
+<!-- s1 -->
+<section id="s1" data-nav="①개선대책 종류">
+<h2><span class="n">1</span>위험성 개선대책(공학적·관리적)의 종류</h2>
+<div class="law">고시「사업장 위험성평가에 관한 지침」</div>
+<h3>① 감소대책의 우선순위</h3>
+<div class="tw"><table>
+<tr><th>순위</th><th>대책</th><th>예</th></tr>
+<tr><td>1</td><td><b>본질적 대책</b> — 위험한 작업의 폐지·변경, 유해·위험물질 <b>대체</b></td><td>유기용제 → 수성 페인트, 고소작업을 지상 조립으로</td></tr>
+<tr><td>2</td><td><b>공학적 대책</b> — 연동장치, 환기장치 등 설비로 차단</td><td>인터록, 방호가드, 국소배기, 차음벽</td></tr>
+<tr><td>3</td><td><b>관리적 대책</b> — 작업절차서 정비 등</td><td>작업절차서, 교육, 작업순환, 출입통제, 안전표지</td></tr>
+<tr><td>4</td><td><b>개인보호구</b> 사용</td><td>안전모, 방독마스크, 귀마개</td></tr>
+</table></div>
+<div class="mn"><div class="t">"제·공·관·보" → 제공(提供)한 관보(官報) 순서대로</div>
+<div class="s"><b>제</b>거·대체(본질) → <b>공</b>학 → <b>관</b>리 → <b>보</b>호구 — "보호구는 마지막 수단"</div></div>
+<div class="trap">'보호구 지급'을 최우선 대책으로 낸 보기는 오답 / 작업절차서·교육은 '관리적', 인터록·환기는 '공학적'</div>
+
+<h3>② 실행 시 유의사항</h3>
+<ul>
+<li>대책 실행 후 <b>잔류 위험성</b>이 허용 가능한 수준인지 다시 확인</li>
+<li>중대재해·중대산업사고·심각한 질병 우려가 있는 위험성 → 감소대책 실행 전이라도 <b class="k">즉시 잠정조치</b></li>
+<li>대책 시행 결과는 근로자에게 알리고 기록</li>
+</ul>
+<div class="sum">제·공·관·보! 보호구는 마지막, 급하면 즉시 잠정조치!</div>
+<div class="quiz" data-set="s1"></div>
+<label class="chk"><input type="checkbox" data-k="s1">이 단원 암기 완료</label>
+</section>
+
+<!-- s2 -->
+<section id="s2" data-nav="②허용 위험수준">
+<h2><span class="n">2</span>허용 가능한 위험수준 분석</h2>
+<h3>① 허용 가능한 위험</h3>
+<ul>
+<li>법적 의무와 사업장의 안전보건 방침에 따라 <b>받아들일 수 있는 수준</b>까지 낮춘 위험</li>
+<li>사업장이 스스로 '허용 가능한 위험성 기준'을 정하고, 추정한 위험성과 비교해 결정</li>
+</ul>
+<h3>② ALARP 원칙</h3>
+<div class="tw"><table>
+<tr><th>영역</th><th>조치</th></tr>
+<tr><td>허용 불가 영역</td><td>어떤 이익이 있어도 허용 안 됨 → 반드시 감소</td></tr>
+<tr><td><b>ALARP</b> 영역</td><td>합리적으로 실행 가능한 한 낮게 (비용 대비 효과 고려)</td></tr>
+<tr><td>널리 수용되는 영역</td><td>무시 가능한 수준 → 현 상태 유지·관찰</td></tr>
+</table></div>
+<div class="mn"><div class="t">ALARP = As Low As Reasonably Practicable → "할 수 있는 만큼 최대한 낮게"</div></div>
+
+<h3>③ 위험성 매트릭스 (예시)</h3>
+<p>위험성 = 가능성(빈도) × 중대성(강도) — 예: 3 × 3 매트릭스</p>
+<div class="tw"><table>
+<tr><th>가능성 \ 중대성</th><th>1 (경미)</th><th>2 (중간)</th><th>3 (중대)</th></tr>
+<tr><td>3 (상)</td><td>3 보통</td><td>6 높음</td><td>9 높음</td></tr>
+<tr><td>2 (중)</td><td>2 낮음</td><td>4 보통</td><td>6 높음</td></tr>
+<tr><td>1 (하)</td><td>1 낮음</td><td>2 낮음</td><td>3 보통</td></tr>
+</table></div>
+<ul><li>예: 낮음(1~2) 허용 · 보통(3~4) 개선 계획 · 높음(6~9) 즉시 개선 — 기준은 사업장이 정함</li></ul>
+<div class="sum">허용 가능 위험은 사업장이 정한다! ALARP = 할 수 있는 만큼 낮게! 가능성 × 중대성!</div>
+<div class="quiz" data-set="s2"></div>
+<label class="chk"><input type="checkbox" data-k="s2">이 단원 암기 완료</label>
+</section>
+
+<!-- s3 -->
+<section id="s3" data-nav="③효과 분석">
+<h2><span class="n">3</span>감소대책에 따른 효과 분석</h2>
+<h3>① 효과를 보는 방법</h3>
+<ul>
+<li>대책 <b>전후 위험성 수준</b>(가능성·중대성) 재평가 비교</li>
+<li>재해율 지표(도수율·강도율 등)의 변화</li>
+<li>비용-편익 분석: 편익 ÷ 비용(B/C) &gt; 1이면 경제적으로 타당</li>
+</ul>
+
+<h3>② 재해율 지표</h3>
+<div class="tw"><table>
+<tr><th>지표</th><th>식</th><th>의미</th></tr>
+<tr><td>도수율 (빈도율)</td><td>재해건수 ÷ 연근로시간수 × <b>1,000,000</b></td><td>100만 시간당 재해 건수</td></tr>
+<tr><td>강도율</td><td>근로손실일수 ÷ 연근로시간수 × <b>1,000</b></td><td>1,000시간당 손실일수</td></tr>
+<tr><td>연천인율</td><td>재해자수 ÷ 연평균근로자수 × 1,000</td><td>= <b>도수율 × 2.4</b></td></tr>
+<tr><td>환산도수율</td><td>도수율 ÷ 10</td><td>평생(10만 시간) 재해 건수</td></tr>
+<tr><td>환산강도율</td><td>강도율 × 100</td><td>평생 근로손실일수</td></tr>
+<tr><td>종합재해지수(FSI)</td><td>√(도수율 × 강도율)</td><td>빈도와 강도를 함께</td></tr>
+</table></div>
+<div class="mn"><div class="t">"도수율은 백만, 강도율은 천, 연천인율은 도수율의 2.4배"</div>
+<div class="s">연근로시간 = 근로자수 × 2,400시간(1일 8시간 × 300일)</div></div>
+
+<h3>③ 근로손실일수</h3>
+<div class="tw"><table>
+<tr><th>구분</th><th>손실일수</th></tr>
+<tr><td>사망 · 신체장해 1~3급</td><td><b>7,500일</b></td></tr>
+<tr><td>4급 · 5급 · 6급</td><td>5,500 · 4,000 · 3,000일</td></tr>
+<tr><td>7급 · 8급 · 9급 · 10급</td><td>2,200 · 1,500 · 1,000 · 600일</td></tr>
+<tr><td>11급 · 12급 · 13급 · 14급</td><td>400 · 200 · 100 · 50일</td></tr>
+<tr><td>휴업(일시 전노동불능)</td><td>휴업일수 × <b>300/365</b></td></tr>
+</table></div>
+<div class="mn"><div class="t">"사망은 칠천오백(7,500), 14급은 오십(50)" / 휴업은 "삼백 나누기 삼백육십오"</div></div>
+
+<h3>④ Safe-T-Score (안전 성적 비교)</h3>
+<p>(현재 도수율 − 과거 도수율) ÷ √(과거 도수율 ÷ 현재 근로총시간 × 10⁶)</p>
+<ul><li>+2.00 이상: 과거보다 <b>심각하게 나빠짐</b> / −2.00 이하: 과거보다 <b>좋아짐</b> / 그 사이: 차이 없음</li></ul>
+<div class="mn"><div class="t">"±2를 넘어야 진짜 변화"</div></div>
+
+<div class="mn"><div class="t">계산 예: 근로자 500명, 재해 6건, 손실 300일</div>
+<div class="s">연근로시간 = 500 × 2,400 = 1,200,000시간 → 도수율 = 6 ÷ 1,200,000 × 10⁶ = <b>5</b> · 강도율 = 300 ÷ 1,200,000 × 1,000 = <b>0.25</b> · 연천인율 = 5 × 2.4 = <b>12</b></div></div>
+<div class="sum">도수율 백만·강도율 천·연천인율 2.4배! 사망 7,500일, 휴업은 300/365! Safe-T ±2!</div>
+<div class="quiz" data-set="s3"></div>
+<label class="chk"><input type="checkbox" data-k="s3">이 단원 암기 완료</label>
+</section>
+
+<section id="s4" data-nav="④최종 점검">
+<h2><span class="n">✔</span>최종 점검 기출 (단원 통합)</h2>
+<div class="quiz final" data-set="final" data-title="최종 점검"></div>
+<label class="chk"><input type="checkbox" data-k="s4">최종 점검 완료</label>
+</section>
+<p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
+</main>
+<div class="pn"><a href="2과목_2_위험성_파악결정.html"><small>← 이전</small>2. 위험성 파악·결정</a><a class="nx" href="2과목_4_근골격계질환_예방관리.html"><small>다음 →</small>4. 근골격계질환 예방관리</a></div>
+<script>
+const S={
+"s1":[
+["위험성 감소대책 중 가장 먼저 검토해야 하는 것은?",["개인보호구 사용","작업절차서 정비","위험한 작업의 폐지·유해물질 대체","연동장치 설치"],2,"본질적 대책이 1순위입니다."],
+["위험성 감소대책의 우선순위로 옳은 것은?",["본질적→공학적→관리적→보호구","공학적→본질적→관리적→보호구","보호구→관리적→공학적→본질적","관리적→공학적→본질적→보호구"],0,"'제·공·관·보'입니다."],
+["공학적 대책에 해당하는 것은?",["작업절차서 정비","안전교육","국소배기장치 설치","작업순환 배치"],2,"설비로 막는 것이 공학적 대책입니다."],
+["관리적 대책에 해당하는 것은?",["인터록 설치","방호가드 설치","작업절차서 정비","차음벽 설치"],2,"절차서·교육은 관리적입니다."],
+["중대재해 우려가 있는 위험성이 확인되었을 때 조치는?",["다음 정기평가 때 검토","감소대책 실행 전이라도 즉시 잠정조치","보호구만 지급","기록만 남김"],1,"즉시 잠정조치입니다."]
+],
+"s2":[
+["ALARP의 뜻으로 옳은 것은?",["위험을 완전히 없앤다","합리적으로 실행 가능한 한 낮게 한다","비용과 무관하게 최대한 투자한다","위험을 무시한다"],1,"As Low As Reasonably Practicable입니다."],
+["허용 가능한 위험에 대한 설명으로 옳은 것은?",["위험이 0인 상태","법적 의무와 사업장 방침에 따라 받아들일 수 있는 수준","근로자가 동의하면 무조건 허용","보호구를 지급하면 자동 허용"],1,"받아들일 수 있는 수준까지 낮춘 위험입니다."],
+["가능성 3, 중대성 2일 때 곱셈법 위험성 점수는?",["5","6","8","9"],1,"3 × 2 = 6입니다."],
+["ALARP 원칙에서 어떤 이익이 있어도 받아들일 수 없는 영역은?",["허용 불가 영역","ALARP 영역","널리 수용되는 영역","무시 영역"],0,"허용 불가 영역입니다."]
+],
+"s3":[
+["도수율 계산식으로 옳은 것은?",["재해건수 ÷ 연근로시간수 × 1,000","재해건수 ÷ 연근로시간수 × 1,000,000","근로손실일수 ÷ 연근로시간수 × 1,000","재해자수 ÷ 근로자수 × 1,000"],1,"도수율은 백만입니다."],
+["도수율이 5일 때 연천인율은?",["2","5","10","12"],3,"5 × 2.4 = 12입니다."],
+["사망 재해의 근로손실일수는?",["5,500일","6,000일","7,500일","10,000일"],2,"7,500일입니다."],
+["휴업일수 73일의 근로손실일수는?",["50일","60일","73일","88일"],1,"73 × 300/365 = 60일입니다."],
+["근로자 1,000명(연 2,400시간), 근로손실일수 1,200일인 사업장의 강도율은?",["0.25","0.5","1.2","5"],1,"1,200 ÷ 2,400,000 × 1,000 = 0.5입니다."],
+["Safe-T-Score가 +2.5일 때 판정은?",["과거보다 좋아졌다","차이가 없다","과거보다 심각하게 나빠졌다","판정 불가"],2,"+2 이상이면 나빠진 것입니다."],
+["도수율 4, 강도율 1일 때 종합재해지수(FSI)는?",["1","2","4","5"],1,"√(4 × 1) = 2입니다."]
+],
+"final":[
+["유기용제 페인트를 수성 페인트로 바꾸는 대책은?",["본질적 대책(대체)","공학적 대책","관리적 대책","개인보호구"],0,"대체는 본질적 대책입니다."],
+["작업자 순환 배치로 노출시간을 줄이는 대책은?",["본질적","공학적","관리적","보호구"],2,"관리적 대책입니다."],
+["위험성 감소대책 중 최후의 수단은?",["대체","인터록","교육","개인보호구"],3,"보호구는 마지막입니다."],
+["환산도수율이 의미하는 것은?",["100만 시간당 재해건수","평생 근로하는 동안의 재해건수","1,000시간당 손실일수","근로자 1,000명당 재해자수"],1,"평생(10만 시간) 기준입니다."],
+["도수율 20인 사업장의 환산도수율은?",["0.2","2","20","200"],1,"20 ÷ 10 = 2입니다."],
+["강도율 1.5인 사업장의 환산강도율은?",["15","150","1,500","0.015"],1,"1.5 × 100 = 150입니다."],
+["근로자 500명(연 2,400시간), 재해 3건인 사업장의 도수율은?",["1.25","2.5","5","6"],1,"3 ÷ 1,200,000 × 10⁶ = 2.5입니다."],
+["신체장해등급 14급의 근로손실일수는?",["50일","100일","200일","400일"],0,"14급은 50일입니다."],
+["연천인율 24인 사업장의 도수율은?",["2.4","10","24","57.6"],1,"24 ÷ 2.4 = 10입니다."],
+["Safe-T-Score가 −1.5일 때 판정은?",["과거보다 좋아졌다","차이가 없다","과거보다 나빠졌다","심각하게 나빠졌다"],1,"±2 사이면 차이 없음입니다."],
+["편익 ÷ 비용(B/C) 값이 얼마일 때 대책이 경제적으로 타당한가?",["0보다 클 때","0.5보다 클 때","1보다 클 때","항상 타당"],2,"B/C > 1입니다."]
+]
+};
+function mount(box){
+  const qs=S[box.dataset.set];let ok=0,done=0;
+  box.innerHTML='<div class="qh"><b>📝 '+(box.dataset.title||'단원 기출')+' ('+qs.length+')</b><span class="score"></span><button class="rs">다시 풀기</button></div>';
+  const sc=box.querySelector('.score'),upd=()=>{sc.textContent=done+'/'+qs.length+' · 정답 '+ok};
+  box.querySelector('.rs').onclick=()=>mount(box);
+  qs.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p>'+(i+1)+'. '+q[0]+'</p>';
+    q[1].forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent='①②③④'[j]+' '+o;
+      b.onclick=()=>{if(d.classList.contains('show'))return;d.classList.add('show');done++;
+        const bs=d.querySelectorAll('.opt');bs[q[2]].classList.add('right');if(j!==q[2])b.classList.add('wrong');else ok++;upd()};
+      d.appendChild(b)});
+    const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
+    box.appendChild(d)});
+  upd();
+}
+document.querySelectorAll('.quiz').forEach(mount);
+const KEY='s2_p3';
+let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const boxes=document.querySelectorAll('.chk input'),links=document.querySelectorAll('#nav a');
+function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links[i].classList.toggle('done',b.checked)});
+  document.getElementById('prog').textContent=n+'/'+boxes.length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%'}
+boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
+try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
+prog();
+</script>
+</body>
+</html>
