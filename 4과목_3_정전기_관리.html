@@ -20,6 +20,14 @@ nav{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
 nav a{flex:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;white-space:nowrap}
 nav a.done{border-color:var(--ok);color:var(--ok)}
+nav a.cur{background:var(--acc);border-color:var(--acc);color:#fff}
+.vbtn{font-size:12px;border:1px solid var(--line);border-radius:12px;padding:2px 8px;color:var(--sub);background:var(--card);flex:none;cursor:pointer}
+body.one main>section,body.one main>.part{display:none}
+body.one main>section.cur,body.one main>.part.cur{display:block}
+.snav{display:none;gap:8px;margin-top:14px}
+body.one .snav{display:flex}
+.snav button{flex:1;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font-size:14px;cursor:pointer}
+.snav button:disabled{opacity:.35;cursor:default}
 main{max-width:760px;margin:0 auto;padding:8px 8px 40px}
 .part{font-size:13px;font-weight:700;color:var(--sub);margin:18px 6px 2px;letter-spacing:.02em}
 section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;scroll-margin-top:84px}
@@ -62,11 +70,28 @@ th{background:var(--bg)}
 .pn a small{display:block;color:var(--sub);font-size:12px}
 .pn a.nx{text-align:right}
 .note{font-size:12.5px;color:var(--sub);margin:8px 6px}
+/* 카드 넘기기 */
+body.card main>section,body.card main>.part{display:none}
+body.card main>section.cur,body.card main>.part.cur{display:block}
+body.card section.cur>.pg-x,body.card .quiz .q.pg-x,body.card .quiz.pg-x{display:none}
+body.card main{padding-bottom:84px;overflow-x:clip}
+body.card .snav,body.card main>.note,body.card .pn{display:none}
+body.card.end .pn{display:flex;padding-bottom:90px}
+body.card section.cur{min-height:calc(100vh - 240px);animation:pgin .18s ease}
+@keyframes pgin{from{opacity:.4;transform:translateX(var(--dx,0))}to{opacity:1;transform:none}}
+.cbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));gap:8px;align-items:center}
+body.card .cbar{display:flex}
+.cbar button{flex:none;width:30%;max-width:160px;padding:12px 0;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-size:15px;font-weight:600;cursor:pointer}
+.cbar button.nx{background:var(--acc);border-color:var(--acc);color:#fff}
+.cbar button:disabled{opacity:.35}
+.cbar .ci{flex:1;min-width:0;text-align:center;font-size:12.5px;color:var(--sub);line-height:1.3}
+.cbar .ci b{display:block;color:var(--ink);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cdots{display:flex;gap:3px;justify-content:center;margin-top:4px}.cdots i{width:6px;height:6px;border-radius:3px;background:var(--line)}.cdots i.on{background:var(--acc);width:14px}
 </style>
 </head>
 <body>
 <header>
-  <div class="top"><a class="home" href="산업안전기사_4과목_목차.html">목차</a><h1>3. 정전기 장·재해 관리</h1><span class="prog" id="prog">0</span></div>
+  <div class="top"><a class="home" href="산업안전기사_4과목_목차.html">목차</a><h1>3. 정전기 장·재해 관리</h1><button class="vbtn" id="vbtn" type="button">🃏 카드</button><span class="prog" id="prog">0</span></div>
   <div class="bar"><i id="bar"></i></div>
   <nav id="nav"><a href="#s1">①발생원리·현상</a><a href="#s2">②방전·장해</a><a href="#s3">③접지·본딩·유속</a><a href="#s4">④가습·제전기</a><a href="#s5">⑤최종 점검</a></nav>
 </header>
@@ -194,6 +219,7 @@ th{background:var(--bg)}
 <p class="note">※ 기출문제는 출제 포인트로 재구성한 유형 문제입니다. 법령 수치는 개정될 수 있으니 국가법령정보센터에서 최신 내용을 확인하세요.</p>
 </main>
 <div class="pn"><a href="4과목_2_감전재해_방지.html"><small>← 이전</small>2. 감전재해 및 방지대책</a><a class="nx" href="4과목_4_전기방폭_관리.html"><small>다음 →</small>4. 전기 방폭 관리</a></div>
+<div class="cbar" id="cbar"><button type="button" id="cpv">◀ 이전</button><div class="ci" id="ci"></div><button type="button" class="nx" id="cnx">다음 ▶</button></div>
 <script>
 const S={
 "s1":[
@@ -245,7 +271,7 @@ function mount(box){
       d.appendChild(b)});
     const e=document.createElement('div');e.className='exp';e.innerHTML='▶ <b>정답 '+'①②③④'[q[2]]+'</b> '+q[3];d.appendChild(e);
     box.appendChild(d)});
-  upd();
+  upd();box.dispatchEvent(new Event('mounted'));
 }
 document.querySelectorAll('.quiz').forEach(mount);
 const KEY='s4_p3';
@@ -256,6 +282,96 @@ function prog(){let n=0;boxes.forEach((b,i)=>{if(b.checked)n++;if(links[i])links
 boxes.forEach(b=>{b.checked=!!st[b.dataset.k];b.onchange=()=>{st[b.dataset.k]=b.checked;st._n=boxes.length;try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}prog()}});
 try{st._n=boxes.length;localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}
 prog();
+/* 보기 방식: card(카드 넘기기) / one(한 단원씩) / all(전체) */
+(function(){
+  const secs=[...document.querySelectorAll('main>section')], VK=KEY+'_view';
+  if(!secs.length)return;
+  const vb=document.getElementById('vbtn'),ci=document.getElementById('ci'),cpv=document.getElementById('cpv'),cnx=document.getElementById('cnx');
+  const LBL={card:'🃏 카드',one:'📄 단원',all:'📜 전체'},ORD=['card','one','all'];
+  let view='card';try{const v=localStorage.getItem(VK);if(ORD.includes(v))view=v}catch(e){}
+  let cur=0,pg=0;
+  secs.forEach((sec,i)=>{
+    const d=document.createElement('div');d.className='snav';
+    d.innerHTML='<button type="button" data-go="-1">◀ 이전 단원</button><button type="button" data-go="1">다음 단원 ▶</button>';
+    if(i===0)d.children[0].disabled=true; if(i===secs.length-1)d.children[1].disabled=true;
+    d.addEventListener('click',e=>{const g=e.target.dataset.go;if(g)show(i+ +g,0,true)});
+    sec.appendChild(d);
+  });
+  /* 단원을 카드로 나누기: h3마다 한 장, 기출은 한 문제씩 */
+  function pagesOf(sec){
+    const kids=[...sec.children].filter(c=>!c.classList.contains('snav'));
+    const P=[];let p={els:[],t:''};
+    kids.forEach(c=>{
+      if(c.tagName==='H3'&&p.els.some(x=>x.tagName!=='H2')){P.push(p);p={els:[],t:''}}
+      if(c.classList.contains('quiz')){
+        if(p.els.length)P.push(p);p={els:[],t:''};
+        const qs=[...c.querySelectorAll(':scope>.q')];
+        qs.forEach((q,k)=>P.push({els:[c],q:q,t:'📝 기출 '+(k+1)+'/'+qs.length}));
+        return;
+      }
+      if(c.classList.contains('chk')){const L=P[P.length-1]||p;(p.els.length?p:L).els.push(c);return}
+      if(c.tagName==='H3'&&!p.t)p.t=c.textContent;
+      if(c.tagName==='H2'&&!p.t)p.t=c.textContent;
+      p.els.push(c);
+    });
+    if(p.els.length)P.push(p);
+    return P;
+  }
+  let PG=pagesOf(secs[0]);
+  function paint(dx){
+    const sec=secs[cur],kids=[...sec.children];
+    if(view!=='card'){kids.forEach(c=>c.classList.remove('pg-x'));sec.querySelectorAll('.quiz .q').forEach(q=>q.classList.remove('pg-x'));document.body.classList.remove('end');return}
+    const P=PG[pg],show=new Set(P.els);
+    kids.forEach(c=>c.classList.toggle('pg-x',!show.has(c)&&!c.classList.contains('snav')));
+    sec.querySelectorAll('.quiz').forEach(qz=>{const on=show.has(qz);qz.classList.toggle('pg-x',!on);qz.querySelectorAll(':scope>.q').forEach(q=>q.classList.toggle('pg-x',q!==P.q))});
+    const last=cur===secs.length-1&&pg===PG.length-1;
+    document.body.classList.toggle('end',last);
+    cpv.disabled=cur===0&&pg===0;
+    cnx.textContent=pg===PG.length-1?(last?'끝 ✔':'다음 단원 ▶'):'다음 ▶';cnx.disabled=last;
+    const n=PG.length,dots=n<=14?'<div class="cdots">'+Array.from({length:n},(_,k)=>'<i'+(k===pg?' class="on"':'')+'></i>').join('')+'</div>':'';
+    ci.innerHTML='<b>'+(secs[cur].dataset.nav||'')+' · '+(pg+1)+'/'+n+'</b>'+(P.t||'')+dots;
+    sec.style.setProperty('--dx',dx||'0px');sec.style.animation='none';sec.offsetWidth;sec.style.animation='';
+  }
+  function partFor(sec){let p=sec.previousElementSibling;while(p){if(p.classList.contains('part'))return p;p=p.previousElementSibling}return null}
+  function show(i,p,top,dx){
+    i=Math.max(0,Math.min(secs.length-1,i));
+    const t=secs[i];if(i!==cur||!PG.length)PG=pagesOf(t);cur=i;
+    pg=p<0?PG.length-1:Math.min(p,PG.length-1);
+    secs.forEach(s=>s.classList.toggle('cur',s===t));
+    document.querySelectorAll('main>.part').forEach(x=>x.classList.remove('cur'));
+    const pp=partFor(t);if(pp)pp.classList.add('cur');
+    links.forEach(a=>a.classList.toggle('cur',a.getAttribute('href')==='#'+t.id));
+    const ca=document.querySelector('#nav a.cur');if(ca)ca.scrollIntoView({block:'nearest',inline:'center'});
+    try{history.replaceState(null,'','#'+t.id)}catch(e){}
+    try{localStorage.setItem(KEY+'_last',t.id)}catch(e){}
+    paint(dx);
+    if(top){if(view==='all')t.scrollIntoView();else window.scrollTo(0,0)}
+  }
+  function step(d){
+    if(view!=='card')return;
+    if(d>0){if(pg<PG.length-1)show(cur,pg+1,true,'40px');else if(cur<secs.length-1)show(cur+1,0,true,'40px')}
+    else{if(pg>0)show(cur,pg-1,true,'-40px');else if(cur>0)show(cur-1,-1,true,'-40px')}
+  }
+  cpv.onclick=()=>step(-1);cnx.onclick=()=>step(1);
+  function mode(v){view=v;document.body.classList.toggle('one',v==='one');document.body.classList.toggle('card',v==='card');
+    vb.textContent=LBL[v];try{localStorage.setItem(VK,v)}catch(e){}}
+  vb.addEventListener('click',()=>{mode(ORD[(ORD.indexOf(view)+1)%3]);show(cur,view==='card'?0:pg,true)});
+  links.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();show(secs.findIndex(s=>'#'+s.id===a.getAttribute('href')),0,true)}));
+  /* 다시 풀기 → 문항이 새로 그려지므로 카드 재구성 */
+  document.querySelectorAll('.quiz').forEach(b=>b.addEventListener('mounted',()=>{if(b.closest('section')===secs[cur]){PG=pagesOf(secs[cur]);const f=PG.findIndex(x=>x.q);show(cur,f<0?0:f,true)}}));
+  /* 스와이프 · 방향키 */
+  let sx=0,sy=0,st0=0;
+  document.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;sx=e.touches[0].clientX;sy=e.touches[0].clientY;st0=Date.now()},{passive:true});
+  document.addEventListener('touchend',e=>{if(view!=='card'||!sx)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;sx=0;
+    if(e.target.closest('.tw,nav'))return;
+    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5&&Date.now()-st0<700)step(dx<0?1:-1)},{passive:true});
+  document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)});
+  let s0=location.hash.slice(1);
+  if(!document.getElementById(s0)){try{s0=localStorage.getItem(KEY+'_last')}catch(e){s0=null}}
+  let i0=secs.findIndex(s=>s.id===s0);if(i0<0)i0=0;
+  mode(view);PG=pagesOf(secs[i0]);show(i0,0,false);
+  if(view==='all'&&location.hash){const t=document.getElementById(location.hash.slice(1));if(t)t.scrollIntoView()}
+})();
 </script>
 </body>
 </html>
