@@ -34,9 +34,9 @@ let T=0,D=0;
 document.querySelectorAll('.pg').forEach(el=>{
   if(!el.dataset.key)return;
   let st={};try{st=JSON.parse(localStorage.getItem(el.dataset.key))||{}}catch(e){}
-  const n=st._n||0,d=Object.keys(st).filter(k=>k!=='_n'&&st[k]===true).length;
-  T+=n;D+=Math.min(d,n);
-  el.textContent=n?d+'/'+n+' 단원':'미시작';
+  const n=st._n||0,d=st._r?Object.values(st._r).reduce((a,s)=>a+s.split('1').length-1,0)/7:Object.keys(st).filter(k=>k!=='_n'&&st[k]===true).length;
+  T+=n;D+=Math.min(d,n);let r=0;try{r=+localStorage.getItem(el.dataset.key+'_round')||0}catch(e){}
+  el.textContent=n?Math.round(d/n*100)+'%'+(r?' · '+r+'회독':''):'미시작';
   const bar=el.closest('.card').querySelector('.mb i');if(n)bar.style.width=(d/n*100)+'%';
 });
 const pct=T?Math.round(D/T*100):0;document.getElementById('tp').textContent=pct+'%';document.getElementById('tb').style.width=pct+'%';

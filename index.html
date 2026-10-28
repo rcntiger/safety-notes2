@@ -32,11 +32,11 @@ let T=0,D=0;
 document.querySelectorAll('.card').forEach(c=>{
   let n=0,d=0;
   c.dataset.keys.split(',').forEach(k=>{let st={};try{st=JSON.parse(localStorage.getItem(k))||{}}catch(e){}
-    const nn=st._n||0;n+=nn;d+=Math.min(nn,Object.keys(st).filter(x=>x!=='_n'&&st[x]===true).length);});
+    const nn=st._n||0;n+=nn;d+=Math.min(nn,st._r?Object.values(st._r).reduce((a,s)=>a+s.split('1').length-1,0)/7:Object.keys(st).filter(x=>x!=='_n'&&st[x]===true).length);});
   T+=n;D+=d;
   c.querySelector('.pg').textContent=n?Math.round(d/n*100)+'%':'미시작';
   if(n)c.querySelector('.mb i').style.width=(d/n*100)+'%';
 });
 const p=T?Math.round(D/T*100):0;document.getElementById('tp').textContent=p+'%';document.getElementById('tb').style.width=p+'%';
-if(T)document.getElementById('tc').textContent='('+D+'/'+T+' 단원)';
+if(T)document.getElementById('tc').textContent='(7회독 기준)';
 </script></body></html>
